@@ -75,6 +75,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1790ad64b3aaa134c99283fe064569ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement:
+    m_Name: Movement
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: eede4302-8196-4328-b6d5-159f9b274521
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 1e9e59df-65ae-4ab5-a79b-78c17524dd61
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 408e4e21-1b59-431f-a670-9f29f9610431
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    - m_Name: down
+      m_Id: a22f9985-3ad8-4207-918a-3176c9b50506
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    - m_Name: left
+      m_Id: a9e54678-8959-4a57-9956-2d4d9fe9c166
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    - m_Name: right
+      m_Id: bf4a29ca-eb20-478b-86fb-72cbd459b3da
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Movement
+      m_Flags: 8
+    m_Flags: 0
+  _isDummy: 0
   _playerId: 0
   movementSpeed: 10
   _inverted: 0

@@ -893,8 +893,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3435f92ffcfc0bd429f0f685c72a26b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _p1: {fileID: 1651051483}
-  _p2: {fileID: 1214388772}
+  _p1: {fileID: 257689495}
+  _p2: {fileID: 14066564}
+  _targetGroup: {fileID: 110547468}
   _height: 1.25
 --- !u!4 &1212033319
 Transform:
@@ -1015,6 +1016,14 @@ PrefabInstance:
     - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
       propertyPath: _isDummy
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: movement.m_Id
+      value: 555119c3-ed3d-4d3a-a2cd-d45f4a07aaf7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: movement.m_Name
+      value: Movement
       objectReference: {fileID: 0}
     - target: {fileID: 3608419315480924841, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1194,6 +1203,58 @@ PrefabInstance:
     - target: {fileID: 112335604057232051, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
       propertyPath: m_Name
       value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: up.m_Id
+      value: bbfa7865-87b5-4bca-a6d3-46256539162a
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: _inverted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: down.m_Id
+      value: e6d8e2e7-9af2-4688-96b4-59a1d3a4274b
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: left.m_Id
+      value: 331dbb7b-7f1a-4032-ba5c-fac702eae38f
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: up.m_Name
+      value: Up
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: right.m_Id
+      value: f569d644-1660-435a-bf43-d81c63b68cb6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: down.m_Name
+      value: Down
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: left.m_Name
+      value: Left
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: right.m_Name
+      value: Right
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: up.m_SingletonActionBindings.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: up.m_SingletonActionBindings.Array.data[0].m_Id
+      value: c9b3f4cf-d41e-401e-8d75-133b61e22cf2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: up.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <Keyboard>/w
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155619070582107613, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: up.m_SingletonActionBindings.Array.data[0].m_Action
+      value: Up
       objectReference: {fileID: 0}
     - target: {fileID: 3608419315480924841, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
       propertyPath: m_Materials.Array.data[0]

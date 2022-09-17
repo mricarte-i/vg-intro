@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
+    #region InputActions
+    [SerializeField] private InputAction movement;
+    #endregion
+
     #region Properties and Fields
     [SerializeField] private bool _isDummy = false;
     [SerializeField] private int _playerId = 0;
@@ -25,6 +29,25 @@ public class PlayerInputHandler : MonoBehaviour
     void Start()
     {
         _moveCommandReceiver = new MoveCommandReceiver();
+
+        movement.performed += OnMovementPerformed;
+        movement.canceled += OnMovementPerformed;
+    }
+
+    private void OnMovementPerformed(InputAction.CallbackContext context) {
+        var direction = context.ReadValue<Vector2>();
+
+        Horizontal = direction.x;
+        Vertical = direction.y;
+
+    }
+
+    void OnEnable() {
+        movement.Enable();
+    }
+
+    void OnDisable(){
+        movement.Disable();
     }
 
     // Update is called once per frame
@@ -46,45 +69,14 @@ public class PlayerInputHandler : MonoBehaviour
         //_currentCmdNum++; memento lmao
     }
 
-    private void MoveRight() { Move(Vector3.forward); }
-    private void MoveLeft() { Move(Vector3.back); }
-    private void MoveUp() { Move(Vector3.left); }
-    private void MoveDown() { Move(Vector3.right); }
-
     #region Movement Properties
 
-    private float Vertical {
-        get{
-            var keyboard = Keyboard.current;
-            var vertical = 0;
-
-            if(keyboard.wKey.isPressed){
-                vertical = 1;
-            }else if(keyboard.sKey.isPressed){
-                vertical = -1;
-            }
-            return (_inverted ? 1 : -1) * vertical;
-        }
-
-    }
-    private float Horizontal {
-        get{
-            var keyboard = Keyboard.current;
-            var horizontal = 0;
-
-            if(keyboard.dKey.isPressed){
-                horizontal = 1;
-            }else if(keyboard.aKey.isPressed){
-                horizontal = -1;
-            }
-            return (_inverted ? -1 : 1) * horizontal;
-        }
-
-    }
+    private float Vertical { get; set; }
+    private float Horizontal { get; set; }
 
     private Vector3 Direction {
         get {
-            var dir = (transform.forward * Horizontal) + (transform.right * Vertical);
+            var dir = (transform.forward * Horizontal * (_inverted ? -1 : 1)) + (transform.right * Vertical * (_inverted ? 1 : -1));
             return dir;
         }
     }
