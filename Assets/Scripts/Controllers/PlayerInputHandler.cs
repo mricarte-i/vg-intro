@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     #region InputActions
-    [SerializeField] private InputAction movement;
+    private InputAction movement;
+    [Space][SerializeField] private InputActionAsset playerControls;
     #endregion
 
     #region Properties and Fields
@@ -25,15 +26,18 @@ public class PlayerInputHandler : MonoBehaviour
 
     #endregion
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _moveCommandReceiver = new MoveCommandReceiver();
+
+        var gameplayActionMap = playerControls.FindActionMap("Gameplay");
+        movement = gameplayActionMap.FindAction("Movement");
 
         movement.performed += OnMovementPerformed;
         movement.canceled += OnMovementPerformed;
     }
 
+    #region Movement Boilerplate
     private void OnMovementPerformed(InputAction.CallbackContext context) {
         var direction = context.ReadValue<Vector2>();
 
@@ -49,6 +53,7 @@ public class PlayerInputHandler : MonoBehaviour
     void OnDisable(){
         movement.Disable();
     }
+    #endregion
 
     // Update is called once per frame
     void Update()
