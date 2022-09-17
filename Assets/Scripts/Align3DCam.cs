@@ -8,7 +8,7 @@ public class Align3DCam : MonoBehaviour
 {
 
     [Tooltip("The transforms the camera aligns to.")]
-    [SerializeField] private Transform _t1, _t2;
+    [SerializeField] private PlayerInputHandler _t1, _t2;
 
     private Cinemachine.CinemachineVirtualCamera _vCam;
 
@@ -51,7 +51,7 @@ public class Align3DCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 diff = _t1.position - _t2.position;
+        Vector3 diff = _t1.transform.position - _t2.transform.position;
         _distT1T2 = diff.magnitude;
 
         diff.y = 0f;

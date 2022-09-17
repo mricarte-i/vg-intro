@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3633861960990128821}
-  - component: {fileID: 6642150850305574672}
   - component: {fileID: 1471822888186944982}
   - component: {fileID: 6331053129667361786}
+  - component: {fileID: 3155619070582107613}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -34,20 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6642150850305574672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 112335604057232051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e87bb2c41477aab4b9f67a4fe6946245, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyboard: 1
-  device: 0
 --- !u!54 &1471822888186944982
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -77,6 +63,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 2.05, z: 0.5}
   m_Center: {x: 0, y: 1.02, z: 0}
+--- !u!114 &3155619070582107613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 112335604057232051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1790ad64b3aaa134c99283fe064569ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerId: 0
+  movementSpeed: 10
+  _inverted: 0
+  _inputKeyboard: 0
+  _controllerId: 0
 --- !u!1001 &5099156358163994423
 PrefabInstance:
   m_ObjectHideFlags: 0
