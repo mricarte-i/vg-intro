@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     #region InputActions
-    private InputAction movement;
+    private InputAction walking;
     [Space][SerializeField] private InputActionAsset playerControls;
     #endregion
 
@@ -31,14 +31,14 @@ public class PlayerInputHandler : MonoBehaviour
         _moveCommandReceiver = new MoveCommandReceiver();
 
         var gameplayActionMap = playerControls.FindActionMap("Gameplay");
-        movement = gameplayActionMap.FindAction("Movement");
+        walking = gameplayActionMap.FindAction("Walking");
 
-        movement.performed += OnMovementPerformed;
-        movement.canceled += OnMovementPerformed;
+        walking.performed += OnWalkingPerformed;
+        walking.canceled += OnWalkingPerformed;
     }
 
-    #region Movement Boilerplate
-    private void OnMovementPerformed(InputAction.CallbackContext context) {
+    #region Walking Boilerplate
+    private void OnWalkingPerformed(InputAction.CallbackContext context) {
         var direction = context.ReadValue<Vector2>();
 
         Horizontal = direction.x;
@@ -47,11 +47,11 @@ public class PlayerInputHandler : MonoBehaviour
     }
 
     void OnEnable() {
-        movement.Enable();
+        walking.Enable();
     }
 
     void OnDisable(){
-        movement.Disable();
+        walking.Disable();
     }
     #endregion
 
@@ -85,7 +85,7 @@ public class PlayerInputHandler : MonoBehaviour
             return dir;
         }
     }
-    // => new Vector3(Horizontal, 0, Vertical);
+
     private bool IsMoving => Direction != Vector3.zero;
 
     #endregion
