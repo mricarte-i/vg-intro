@@ -1075,6 +1075,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4598645410986894945, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
       propertyPath: _isDummy
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598645410986894945, guid: f6ccd552f1b9cf14eb82c0f3ed430279, type: 3}
+      propertyPath: _inputKeyboard
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

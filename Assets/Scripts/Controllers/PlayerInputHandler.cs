@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 
 public class PlayerInputHandler : MonoBehaviour
 {
@@ -30,7 +31,23 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _moveCommandReceiver = new MoveCommandReceiver();
 
-        var gameplayActionMap = playerControls.FindActionMap("Gameplay");
+        var gameplayActionMap = playerControls.FindActionMap("Gameplay").Clone();
+
+        if(_inputKeyboard){
+            gameplayActionMap.ApplyBindingOverridesOnMatchingControls(Keyboard.current);
+            Debug.Log("keyboard");
+        }else{
+            int i = 0;
+            foreach(var device in InputUser.GetUnpairedInputDevices()){
+                if(_controllerId == i && device.name.Contains("Controller")){
+                    gameplayActionMap.ApplyBindingOverridesOnMatchingControls(device);
+                    Debug.Log(device.name);
+                    break; //no need to keep iterating
+                }
+                i++;
+            }
+        }
+
         walking = gameplayActionMap.FindAction("Walking");
 
         walking.performed += OnWalkingPerformed;
