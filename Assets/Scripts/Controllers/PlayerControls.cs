@@ -24,7 +24,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
+            ""name"": ""Movement"",
             ""id"": ""ca44e6ac-08c3-4c73-b701-a0f6f6199913"",
             ""actions"": [
                 {
@@ -32,6 +32,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""c43a6058-01fd-463a-9ac6-264a0f2b4309"",
                     ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jumping"",
+                    ""type"": ""Button"",
+                    ""id"": ""620280ed-7e08-4066-b27a-a2d40471b9ab"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -158,6 +167,28 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                     ""action"": ""Walking"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b85b58e-5757-4660-9145-22db6b74ae14"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Jumping"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""15e59379-49db-4ff3-b694-a342b41ec131"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Jumping"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,9 +218,10 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_Walking = m_Gameplay.FindAction("Walking", throwIfNotFound: true);
+        // Movement
+        m_Movement = asset.FindActionMap("Movement", throwIfNotFound: true);
+        m_Movement_Walking = m_Movement.FindAction("Walking", throwIfNotFound: true);
+        m_Movement_Jumping = m_Movement.FindAction("Jumping", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -246,38 +278,46 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private IGameplayActions m_GameplayActionsCallbackInterface;
-    private readonly InputAction m_Gameplay_Walking;
-    public struct GameplayActions
+    // Movement
+    private readonly InputActionMap m_Movement;
+    private IMovementActions m_MovementActionsCallbackInterface;
+    private readonly InputAction m_Movement_Walking;
+    private readonly InputAction m_Movement_Jumping;
+    public struct MovementActions
     {
         private @PlayerControls m_Wrapper;
-        public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Walking => m_Wrapper.m_Gameplay_Walking;
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+        public MovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Walking => m_Wrapper.m_Movement_Walking;
+        public InputAction @Jumping => m_Wrapper.m_Movement_Jumping;
+        public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        public void SetCallbacks(IGameplayActions instance)
+        public static implicit operator InputActionMap(MovementActions set) { return set.Get(); }
+        public void SetCallbacks(IMovementActions instance)
         {
-            if (m_Wrapper.m_GameplayActionsCallbackInterface != null)
+            if (m_Wrapper.m_MovementActionsCallbackInterface != null)
             {
-                @Walking.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalking;
-                @Walking.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalking;
-                @Walking.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnWalking;
+                @Walking.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnWalking;
+                @Walking.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnWalking;
+                @Walking.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnWalking;
+                @Jumping.started -= m_Wrapper.m_MovementActionsCallbackInterface.OnJumping;
+                @Jumping.performed -= m_Wrapper.m_MovementActionsCallbackInterface.OnJumping;
+                @Jumping.canceled -= m_Wrapper.m_MovementActionsCallbackInterface.OnJumping;
             }
-            m_Wrapper.m_GameplayActionsCallbackInterface = instance;
+            m_Wrapper.m_MovementActionsCallbackInterface = instance;
             if (instance != null)
             {
                 @Walking.started += instance.OnWalking;
                 @Walking.performed += instance.OnWalking;
                 @Walking.canceled += instance.OnWalking;
+                @Jumping.started += instance.OnJumping;
+                @Jumping.performed += instance.OnJumping;
+                @Jumping.canceled += instance.OnJumping;
             }
         }
     }
-    public GameplayActions @Gameplay => new GameplayActions(this);
+    public MovementActions @Movement => new MovementActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -296,8 +336,9 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_JoystickSchemeIndex];
         }
     }
-    public interface IGameplayActions
+    public interface IMovementActions
     {
         void OnWalking(InputAction.CallbackContext context);
+        void OnJumping(InputAction.CallbackContext context);
     }
 }

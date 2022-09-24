@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class MoveCommandReceiver
 {
-    public void MoveOperation(GameObject gameObject, Vector3 direction){
-        gameObject.transform.position += direction;
+    public void MoveOperation(CharacterController characterController, Vector3 force){
+        //gameObject.transform.position += direction;
+        //rigidbody.AddForce(force, ForceMode.VelocityChange);
+        characterController.Move(force);
     }
 }

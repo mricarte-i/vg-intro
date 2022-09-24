@@ -2,7 +2,7 @@
     "name": "PlayerControls",
     "maps": [
         {
-            "name": "Gameplay",
+            "name": "Movement",
             "id": "ca44e6ac-08c3-4c73-b701-a0f6f6199913",
             "actions": [
                 {
@@ -10,6 +10,15 @@
                     "type": "PassThrough",
                     "id": "c43a6058-01fd-463a-9ac6-264a0f2b4309",
                     "expectedControlType": "Stick",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Jumping",
+                    "type": "Button",
+                    "id": "620280ed-7e08-4066-b27a-a2d40471b9ab",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -136,6 +145,28 @@
                     "action": "Walking",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "5b85b58e-5757-4660-9145-22db6b74ae14",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Jumping",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "15e59379-49db-4ff3-b694-a342b41ec131",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Jumping",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
