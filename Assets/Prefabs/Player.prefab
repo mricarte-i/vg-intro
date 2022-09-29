@@ -95,12 +95,12 @@ MonoBehaviour:
   movementSpeed: 4
   _gravity: -9.8
   _groundedGravity: -0.5
-  _maxJumpHeight: 1
-  _maxJumpTime: 0.5
+  _maxJumpHeight: 0.75
+  _maxJumpTime: 0.75
   _isDummy: 0
   _playerId: 0
   _inverted: 0
-  _inputKeyboard: 0
+  _inputKeyboard: 1
   _controllerId: 0
 --- !u!1001 &5099156358163994423
 PrefabInstance:
