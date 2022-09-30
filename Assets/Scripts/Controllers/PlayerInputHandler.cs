@@ -8,6 +8,7 @@ public class PlayerInputHandler : MonoBehaviour
     #region InputActions
     private InputAction walking;
     private InputAction jumping;
+    private InputAction menu;
     [Space][SerializeField] private InputActionAsset playerControls;
     #endregion
 
@@ -79,6 +80,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         walking = movementActionMap.FindAction("Walking");
         jumping = movementActionMap.FindAction("Jumping");
+        menu = playerControls.FindActionMap("Menu").FindAction("Pause");
 
         walking.started += OnWalkingPerformed;
         walking.performed += OnWalkingPerformed;
@@ -86,6 +88,8 @@ public class PlayerInputHandler : MonoBehaviour
 
         jumping.started += OnJumpingPerformed;
         jumping.canceled += OnJumpingPerformed;
+
+        menu.started += OnMenuPerformed;
         setUpJumpVariables();
     }
 
@@ -110,15 +114,23 @@ public class PlayerInputHandler : MonoBehaviour
             Debug.Log("hear me!");
         }
     }
+    private void OnMenuPerformed(InputAction.CallbackContext context) {
+        if(_isDummy) return;
+        context.ReadValueAsButton();
+        Debug.Log("calling a manager...");
+        AppManager.Instance.TogglePause();
+    }
 
     void OnEnable() {
         walking.Enable();
         jumping.Enable();
+        menu.Enable();
     }
 
     void OnDisable(){
         walking.Disable();
         jumping.Disable();
+        menu.Disable();
     }
 
     #endregion

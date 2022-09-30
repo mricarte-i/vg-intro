@@ -18,10 +18,15 @@ public class AppManager : MonoBehaviour
 
     public void TogglePause(){
         _paused = !_paused;
+        Debug.Log("TOGGLE PAUSE CALLED " + _paused + " " + Time.timeScale);
 
-        Time.timeScale = _paused ? 0f : 1f;
-
-        _settingsMenu.SetActive(_paused);
+        if(_paused){
+            Time.timeScale = 0;
+            _settingsMenu.SetActive(true);
+        }else{
+            Time.timeScale = 1f;
+            _settingsMenu.SetActive(false);
+        }
     }
 
     void Start(){
