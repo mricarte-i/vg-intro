@@ -10,6 +10,8 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction jumping;
     private InputAction menu;
     [Space][SerializeField] private InputActionAsset playerControls;
+    [SerializeField] private InputUser _user;
+    public void SetInputUser(InputUser newUser) => _user = newUser;
     #endregion
 
     #region Properties and Fields
@@ -60,27 +62,70 @@ public class PlayerInputHandler : MonoBehaviour
 
 
         _moveCommandReceiver = new MoveCommandReceiver();
+        /* now doing this from BindControls...
 
         var movementActionMap = playerControls.FindActionMap("Movement").Clone();
+        var menuActionMap = playerControls.FindActionMap("Menu").Clone();
 
+
+        walking = movementActionMap.FindAction("Walking");
+        jumping = movementActionMap.FindAction("Jumping");
+        menu = menuActionMap.FindAction("Pause");
+        **/
+
+        /**
+        *   Not working...
+        foreach(var scheme in menu.controls){
+            Debug.Log("controlSchemes..." + scheme);
+        }
         if(_inputKeyboard){
             movementActionMap.ApplyBindingOverridesOnMatchingControls(Keyboard.current);
             Debug.Log("keyboard");
+            _user = InputUser.PerformPairingWithDevice(Keyboard.current);
+            _user.AssociateActionsWithUser(movementActionMap);
+            _user.AssociateActionsWithUser(menuActionMap);
+            _user.ActivateControlScheme(playerControls.controlSchemes[0]);
         }else{
+            _user = InputUser.PerformPairingWithDevice(Gamepad.all[_playerId]);
+            _user.AssociateActionsWithUser(movementActionMap);
+            _user.AssociateActionsWithUser(menuActionMap);
+            _user.ActivateControlScheme(playerControls.controlSchemes[1]);
+
             int i = 0;
             foreach(var device in InputUser.GetUnpairedInputDevices()){
                 if(_controllerId == i && device.name.Contains("Controller")){
                     movementActionMap.ApplyBindingOverridesOnMatchingControls(device);
-                    Debug.Log(device.name);
+                    Debug.Log("picked " + device);
                     break; //no need to keep iterating
                 }
+                Debug.Log(device.name);
                 i++;
             }
+            //
         }
+        */
 
-        walking = movementActionMap.FindAction("Walking");
-        jumping = movementActionMap.FindAction("Jumping");
-        menu = playerControls.FindActionMap("Menu").FindAction("Pause");
+        /* now doing this from BindControls...
+        walking.started += OnWalkingPerformed;
+        walking.performed += OnWalkingPerformed;
+        walking.canceled += OnWalkingPerformed;
+
+        jumping.started += OnJumpingPerformed;
+        jumping.canceled += OnJumpingPerformed;
+
+        menu.started += OnMenuPerformed;
+        **/
+        setUpJumpVariables();
+    }
+
+    public void BindControls(GeneratedPlayerControls controls){
+        var movementActionMap = controls.Movement;
+        var menuActionMap = controls.Menu;
+
+        walking = movementActionMap.Walking;
+        jumping = movementActionMap.Jumping;
+        menu = menuActionMap.Pause;
+
 
         walking.started += OnWalkingPerformed;
         walking.performed += OnWalkingPerformed;
@@ -90,7 +135,16 @@ public class PlayerInputHandler : MonoBehaviour
         jumping.canceled += OnJumpingPerformed;
 
         menu.started += OnMenuPerformed;
-        setUpJumpVariables();
+
+        //should be called OnEnable...
+        walking.Enable();
+        jumping.Enable();
+        menu.Enable();
+
+    }
+
+    private void OnDestroy() {
+        _user.UnpairDevices();
     }
 
     private void setUpJumpVariables() {
@@ -121,11 +175,13 @@ public class PlayerInputHandler : MonoBehaviour
         AppManager.Instance.TogglePause();
     }
 
+/*
     void OnEnable() {
         walking.Enable();
         jumping.Enable();
         menu.Enable();
     }
+    */
 
     void OnDisable(){
         walking.Disable();

@@ -7,7 +7,13 @@ public class PlayerGuider : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
     [SerializeField] private float _height = 1.25f;
 
+    public void SetPlayers(PlayerInputHandler p1, PlayerInputHandler p2){
+        _p1 = p1;
+        _p2 = p2;
+    }
+
     // Start is called before the first frame update
+    /*
     void Start()
     {
         if (_p1 == null || _p2 == null || _targetGroup == null)
@@ -15,13 +21,14 @@ public class PlayerGuider : MonoBehaviour
             Debug.LogError("Player Guider requires both players to be referenced!");
         }
     }
+    */
 
     // Update is called once per frame
     void LateUpdate()
     {
         if (_p1 == null || _p2 == null || _targetGroup == null)
         {
-            Debug.LogError("Player Guider requires both players to be referenced!");
+            //Debug.LogError("Player Guider requires both players to be referenced!");
             return;
         }
         var player1Pos = _p1.transform.position;

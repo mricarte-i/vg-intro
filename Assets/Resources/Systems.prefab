@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _settingsMenu: {fileID: 7784197902770079823}
-  _player1Device: 
-  _player2Device: 
+  _player1Device: {fileID: 11400000, guid: 70d1451b584f88042a62cb297d75e406, type: 2}
+  _player2Device: {fileID: 11400000, guid: e710b6a160f10a94b8f3e2651089d3e3, type: 2}
   _paused: 0
 --- !u!1 &2184399878655169389
 GameObject:

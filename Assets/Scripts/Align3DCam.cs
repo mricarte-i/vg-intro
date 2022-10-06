@@ -9,6 +9,10 @@ public class Align3DCam : MonoBehaviour
 
     [Tooltip("The transforms the camera aligns to.")]
     [SerializeField] private PlayerInputHandler _t1, _t2;
+    public void SetPlayers(PlayerInputHandler p1, PlayerInputHandler p2){
+        _t1 = p1;
+        _t2 = p2;
+    }
 
     private Cinemachine.CinemachineVirtualCamera _vCam;
 
