@@ -792,6 +792,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _loadingScreen: {fileID: 7434422966017216649}
   _progressBar: {fileID: 478660959569480189}
+  _normalSetup: {fileID: 9203922950841310680, guid: 5f0b4f911a254b24e841a69ec3fac405, type: 3}
+  _rhythmSetup: {fileID: 0}
 --- !u!1 &7074664645201961326
 GameObject:
   m_ObjectHideFlags: 0

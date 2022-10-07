@@ -5,12 +5,18 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Controls;
 using System;
 
+public enum GameMode {
+    NORMAL,
+    RHYTHM,
+};
+
 public class AppManager : MonoBehaviour
 {
     public static AppManager Instance;
     [SerializeField] private GameObject _settingsMenu;
     [SerializeField] private PlayableCharacter _player1Device = null, _player2Device = null;
     [SerializeField] private bool _paused = false;
+    [SerializeField] private GameMode _selectedGameMode = GameMode.NORMAL;
 
     void Awake() {
         if(Instance == null){
@@ -94,6 +100,10 @@ public class AppManager : MonoBehaviour
         }else{
             throw new Exception("AppManager's GetInputUser being mishandled!");
         }
+    }
+
+    public GameMode GetGameMode() {
+        return _selectedGameMode;
     }
 
     void Start(){
