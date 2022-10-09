@@ -1,13 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem.Users;
 
-[CreateAssetMenu(fileName ="PlayableCharacter", menuName = "Playable Character (yes)")]
+[CreateAssetMenu(fileName ="New PlayableCharacter", menuName = "Playable Character")]
 public class PlayableCharacter : ScriptableObject
 {
-    public string Name;
-    public float Speed;
-    public GameObject Model;
-    public GameObject Collider;
+    public CharacterData characterData = null;
     public InputUser inputUser;
     public void SetInputUser(InputUser iu) => inputUser = iu;
     public GeneratedPlayerControls controls = null;

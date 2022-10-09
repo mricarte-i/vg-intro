@@ -60,61 +60,8 @@ public class PlayerInputHandler : MonoBehaviour
 
         _pushInteract = GetComponent<CharacterPushInteraction>();
 
-
         _moveCommandReceiver = new MoveCommandReceiver();
-        /* now doing this from BindControls...
 
-        var movementActionMap = playerControls.FindActionMap("Movement").Clone();
-        var menuActionMap = playerControls.FindActionMap("Menu").Clone();
-
-
-        walking = movementActionMap.FindAction("Walking");
-        jumping = movementActionMap.FindAction("Jumping");
-        menu = menuActionMap.FindAction("Pause");
-        **/
-
-        /**
-        *   Not working...
-        foreach(var scheme in menu.controls){
-            Debug.Log("controlSchemes..." + scheme);
-        }
-        if(_inputKeyboard){
-            movementActionMap.ApplyBindingOverridesOnMatchingControls(Keyboard.current);
-            Debug.Log("keyboard");
-            _user = InputUser.PerformPairingWithDevice(Keyboard.current);
-            _user.AssociateActionsWithUser(movementActionMap);
-            _user.AssociateActionsWithUser(menuActionMap);
-            _user.ActivateControlScheme(playerControls.controlSchemes[0]);
-        }else{
-            _user = InputUser.PerformPairingWithDevice(Gamepad.all[_playerId]);
-            _user.AssociateActionsWithUser(movementActionMap);
-            _user.AssociateActionsWithUser(menuActionMap);
-            _user.ActivateControlScheme(playerControls.controlSchemes[1]);
-
-            int i = 0;
-            foreach(var device in InputUser.GetUnpairedInputDevices()){
-                if(_controllerId == i && device.name.Contains("Controller")){
-                    movementActionMap.ApplyBindingOverridesOnMatchingControls(device);
-                    Debug.Log("picked " + device);
-                    break; //no need to keep iterating
-                }
-                Debug.Log(device.name);
-                i++;
-            }
-            //
-        }
-        */
-
-        /* now doing this from BindControls...
-        walking.started += OnWalkingPerformed;
-        walking.performed += OnWalkingPerformed;
-        walking.canceled += OnWalkingPerformed;
-
-        jumping.started += OnJumpingPerformed;
-        jumping.canceled += OnJumpingPerformed;
-
-        menu.started += OnMenuPerformed;
-        **/
         setUpJumpVariables();
     }
 
@@ -175,13 +122,6 @@ public class PlayerInputHandler : MonoBehaviour
         AppManager.Instance.TogglePause();
     }
 
-/*
-    void OnEnable() {
-        walking.Enable();
-        jumping.Enable();
-        menu.Enable();
-    }
-    */
 
     void OnDisable(){
         walking.Disable();

@@ -41,7 +41,7 @@ public class NormalFightSetup : MonoBehaviour
         pc.SetInputUser(player.inputUser);
         pc.BindControls(player.controls);
 
-        var model = Instantiate(player.Model, go.transform); //instance model with player gameObject as parent!
+        var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         //do the same when we eventually add the collider thingy!
 
         return pc;
