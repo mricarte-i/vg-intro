@@ -96,6 +96,7 @@ public class WSCharacterSelectMenu : MonoBehaviour
         go.transform.position = _cursorSpawnPositions[playerId].position;
 
         CursorInputHandler cih = go.GetComponent<CursorInputHandler>();
+        cih.SetPlayerId(playerId);
         cih.SetInputUser(player.inputUser);
         cih.BindControls(player.controls);
         CursorMaterialHandler cmh = go.GetComponent<CursorMaterialHandler>();

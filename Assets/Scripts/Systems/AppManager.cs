@@ -16,6 +16,11 @@ public class AppManager : MonoBehaviour
     [SerializeField] private PlayableCharacter _player1Device = null, _player2Device = null;
     [SerializeField] private bool _paused = false;
     [SerializeField] private GameMode _selectedGameMode = GameMode.CSM;
+    [SerializeField] private string _selectedStage = "SceneStageCerro";
+
+    public string GetStageName(){
+        return _selectedStage;
+    }
 
     void Awake() {
         if(Instance == null){

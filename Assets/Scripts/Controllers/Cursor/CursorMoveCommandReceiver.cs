@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class CursorMoveCommandReceiver
 {
-    public void MoveOperation(Transform transform, Vector3 diff){
-        transform.position += diff;
+    public void MoveOperation(Rigidbody rb, Vector3 diff){
+        //transform.position += diff;
+        rb.MovePosition(rb.position + diff);
     }
 }

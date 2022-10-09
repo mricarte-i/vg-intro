@@ -22,6 +22,7 @@ public class CursorInputHandler : MonoBehaviour
     private CursorMoveCommandReceiver _moveCommandReceiver;
     private List<CursorMoveCommand> commands = new List<CursorMoveCommand>();
     [SerializeField] private BoxCollider _cursorCollider;
+    private Rigidbody _rb;
 
 
 
@@ -31,6 +32,7 @@ public class CursorInputHandler : MonoBehaviour
         _moveCommandReceiver = new CursorMoveCommandReceiver();
         _cursorCollider = GetComponent<BoxCollider>();
         _cursorCollider.isTrigger = true;
+        _rb = GetComponent<Rigidbody>();
 
     }
 
@@ -46,7 +48,7 @@ public class CursorInputHandler : MonoBehaviour
             CursorMoveCommand moveCommand = new CursorMoveCommand(
                 _moveCommandReceiver,
                 Direction * _speed * Time.deltaTime,
-                transform);
+                _rb);
             moveCommand.Execute();
             commands.Add(moveCommand);
         }
@@ -89,6 +91,10 @@ public class CursorInputHandler : MonoBehaviour
             _playerFloor.ShowCharacterData(chara);
             if(IsConfirmPressed){
                 AppManager.Instance.SetPlayerCharacter(_playerId, chara);
+            }
+        }else if(other.gameObject.GetComponent<ReadyBox>()){
+            if(IsConfirmPressed){
+                other.gameObject.GetComponent<ReadyBox>().CalledReady(_playerId);
             }
         }
     }

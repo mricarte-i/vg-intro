@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 2231509708024531000}
   - component: {fileID: 8851425949862633782}
   - component: {fileID: 1381280182277900740}
+  - component: {fileID: 6231726101814142799}
   m_Layer: 0
   m_Name: cursor-model
   m_TagString: Untagged
@@ -170,14 +171,27 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7554049938569256353}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.0000001
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 3
+--- !u!65 &6231726101814142799
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7554049938569256353}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.12, y: 1.09, z: 2.9}
+  m_Center: {x: 0, y: 0, z: -0.45}
 --- !u!1 &8819335965177757066
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +203,6 @@ GameObject:
   - component: {fileID: 2340531637031961796}
   - component: {fileID: 2862690060622249671}
   - component: {fileID: 8505159978051928618}
-  - component: {fileID: 6583904402976017051}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -260,17 +273,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6583904402976017051
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8819335965177757066}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -462981019419857548, guid: af66621bddc20f94a9714f4acbb150df, type: 3}

@@ -4,17 +4,17 @@ public class CursorMoveCommand : Command
 {
   private Vector3 _diff;
   private CursorMoveCommandReceiver _moveCommandReceiver;
-  private Transform _transform;
+  private Rigidbody _rb;
 
-  public CursorMoveCommand(CursorMoveCommandReceiver receiver, Vector3 diff, Transform transform){
+  public CursorMoveCommand(CursorMoveCommandReceiver receiver, Vector3 diff, Rigidbody rb){
     this._moveCommandReceiver = receiver;
     this._diff = diff;
-    this._transform = transform;
+    this._rb = rb;
   }
 
   public void Execute()
   {
-    _moveCommandReceiver.MoveOperation(_transform, _diff);
+    _moveCommandReceiver.MoveOperation(_rb, _diff);
   }
 
 }
