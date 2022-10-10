@@ -14,7 +14,6 @@ public class CursorMaterialHandler : MonoBehaviour
         _outline.GetComponent<MeshRenderer>().material = _blueOutline;
     }
     public void SetOutlineRed(){
-        Debug.Log("lmao");
         _outline.GetComponent<MeshRenderer>().material = _redOutline;
     }
 

@@ -23,6 +23,7 @@ public class CursorInputHandler : MonoBehaviour
     private List<CursorMoveCommand> commands = new List<CursorMoveCommand>();
     [SerializeField] private BoxCollider _cursorCollider;
     private Rigidbody _rb;
+    private bool _mode = false;
 
 
 
@@ -41,6 +42,10 @@ public class CursorInputHandler : MonoBehaviour
     {
         if(_user == null){
             Debug.Log("oh no");
+            return;
+        }
+
+        if(_mode){
             return;
         }
 
@@ -73,14 +78,24 @@ public class CursorInputHandler : MonoBehaviour
 
     }
 
+    public void SetCinematicMode(bool mode){
+        _mode = mode;
+    }
+
     public void SetPaired(PlayerFloor pf){
         _playerFloor = pf;
     }
 
     void OnTriggerEnter(Collider other){
+        if(_mode){
+            return;
+        }
         CursorHover(other);
     }
     void OnTriggerStay(Collider other){
+        if(_mode){
+            return;
+        }
         CursorHover(other);
     }
 

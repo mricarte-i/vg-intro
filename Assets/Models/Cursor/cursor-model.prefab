@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControls: {fileID: 0}
-  _speed: 20
+  _speed: 10
   _playerId: 0
   _cursorCollider: {fileID: 0}
 --- !u!65 &8851425949862633782

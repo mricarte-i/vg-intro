@@ -16,6 +16,7 @@ public class WSCharacterSelectMenu : MonoBehaviour
     [SerializeField] private List<CharacterData> _characters = new List<CharacterData>();
     [Space]
     [SerializeField] private List<GameObject> _playerFloors = new List<GameObject>();
+    [SerializeField] private SelectMenuConductor _menu;
 
     private bool _listening = false;
 
@@ -94,6 +95,7 @@ public class WSCharacterSelectMenu : MonoBehaviour
         //instatiation order matters!
         GameObject go = Instantiate(_playerCursorPrefab);
         go.transform.position = _cursorSpawnPositions[playerId].position;
+        _menu.AddCursor(go);
 
         CursorInputHandler cih = go.GetComponent<CursorInputHandler>();
         cih.SetPlayerId(playerId);
