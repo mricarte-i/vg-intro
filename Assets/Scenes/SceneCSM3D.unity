@@ -123,6 +123,66 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &56507198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 56507199}
+  m_Layer: 0
+  m_Name: CursorSpawnPos (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &56507199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56507198}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.7407773, y: 1.16, z: -0.391}
+  m_LocalScale: {x: 0.34128943, y: 1, z: 0.14713003}
+  m_Children: []
+  m_Father: {fileID: 584935558}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &144496372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 144496373}
+  m_Layer: 0
+  m_Name: CursorSpawnPos (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &144496373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 144496372}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.7407773, y: 1.16, z: 0.04}
+  m_LocalScale: {x: 0.34128943, y: 1, z: 0.14713003}
+  m_Children: []
+  m_Father: {fileID: 584935558}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &174801033
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,6 +587,9 @@ Transform:
   m_LocalScale: {x: 20.249, y: 1, z: 126.29331}
   m_Children:
   - {fileID: 1021088229}
+  - {fileID: 1671964665}
+  - {fileID: 144496373}
+  - {fileID: 56507199}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -545,6 +608,11 @@ MonoBehaviour:
   _vCam: {fileID: 1083814660}
   _state: 0
   _pathPosTarget: 0
+  _dividers: []
+  _cursor_move_state: 3
+  _pair_place_target: {fileID: 1671964665}
+  _stage_place_target: {fileID: 144496373}
+  _music_place_target: {fileID: 56507199}
 --- !u!1 &739118313
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +863,7 @@ MonoBehaviour:
   _playerFloors:
   - {fileID: 1146087106}
   - {fileID: 1869832775}
+  _menu: {fileID: 584935559}
 --- !u!64 &1021088231
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1312,6 +1381,36 @@ Transform:
   m_Father: {fileID: 914273831}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1671964664
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1671964665}
+  m_Layer: 0
+  m_Name: CursorSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1671964665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671964664}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.7407773, y: 1.16, z: 0.39115748}
+  m_LocalScale: {x: 0.34128943, y: 1, z: 0.14713003}
+  m_Children: []
+  m_Father: {fileID: 584935558}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1777181515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,7 +1487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 464267435}
-  m_PathPosition: 0
+  m_PathPosition: -0.43
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
@@ -1545,7 +1644,7 @@ GameObject:
   - component: {fileID: 1971627485}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
