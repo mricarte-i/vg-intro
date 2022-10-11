@@ -23,8 +23,11 @@ public class AppManager : MonoBehaviour
     }
 
     public void SetStage(StageData stageData){
-        Debug.Log("nice nice, you changed the selectedStage");
         _selectedStage = stageData.SceneName;
+    }
+
+    public void SetGameMode(GameMode gm){
+        _selectedGameMode = gm;
     }
 
     void Awake() {

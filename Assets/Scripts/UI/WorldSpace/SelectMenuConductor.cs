@@ -115,7 +115,7 @@ public class SelectMenuConductor : MonoBehaviour
                 break;
             case MenuState.STAGE_MODE_SELECT:
                 _pathPosTarget = 1;
-                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE && ArePlayersReady()){
+                if(_cursor_move_state == MoveState.DONE && ArePlayersReady()){
                     ToggleDividers();
                     _state = MenuState.MUSIC_BPM_SELECT;
                     Debug.Log("advance! to 2");
@@ -125,7 +125,7 @@ public class SelectMenuConductor : MonoBehaviour
                 break;
             case MenuState.MUSIC_BPM_SELECT:
                 _pathPosTarget = 2;
-                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE && ArePlayersReady()){
+                if(_cursor_move_state == MoveState.DONE && ArePlayersReady()){
                     ToggleDividers();
                     _pathPosTarget = 0;
                     _cursor_move_state = MoveState.PAIR_CHAR_SELECT;

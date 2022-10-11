@@ -100,7 +100,7 @@ public class CursorInputHandler : MonoBehaviour
     }
 
     private void CursorHover(Collider other){
-
+        //man, where is the DOM when you need it?
         if(other.gameObject.GetComponent<CharacterBox>()){
             var chara = other.gameObject.GetComponent<CharacterBox>().GetCharacterData();
             _playerFloor.ShowCharacterData(chara);
@@ -115,6 +115,11 @@ public class CursorInputHandler : MonoBehaviour
             var stage = other.gameObject.GetComponent<StageBox>().GetStageData();
             if(IsConfirmPressed){
                 AppManager.Instance.SetStage(stage);
+            }
+        }else if(other.gameObject.GetComponent<ButtonBox>()){
+            var data = other.gameObject.GetComponent<ButtonBox>().GetData();
+            if(IsConfirmPressed){
+                AppManager.Instance.SetGameMode(data =="0" ? GameMode.RHYTHM : GameMode.NORMAL);
             }
         }
     }
