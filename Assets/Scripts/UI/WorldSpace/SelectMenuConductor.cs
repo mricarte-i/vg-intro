@@ -33,6 +33,7 @@ public class SelectMenuConductor : MonoBehaviour
     [SerializeField] private Transform _pair_place_target, _stage_place_target, _music_place_target;
 
     void Start(){
+        AppManager.Instance.SetAppState(AppState.CSM);
         _dolly = _vCam.GetCinemachineComponent<Cinemachine.CinemachineTrackedDolly>();
         _dolly.m_PathPosition = 0f;
     }
@@ -130,7 +131,7 @@ public class SelectMenuConductor : MonoBehaviour
                     _pathPosTarget = 0;
                     _cursor_move_state = MoveState.PAIR_CHAR_SELECT;
                     Debug.Log("advance! to 0");
-                    LevelManager.Instance.LoadScene(AppManager.Instance.GetStageName());
+                    AppManager.Instance.StartFight();
                 }
                 break;
             default:

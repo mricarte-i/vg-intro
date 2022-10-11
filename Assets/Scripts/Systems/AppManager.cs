@@ -6,7 +6,13 @@ using System;
 public enum GameMode {
     NORMAL,
     RHYTHM,
+};
+public enum AppState {
+    START,
     CSM,
+    FIGHT,
+    VICTORY,
+    RHYTHMRESULTS,
 };
 
 public class AppManager : MonoBehaviour
@@ -15,7 +21,8 @@ public class AppManager : MonoBehaviour
     [SerializeField] private GameObject _settingsMenu;
     [SerializeField] private PlayableCharacter _player1Device = null, _player2Device = null;
     [SerializeField] private bool _paused = false;
-    [SerializeField] private GameMode _selectedGameMode = GameMode.CSM;
+    [SerializeField] private AppState _appState = AppState.START;
+    [SerializeField] private GameMode _selectedGameMode = GameMode.NORMAL;
     [SerializeField] private string _selectedStage = "SceneStageCerro";
 
     public string GetStageName(){
@@ -28,6 +35,14 @@ public class AppManager : MonoBehaviour
 
     public void SetGameMode(GameMode gm){
         _selectedGameMode = gm;
+    }
+
+    public void SetAppState(AppState appState){
+        _appState = appState;
+    }
+
+    public AppState GetAppState(){
+        return _appState;
     }
 
     void Awake() {
@@ -103,5 +118,10 @@ public class AppManager : MonoBehaviour
 
     void Start(){
         _settingsMenu.SetActive(false);
+    }
+
+    public void StartFight(){
+        SetAppState(AppState.FIGHT);
+        LevelManager.Instance.LoadScene(_selectedStage);
     }
 }

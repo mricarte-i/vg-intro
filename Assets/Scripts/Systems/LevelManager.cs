@@ -24,6 +24,9 @@ public class LevelManager : MonoBehaviour
     }
 
     private void AddSetup(AsyncOperation op) {
+        if(AppManager.Instance.GetAppState() != AppState.FIGHT){
+            return;
+        }
         //we could get the current scene by asking for the sceneName used and set that as the active scene...
         switch(AppManager.Instance.GetGameMode()){
             case GameMode.NORMAL:
