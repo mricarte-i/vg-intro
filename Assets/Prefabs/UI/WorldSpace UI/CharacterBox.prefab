@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: World Space Character Cell
       objectReference: {fileID: 0}
+    - target: {fileID: 3009439909590858707, guid: 1acec6ff1ace2c8459a63b055afc0300, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9216298853579507229, guid: 1acec6ff1ace2c8459a63b055afc0300, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

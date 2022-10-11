@@ -39,7 +39,7 @@ public class SelectMenuConductor : MonoBehaviour
 
     void LateUpdate(){
         if(_dolly.m_PathPosition != _pathPosTarget){
-            _dolly.m_PathPosition = Mathf.Lerp(_dolly.m_PathPosition, _pathPosTarget, 0.5f);
+            _dolly.m_PathPosition = Mathf.Lerp(_dolly.m_PathPosition, _pathPosTarget, 0.1f);
         }
 
         if(_cursor_move_state != MoveState.DONE){
@@ -58,14 +58,15 @@ public class SelectMenuConductor : MonoBehaviour
             foreach(GameObject cursor in _cursors){
                 cursor.GetComponent<CursorInputHandler>().SetCinematicMode(true);
                 _target.x = cursor.transform.position.x;
-                cursor.transform.position = Vector3.Lerp(cursor.transform.position, _target, 0.5f);
+                cursor.transform.position = Vector3.Lerp(cursor.transform.position, _target, 0.1f);
             }
 
-            if(_cursors[0].transform.position.z == _target.z){
+            if(Mathf.Approximately(_cursors[0].transform.position.z, _target.z)){
                 foreach(GameObject cursor in _cursors){
                     cursor.GetComponent<CursorInputHandler>().SetCinematicMode(false);
                 }
                 _cursor_move_state = MoveState.DONE;
+                ToggleDividers();
             }
         }
     }
@@ -76,24 +77,36 @@ public class SelectMenuConductor : MonoBehaviour
         }
         _playersReady[playerId] = true;
         Debug.Log(_playersReady[0] + " " + _playersReady[1]);
-        if(_playersReady[0] && _playersReady[1]){
+        if(_playersReady[0] && _playersReady[1] && _cursor_move_state == MoveState.DONE){
             NextMenuState();
             _playersReady[0] = false;
             _playersReady[1] = false;
         }
     }
 
+    private bool ArePlayersReady(){
+        return _playersReady[0] && _playersReady[1];
+    }
+
     public void AddCursor(GameObject go){
         _cursors.Add(go);
     }
 
+    private void ToggleDividers(){
+        foreach(var wall in _dividers){
+            wall.SetActive(!wall.activeInHierarchy);
+        }
+    }
+
     private void NextMenuState(){
+        Debug.Log(_state.ToString());
+
         switch(_state){
             case MenuState.PAIR_CHAR_SELECT:
                 _pathPosTarget = 0;
-                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE){
+                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE && ArePlayersReady()){
                     _state = MenuState.STAGE_MODE_SELECT;
-                    _dividers[0].SetActive(false);
+                    ToggleDividers();
                     _pathPosTarget = 1;
                     _cursor_move_state = MoveState.STAGE_MODE_SELECT;
 
@@ -102,7 +115,8 @@ public class SelectMenuConductor : MonoBehaviour
                 break;
             case MenuState.STAGE_MODE_SELECT:
                 _pathPosTarget = 1;
-                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE){
+                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE && ArePlayersReady()){
+                    ToggleDividers();
                     _state = MenuState.MUSIC_BPM_SELECT;
                     Debug.Log("advance! to 2");
                     _pathPosTarget = 2;
@@ -111,7 +125,8 @@ public class SelectMenuConductor : MonoBehaviour
                 break;
             case MenuState.MUSIC_BPM_SELECT:
                 _pathPosTarget = 2;
-                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE){
+                if(PlayersHaveCharacters() && _cursor_move_state == MoveState.DONE && ArePlayersReady()){
+                    ToggleDividers();
                     _pathPosTarget = 0;
                     _cursor_move_state = MoveState.PAIR_CHAR_SELECT;
                     Debug.Log("advance! to 0");

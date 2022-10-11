@@ -23,7 +23,7 @@ public class CursorInputHandler : MonoBehaviour
     private List<CursorMoveCommand> commands = new List<CursorMoveCommand>();
     [SerializeField] private BoxCollider _cursorCollider;
     private Rigidbody _rb;
-    private bool _mode = false;
+    [SerializeField] private bool _mode = false;
 
 
 
@@ -110,6 +110,11 @@ public class CursorInputHandler : MonoBehaviour
         }else if(other.gameObject.GetComponent<ReadyBox>()){
             if(IsConfirmPressed){
                 other.gameObject.GetComponent<ReadyBox>().CalledReady(_playerId);
+            }
+        }else if(other.gameObject.GetComponent<StageBox>()){
+            var stage = other.gameObject.GetComponent<StageBox>().GetStageData();
+            if(IsConfirmPressed){
+                AppManager.Instance.SetStage(stage);
             }
         }
     }
