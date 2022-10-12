@@ -8,4 +8,5 @@ public class CharacterData : ScriptableObject
     public GameObject Model;
     public GameObject Collider;
     public Sprite Portrait;
+    public float Zoom = 1f;
 }
