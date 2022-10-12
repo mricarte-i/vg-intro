@@ -9,6 +9,9 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction walking;
     private InputAction jumping;
     private InputAction menu;
+    private InputAction neutralAttack;
+    private InputAction strongAttack;
+    
     [Space][SerializeField] private InputActionAsset playerControls;
     [SerializeField] private InputUser _user;
     public void SetInputUser(InputUser newUser) => _user = newUser;
@@ -68,11 +71,13 @@ public class PlayerInputHandler : MonoBehaviour
     public void BindControls(GeneratedPlayerControls controls){
         var movementActionMap = controls.Movement;
         var menuActionMap = controls.Menu;
+        var attackActionMap = controls.Attacks;
 
         walking = movementActionMap.Walking;
         jumping = movementActionMap.Jumping;
         menu = menuActionMap.Pause;
-
+        neutralAttack = attackActionMap.Neutral;
+        strongAttack = attackActionMap.Strong;
 
         walking.started += OnWalkingPerformed;
         walking.performed += OnWalkingPerformed;
@@ -83,10 +88,18 @@ public class PlayerInputHandler : MonoBehaviour
 
         menu.started += OnMenuPerformed;
 
+        neutralAttack.started += OnNeutralAttackPerformed;
+        neutralAttack.canceled += OnNeutralAttackPerformed;
+
+        strongAttack.started += OnStrongAttackPerformed;
+        strongAttack.canceled += OnStrongAttackPerformed;
+
         //should be called OnEnable...
         walking.Enable();
         jumping.Enable();
         menu.Enable();
+        neutralAttack.Enable();
+        strongAttack.Enable();
 
     }
 
@@ -122,11 +135,22 @@ public class PlayerInputHandler : MonoBehaviour
         AppManager.Instance.TogglePause();
     }
 
+    private void OnNeutralAttackPerformed(InputAction.CallbackContext context)
+    {
+        IsNeutralAttackPressed = context.ReadValueAsButton();
+    }
+    
+    private void OnStrongAttackPerformed(InputAction.CallbackContext context)
+    {
+        IsStrongAttackPressed = context.ReadValueAsButton();
+    }
 
     void OnDisable(){
         walking.Disable();
         jumping.Disable();
         menu.Disable();
+        neutralAttack.Disable();
+        strongAttack.Disable();
     }
 
     #endregion
@@ -164,6 +188,11 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    private void handleAttack()
+    {
+        
+    }
+
     private void Move(Vector3 velForce){
         MoveCommand moveCommand = new MoveCommand(
             _moveCommandReceiver,
@@ -199,6 +228,13 @@ public class PlayerInputHandler : MonoBehaviour
     private Vector3 PushForce => _characterController.velocity.Equals(Vector3.zero) ?
         _currentSpeed :
         _characterController.velocity;
+
+    #endregion
+
+    #region Attacks
+
+    private bool IsNeutralAttackPressed { get; set; }
+    private bool IsStrongAttackPressed { get; set; }
 
     #endregion
 }

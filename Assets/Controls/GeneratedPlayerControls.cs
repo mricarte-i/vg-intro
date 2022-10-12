@@ -453,6 +453,76 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Attacks"",
+            ""id"": ""51a08d17-7888-4075-9729-6287fcb2d169"",
+            ""actions"": [
+                {
+                    ""name"": ""Neutral"",
+                    ""type"": ""Button"",
+                    ""id"": ""3615404e-9a86-4d1b-b5b5-e29d609a6506"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Strong"",
+                    ""type"": ""Button"",
+                    ""id"": ""6030ba32-11fa-4c8d-ad53-f8fbe3811080"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8019fdc1-c8bf-4201-8ad8-adc0057de9b8"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Neutral"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dcc98294-796d-4885-8842-85eef1f3c772"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Neutral"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""435bb4c8-adc5-4c3e-b8a0-727dd386ad46"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Strong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""333417cb-2ebd-4428-ba3f-3febbe3022bf"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Strong"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -491,6 +561,10 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
         m_Menu_Confirm = m_Menu.FindAction("Confirm", throwIfNotFound: true);
         m_Menu_Ready = m_Menu.FindAction("Ready", throwIfNotFound: true);
         m_Menu_Cancel = m_Menu.FindAction("Cancel", throwIfNotFound: true);
+        // Attacks
+        m_Attacks = asset.FindActionMap("Attacks", throwIfNotFound: true);
+        m_Attacks_Neutral = m_Attacks.FindAction("Neutral", throwIfNotFound: true);
+        m_Attacks_Strong = m_Attacks.FindAction("Strong", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -652,6 +726,47 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // Attacks
+    private readonly InputActionMap m_Attacks;
+    private IAttacksActions m_AttacksActionsCallbackInterface;
+    private readonly InputAction m_Attacks_Neutral;
+    private readonly InputAction m_Attacks_Strong;
+    public struct AttacksActions
+    {
+        private @GeneratedPlayerControls m_Wrapper;
+        public AttacksActions(@GeneratedPlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Neutral => m_Wrapper.m_Attacks_Neutral;
+        public InputAction @Strong => m_Wrapper.m_Attacks_Strong;
+        public InputActionMap Get() { return m_Wrapper.m_Attacks; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(AttacksActions set) { return set.Get(); }
+        public void SetCallbacks(IAttacksActions instance)
+        {
+            if (m_Wrapper.m_AttacksActionsCallbackInterface != null)
+            {
+                @Neutral.started -= m_Wrapper.m_AttacksActionsCallbackInterface.OnNeutral;
+                @Neutral.performed -= m_Wrapper.m_AttacksActionsCallbackInterface.OnNeutral;
+                @Neutral.canceled -= m_Wrapper.m_AttacksActionsCallbackInterface.OnNeutral;
+                @Strong.started -= m_Wrapper.m_AttacksActionsCallbackInterface.OnStrong;
+                @Strong.performed -= m_Wrapper.m_AttacksActionsCallbackInterface.OnStrong;
+                @Strong.canceled -= m_Wrapper.m_AttacksActionsCallbackInterface.OnStrong;
+            }
+            m_Wrapper.m_AttacksActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Neutral.started += instance.OnNeutral;
+                @Neutral.performed += instance.OnNeutral;
+                @Neutral.canceled += instance.OnNeutral;
+                @Strong.started += instance.OnStrong;
+                @Strong.performed += instance.OnStrong;
+                @Strong.canceled += instance.OnStrong;
+            }
+        }
+    }
+    public AttacksActions @Attacks => new AttacksActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -682,5 +797,10 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
         void OnConfirm(InputAction.CallbackContext context);
         void OnReady(InputAction.CallbackContext context);
         void OnCancel(InputAction.CallbackContext context);
+    }
+    public interface IAttacksActions
+    {
+        void OnNeutral(InputAction.CallbackContext context);
+        void OnStrong(InputAction.CallbackContext context);
     }
 }
