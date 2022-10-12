@@ -1,4 +1,6 @@
-﻿using Flyweight;
+﻿using System.Collections.Generic;
+using Flyweight;
+using JetBrains.Annotations;
 using Strategy;
 using UnityEngine;
 
@@ -8,17 +10,9 @@ namespace Attacks
     {
         [SerializeField] private AttackStats _attackStats;
 
-        public Collider Hitbox => _attackStats.Hitbox;
+        [SerializeField] private List<GameObject> _hitboxes = new List<GameObject>();
+        public List<GameObject> Hitboxes => _hitboxes;
         public int Damage => _attackStats.Damage;
-        
-        public void OnTriggerEnter(Collider other)
-        {
-            if(other.gameObject.GetComponent<CharacterBox>()){
-                var chara = other.gameObject.GetComponent<CharacterBox>().GetCharacterData();
-                Debug.Log("Banana");
-            }
-            Debug.Log("Manzana");
-        }
 
         public void Execute()
         {

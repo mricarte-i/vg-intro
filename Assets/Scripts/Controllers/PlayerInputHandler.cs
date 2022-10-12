@@ -52,6 +52,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     //private int currentCmdNum = 0; memento lmao
 
+    //private ColliderHandler _colliderHandler;
+
     #endregion
 
     void Awake()
@@ -190,7 +192,10 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void handleAttack()
     {
-        
+        if (IsNeutralAttackPressed)
+        {
+            //_colliderHandler.DoNeutralAttack();
+        }
     }
 
     private void Move(Vector3 velForce){

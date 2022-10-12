@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Flyweight
 {
@@ -6,16 +7,13 @@ namespace Flyweight
     public class AttackStats : ScriptableObject
     {
         [SerializeField] private AttackStatValues _attackStatValues;
-        
-        public Collider Hitbox => _attackStatValues.Hitbox;
         public int Damage => _attackStatValues.Damage;
     }
     
     [System.Serializable]
     public struct AttackStatValues
     {
-        public Collider Hitbox { get; }
-        public int Damage { get; }
+        public int Damage;
     }
 
 }

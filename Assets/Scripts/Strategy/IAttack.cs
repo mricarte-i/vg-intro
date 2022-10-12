@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Strategy
 {
     public interface IAttack : Command
     {
-        Collider Hitbox { get; }
+        List<GameObject> Hitboxes { get; }
         int Damage { get; }
-
-        void OnTriggerEnter(Collider collision);
     }
 }
