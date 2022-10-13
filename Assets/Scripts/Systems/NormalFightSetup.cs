@@ -1,3 +1,4 @@
+using Controllers;
 using UnityEngine;
 
 public class NormalFightSetup : MonoBehaviour
@@ -10,6 +11,7 @@ public class NormalFightSetup : MonoBehaviour
     [Space]
     [SerializeField] private PlayerGuider _playerGuider;
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
+    [SerializeField] private GameObject _damageSystem;
 
     void Awake() {
         Instantiate(_stagePrefab, _stagePos);
@@ -43,8 +45,8 @@ public class NormalFightSetup : MonoBehaviour
 
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         //do the same when we eventually add the collider thingy!
-        var colliders = Instantiate(player.characterData.Collider, go.transform);
-        //pc.SetCollidersHandler(colliders.GetComponent<ColliderHandler>());
+        var damageSystem = Instantiate(_damageSystem, go.transform);
+        pc.SetDamageSystemHandler(damageSystem.GetComponent<DamageSystemHandler>());
         
         return pc;
     }

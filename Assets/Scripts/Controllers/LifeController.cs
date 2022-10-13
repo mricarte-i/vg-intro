@@ -6,7 +6,8 @@ namespace Controllers
 {
     public class LifeController : MonoBehaviour, IHittable
     {
-        public float MaxLife { get; }
+        public float MaxLife => _maxLife;
+        [SerializeField] private float _maxLife;
         
         [SerializeField] private float _currentLife;
 

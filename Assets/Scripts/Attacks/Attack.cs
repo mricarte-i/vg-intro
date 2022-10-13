@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using Controllers;
+using Entities;
 using Flyweight;
 using JetBrains.Annotations;
 using Strategy;
@@ -11,12 +15,48 @@ namespace Attacks
         [SerializeField] private AttackStats _attackStats;
 
         [SerializeField] private List<GameObject> _hitboxes = new List<GameObject>();
+        private LifeController _hurtbox;
+        public void SetHurtBox(LifeController h) => _hurtbox = h;
         public List<GameObject> Hitboxes => _hitboxes;
         public int Damage => _attackStats.Damage;
+        public bool IsAttacking => _isAttacking;
+
+        private bool _isAttacking = false;
+
+        private void Awake()
+        {
+            foreach (var hitboxGo in _hitboxes)
+            {
+                var hitbox = hitboxGo.GetComponent<Hitbox>();
+                hitbox.AddActionOnHit(MakeDamage);
+            }
+        }
+
+        private void MakeDamage(LifeController lifeController)
+        {
+            if(lifeController != _hurtbox) lifeController.GetHit(Damage);
+        }
 
         public void Execute()
         {
-            throw new System.NotImplementedException();
+            _isAttacking = true;
+            foreach (var hitbox in _hitboxes)
+            {
+                hitbox.SetActive(true);
+            }
+
+            StartCoroutine(Wait(3));
+        }
+
+        private IEnumerator Wait(float duration)
+        {
+            yield return new WaitForSecondsRealtime(duration);
+            foreach (var hitbox in _hitboxes)
+            {
+                hitbox.SetActive(false);
+            }
+
+            _isAttacking = false;
         }
     }
 }

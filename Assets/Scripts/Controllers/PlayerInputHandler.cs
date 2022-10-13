@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Controllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
-[RequireComponent(typeof(CharacterController), typeof(BoxCollider))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerInputHandler : MonoBehaviour
 {
     #region InputActions
@@ -47,12 +48,13 @@ public class PlayerInputHandler : MonoBehaviour
     private List<MoveCommand> commands = new List<MoveCommand>();
 
     private CharacterController _characterController;
-    private BoxCollider _boxTrigger; //do we really need to keep this variable?
+    //private BoxCollider _boxTrigger; //do we really need to keep this variable?
     private CharacterPushInteraction _pushInteract;
 
     //private int currentCmdNum = 0; memento lmao
 
-    //private ColliderHandler _colliderHandler;
+    private DamageSystemHandler _damageSystemHandler;
+    public void SetDamageSystemHandler(DamageSystemHandler dsh) => _damageSystemHandler = dsh;
 
     #endregion
 
@@ -60,8 +62,8 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
 
-        _boxTrigger = GetComponent<BoxCollider>();
-        _boxTrigger.isTrigger = true;
+        //_boxTrigger = GetComponent<BoxCollider>();
+        //_boxTrigger.isTrigger = true;
 
         _pushInteract = GetComponent<CharacterPushInteraction>();
 
@@ -170,6 +172,7 @@ public class PlayerInputHandler : MonoBehaviour
         Move(_currentSpeed);
         handleGravity();
         handleJump();
+        handleAttack();
     }
 
     private void handleJump(){
@@ -194,7 +197,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (IsNeutralAttackPressed)
         {
-            //_colliderHandler.DoNeutralAttack();
+            _damageSystemHandler.DoNeutralAttack();
         }
     }
 

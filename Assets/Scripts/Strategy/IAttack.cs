@@ -7,5 +7,7 @@ namespace Strategy
     {
         List<GameObject> Hitboxes { get; }
         int Damage { get; }
+        
+        bool IsAttacking { get; }
     }
 }

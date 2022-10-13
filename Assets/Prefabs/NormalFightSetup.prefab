@@ -644,3 +644,4 @@ MonoBehaviour:
   _stagePos: {fileID: 7059342239362712445}
   _playerGuider: {fileID: 7813271213795260095}
   _targetGroup: {fileID: 8196472450041677406}
+  _damageSystem: {fileID: 5081583450308868924, guid: 68abda53800499843a21fddc37f95cd7, type: 3}
