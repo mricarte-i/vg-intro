@@ -30,7 +30,11 @@ public class NormalFightSetup : MonoBehaviour
         var alignScript = _targetGroup.GetComponent<Align3DCam>();
         alignScript.SetPlayers(player1, player2);
 
-        Instantiate(_fightUIPrefab);
+        GameObject fightUI = Instantiate(_fightUIPrefab);
+        var healthBarP1 = fightUI.transform.Find("Player 1 HealthBar");
+        var healthBarP2 = fightUI.transform.Find("Player 2 HealthBar");
+        //TODO: player1.GetComponentInChildren<LifeController>().SetHPBar(healthBarP1);
+        //TODO: player2.GetComponentInChildren<LifeController>().SetHPBar(healthBarP2);
 
     }
 
