@@ -15,8 +15,14 @@ namespace Attacks
         [SerializeField] private AttackStats _attackStats;
 
         [SerializeField] private List<GameObject> _hitboxes = new List<GameObject>();
+
+        #region Hitter HurtBox
+
         private LifeController _hurtbox;
         public void SetHurtBox(LifeController h) => _hurtbox = h;
+
+        #endregion
+
         public List<GameObject> Hitboxes => _hitboxes;
         public int Damage => _attackStats.Damage;
         public bool IsAttacking => _isAttacking;

@@ -11,7 +11,8 @@ public class PlayerInputHandler : MonoBehaviour
     private InputAction jumping;
     private InputAction menu;
     private InputAction neutralAttack;
-    private InputAction strongAttack;
+    private InputAction downAttack;
+    private InputAction upperAttack;
 
     [Space][SerializeField] private InputActionAsset playerControls;
     [SerializeField] private InputUser _user;
@@ -58,9 +59,6 @@ public class PlayerInputHandler : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
 
-        //_boxTrigger = GetComponent<BoxCollider>();
-        //_boxTrigger.isTrigger = true;
-
         _pushInteract = GetComponent<CharacterPushInteraction>();
 
         _moveCommandReceiver = new MoveCommandReceiver();
@@ -77,7 +75,8 @@ public class PlayerInputHandler : MonoBehaviour
         jumping = movementActionMap.Jumping;
         menu = menuActionMap.Pause;
         neutralAttack = attackActionMap.Neutral;
-        strongAttack = attackActionMap.Strong;
+        downAttack = attackActionMap.Down;
+        upperAttack = attackActionMap.Upper;
 
         walking.started += OnWalkingPerformed;
         walking.performed += OnWalkingPerformed;
@@ -91,16 +90,19 @@ public class PlayerInputHandler : MonoBehaviour
         neutralAttack.started += OnNeutralAttackPerformed;
         neutralAttack.canceled += OnNeutralAttackPerformed;
 
-        strongAttack.started += OnStrongAttackPerformed;
-        strongAttack.canceled += OnStrongAttackPerformed;
+        downAttack.started += OnDownAttackPerformed;
+        downAttack.canceled += OnDownAttackPerformed;
+        
+        upperAttack.started += OnUpperAttackPerformed;
+        upperAttack.canceled += OnUpperAttackPerformed;
 
         //should be called OnEnable...
         walking.Enable();
         jumping.Enable();
         menu.Enable();
         neutralAttack.Enable();
-        strongAttack.Enable();
-
+        downAttack.Enable();
+        upperAttack.Enable();
     }
 
     private void OnDestroy() {
@@ -140,9 +142,14 @@ public class PlayerInputHandler : MonoBehaviour
         IsNeutralAttackPressed = context.ReadValueAsButton();
     }
 
-    private void OnStrongAttackPerformed(InputAction.CallbackContext context)
+    private void OnDownAttackPerformed(InputAction.CallbackContext context)
     {
-        IsStrongAttackPressed = context.ReadValueAsButton();
+        IsDownAttackPressed = context.ReadValueAsButton();
+    }
+
+    private void OnUpperAttackPerformed(InputAction.CallbackContext context)
+    {
+        IsUpperAttackPressed = context.ReadValueAsButton();
     }
 
     void OnDisable(){
@@ -150,7 +157,8 @@ public class PlayerInputHandler : MonoBehaviour
         jumping.Disable();
         menu.Disable();
         neutralAttack.Disable();
-        strongAttack.Disable();
+        downAttack.Disable();
+        upperAttack.Disable();
     }
 
     #endregion
@@ -195,6 +203,16 @@ public class PlayerInputHandler : MonoBehaviour
         {
             _damageSystemHandler.DoNeutralAttack();
         }
+
+        if (IsDownAttackPressed)
+        {
+            _damageSystemHandler.DoDownAttack();
+        }
+
+        if (IsUpperAttackPressed)
+        {
+            _damageSystemHandler.DoUpperAttack();
+        }
     }
 
     private void Move(Vector3 velForce){
@@ -238,7 +256,8 @@ public class PlayerInputHandler : MonoBehaviour
     #region Attacks
 
     private bool IsNeutralAttackPressed { get; set; }
-    private bool IsStrongAttackPressed { get; set; }
+    private bool IsDownAttackPressed { get; set; }
+    private bool IsUpperAttackPressed { get; set; }
 
     #endregion
 }
