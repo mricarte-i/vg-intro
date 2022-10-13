@@ -644,3 +644,4 @@ MonoBehaviour:
   _stagePos: {fileID: 7059342239362712445}
   _playerGuider: {fileID: 7813271213795260095}
   _targetGroup: {fileID: 8196472450041677406}
+  _fightUIPrefab: {fileID: 6664150510100555545, guid: ad7327d0309bd7644877c0aa9987aa3b, type: 3}

@@ -10,6 +10,8 @@ public class NormalFightSetup : MonoBehaviour
     [Space]
     [SerializeField] private PlayerGuider _playerGuider;
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
+    [Space]
+    [SerializeField] private GameObject _fightUIPrefab;
 
     void Awake() {
         Instantiate(_stagePrefab, _stagePos);
@@ -27,6 +29,8 @@ public class NormalFightSetup : MonoBehaviour
 
         var alignScript = _targetGroup.GetComponent<Align3DCam>();
         alignScript.SetPlayers(player1, player2);
+
+        Instantiate(_fightUIPrefab);
 
     }
 

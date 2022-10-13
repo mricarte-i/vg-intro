@@ -16,5 +16,5 @@ MonoBehaviour:
   Speed: 0
   Model: {fileID: 0}
   Collider: {fileID: 0}
-  Portrait: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  Portrait: {fileID: 21300000, guid: 72e1f7a2f08e5fb4fbc6f885a088900c, type: 3}
   Zoom: 1

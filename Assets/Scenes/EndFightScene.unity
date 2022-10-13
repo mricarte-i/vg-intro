@@ -562,6 +562,7 @@ GameObject:
   - component: {fileID: 533933236}
   - component: {fileID: 533933235}
   - component: {fileID: 533933238}
+  - component: {fileID: 533933240}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -679,7 +680,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960144edba54abb48afc8fb936fe6452, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 8
+  _rotationSpeed: 10
+  _rotationVector: {x: 0, y: 1, z: 0}
+--- !u!114 &533933240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533933234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960144edba54abb48afc8fb936fe6452, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 0.1
   _rotationVector: {x: 0, y: 1, z: 0}
 --- !u!1 &673357901
 GameObject:
@@ -1440,7 +1455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _portrait: {fileID: 2105026255}
   _text: {fileID: 928156259}
-  _fightResult: 0
+  _fightResult: 2
   _draw: {fileID: 11400000, guid: 96ad6c1429b94b247a7ca5c57a08b0d5, type: 2}
   _winner: {fileID: 0}
 --- !u!1 &1451172314
@@ -1557,8 +1572,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2105026254}
   - component: {fileID: 2105026257}
-  - component: {fileID: 2105026256}
   - component: {fileID: 2105026255}
+  - component: {fileID: 2105026256}
   m_Layer: 0
   m_Name: Portrait
   m_TagString: Untagged
@@ -1597,7 +1612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fd69d54f25129241b00c87112f0a13a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _chara: {fileID: 11400000, guid: dea9b0e553ce1c94da322a8480786b43, type: 2}
+  _image: {fileID: 2105026256}
+  _chara: {fileID: 0}
   Zoom: 0.55
 --- !u!114 &2105026256
 MonoBehaviour:
