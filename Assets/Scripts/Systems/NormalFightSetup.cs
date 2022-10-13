@@ -1,3 +1,4 @@
+using Controllers;
 using UnityEngine;
 
 public class NormalFightSetup : MonoBehaviour
@@ -12,6 +13,7 @@ public class NormalFightSetup : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
     [Space]
     [SerializeField] private GameObject _fightUIPrefab;
+    [SerializeField] private GameObject _damageSystem;
 
     void Awake() {
         Instantiate(_stagePrefab, _stagePos);
@@ -31,10 +33,10 @@ public class NormalFightSetup : MonoBehaviour
         alignScript.SetPlayers(player1, player2);
 
         GameObject fightUI = Instantiate(_fightUIPrefab);
-        var healthBarP1 = fightUI.transform.Find("Player 1 HealthBar");
-        var healthBarP2 = fightUI.transform.Find("Player 2 HealthBar");
-        //TODO: player1.GetComponentInChildren<LifeController>().SetHPBar(healthBarP1);
-        //TODO: player2.GetComponentInChildren<LifeController>().SetHPBar(healthBarP2);
+        HealthBar hbP1 = fightUI.GetComponent<FightUI>().GetPlayer1HPBar();
+        HealthBar hbP2 = fightUI.GetComponent<FightUI>().GetPlayer2HPBar();
+        player1.GetComponentInChildren<LifeController>().SetHPBar(hbP1);
+        player2.GetComponentInChildren<LifeController>().SetHPBar(hbP2);
 
     }
 
@@ -51,6 +53,8 @@ public class NormalFightSetup : MonoBehaviour
 
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         //do the same when we eventually add the collider thingy!
+        var damageSystem = Instantiate(_damageSystem, go.transform);
+        pc.SetDamageSystemHandler(damageSystem.GetComponent<DamageSystemHandler>());
 
         return pc;
     }
