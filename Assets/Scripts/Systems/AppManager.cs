@@ -19,6 +19,7 @@ public class AppManager : MonoBehaviour
 {
     public static AppManager Instance;
     [SerializeField] private GameObject _settingsMenu;
+    [SerializeField] private GameObject _eventsSystem;
     [SerializeField] private PlayableCharacter _player1Device = null, _player2Device = null;
     [SerializeField] private bool _paused = false;
     [SerializeField] private AppState _appState = AppState.START;
@@ -62,9 +63,15 @@ public class AppManager : MonoBehaviour
         if(_paused){
             Time.timeScale = 0;
             _settingsMenu.SetActive(true);
+
+            //don't active more than one EventSystem at once!
+            if(GameObject.Find("EventSystem") == null){
+                _eventsSystem.SetActive(true);
+            }
         }else{
             Time.timeScale = 1f;
             _settingsMenu.SetActive(false);
+            _eventsSystem.SetActive(false);
         }
     }
 
@@ -118,6 +125,7 @@ public class AppManager : MonoBehaviour
 
     void Start(){
         _settingsMenu.SetActive(false);
+        _eventsSystem.SetActive(false);
     }
 
     public void StartFight(){
