@@ -54,7 +54,10 @@ public class NormalFightSetup : MonoBehaviour
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         //do the same when we eventually add the collider thingy!
         var damageSystem = Instantiate(_damageSystem, go.transform);
-        pc.SetDamageSystemHandler(damageSystem.GetComponent<DamageSystemHandler>());
+        var damageSystemHandler = damageSystem.GetComponent<DamageSystemHandler>();
+        damageSystemHandler.AddBeforeAttackingEvent(pc.DisablePlayerActions);
+        damageSystemHandler.AddAfterAttackingEvent(pc.EnablePlayerActions);
+        pc.SetDamageSystemHandler(damageSystemHandler);
 
         return pc;
     }

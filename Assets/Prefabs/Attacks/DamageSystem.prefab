@@ -47,7 +47,7 @@ MonoBehaviour:
   _attackStats: {fileID: 11400000, guid: 5c5cafdd2e21c434d8474574ba1ee671, type: 2}
   _hitboxes:
   - {fileID: 5700519882723098522}
-  _duration: 3
+  _duration: 0.5
 --- !u!1 &4748555262343062645
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,7 +221,7 @@ MonoBehaviour:
   _attackStats: {fileID: 11400000, guid: 81d3fabe7ff281346901341c87f63fa4, type: 2}
   _hitboxes:
   - {fileID: 2792508410784202616}
-  _duration: 3
+  _duration: 0.5
 --- !u!1 &6153922600008206682
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +302,7 @@ MonoBehaviour:
   _attackStats: {fileID: 11400000, guid: f5fabd4d643b5084ba4e823658bfa633, type: 2}
   _hitboxes:
   - {fileID: 7981266540787658504}
-  _duration: 3
+  _duration: 0.5
 --- !u!1001 &532874059527314348
 PrefabInstance:
   m_ObjectHideFlags: 0

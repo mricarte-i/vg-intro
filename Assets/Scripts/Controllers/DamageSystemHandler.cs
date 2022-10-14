@@ -1,5 +1,6 @@
 ﻿using System;
 using Attacks;
+using Strategy;
 using UnityEngine;
 
 namespace Controllers
@@ -11,26 +12,61 @@ namespace Controllers
         [SerializeField] private Attack _upperAttack;
         [SerializeField] private LifeController _hurtbox;
 
+        public bool IsCurrentlyAttacking => _isCurrentlyAttacking;
+        private bool _isCurrentlyAttacking = false;
+
+        private void SetAsNotAttacking() => _isCurrentlyAttacking = false;
+        private void SetAsAttacking() => _isCurrentlyAttacking = true;
+        
         private void Start()
         {
-            _neutralAttack.SetHurtBox(_hurtbox);
-            _downAttack.SetHurtBox(_hurtbox);
-            _upperAttack.SetHurtBox(_hurtbox);
+            InitAttack(_neutralAttack);
+            InitAttack(_downAttack);
+            InitAttack(_upperAttack);
         }
 
-        public void DoNeutralAttack()
+        private void InitAttack(Attack attack)
         {
-            _neutralAttack.Execute();
+            attack.SetHurtBox(_hurtbox);
+            attack.AddBeforeAttackingEvent(SetAsAttacking);
+            attack.AddAfterAttackingEvent(SetAsNotAttacking);
         }
 
-        public void DoDownAttack()
+        #region Attack
+
+        private void DoAttack(Attack attack)
         {
-            _downAttack.Execute();
+            if (!_isCurrentlyAttacking)
+            {
+                attack.Execute();
+            }
         }
 
-        public void DoUpperAttack()
+        public void DoNeutralAttack() => DoAttack(_neutralAttack);
+
+        public void DoDownAttack() => DoAttack(_downAttack);
+
+        public void DoUpperAttack() => DoAttack(_upperAttack);
+
+        #endregion
+        
+
+        #region OnAttack Events
+
+        public void AddBeforeAttackingEvent(Action beforeAttackingAction)
         {
-            _upperAttack.Execute();
+            _neutralAttack.AddBeforeAttackingEvent(beforeAttackingAction);
+            _downAttack.AddBeforeAttackingEvent(beforeAttackingAction);
+            _upperAttack.AddBeforeAttackingEvent(beforeAttackingAction);
         }
+
+        public void AddAfterAttackingEvent(Action afterAttackingAction)
+        {
+            _neutralAttack.AddAfterAttackingEvent(afterAttackingAction);
+            _downAttack.AddAfterAttackingEvent(afterAttackingAction);
+            _upperAttack.AddAfterAttackingEvent(afterAttackingAction);
+        }
+
+        #endregion
     }
 }

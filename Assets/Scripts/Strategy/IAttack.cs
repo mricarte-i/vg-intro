@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Strategy
@@ -12,5 +13,8 @@ namespace Strategy
         bool IsAttacking { get; }
         
         float Duration { get; }
+
+        void AddBeforeAttackingEvent(Action beforeAttackingAction);
+        void AddAfterAttackingEvent(Action beforeAttackingAction);
     }
 }

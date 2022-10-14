@@ -160,6 +160,24 @@ public class PlayerInputHandler : MonoBehaviour
         downAttack.Disable();
         upperAttack.Disable();
     }
+    
+    public void EnablePlayerActions()
+    {
+        walking.Enable();
+        jumping.Enable();
+        neutralAttack.Enable();
+        downAttack.Enable();
+        upperAttack.Enable();
+    }
+
+    public void DisablePlayerActions()
+    {
+        walking.Disable();
+        jumping.Disable();
+        neutralAttack.Disable();
+        downAttack.Disable();
+        upperAttack.Disable();
+    }
 
     #endregion
 

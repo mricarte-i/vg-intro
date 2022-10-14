@@ -28,9 +28,17 @@ namespace Attacks
         public bool IsAttacking => _isAttacking;
 
         private bool _isAttacking = false;
+        
+        public float Duration => _attackStats.Duration;
 
-        [SerializeField] private float _duration;
-        public float Duration => _duration;
+        private event Action BeforeAttackingEvents;
+        private event Action AfterAttackingEvents;
+
+        public void AddBeforeAttackingEvent(Action beforeAttackingAction) =>
+            BeforeAttackingEvents += beforeAttackingAction;
+        
+        public void AddAfterAttackingEvent(Action afterAttackingAction) =>
+            AfterAttackingEvents += afterAttackingAction;
 
         private void Awake()
         {
@@ -49,12 +57,13 @@ namespace Attacks
         public void Execute()
         {
             _isAttacking = true;
+            BeforeAttackingEvents?.Invoke();
             foreach (var hitbox in _hitboxes)
             {
                 hitbox.SetActive(true);
             }
 
-            StartCoroutine(Wait(_duration));
+            StartCoroutine(Wait(Duration));
         }
 
         private IEnumerator Wait(float duration)
@@ -66,6 +75,7 @@ namespace Attacks
             }
 
             _isAttacking = false;
+            AfterAttackingEvents?.Invoke();
         }
     }
 }
