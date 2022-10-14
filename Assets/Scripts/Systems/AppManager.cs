@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using System;
+using System.Collections;
 
 public enum GameMode {
     NORMAL,
@@ -134,5 +135,23 @@ public class AppManager : MonoBehaviour
     public void StartFight(){
         SetAppState(AppState.FIGHT);
         LevelManager.Instance.LoadScene(_selectedStage);
+    }
+
+    /**
+     * Slows down time for the given seconds (real-time)
+     */
+    public void SlowDownTime(int seconds)
+    {
+        StartCoroutine(SlowDownTimeCoroutine(seconds));
+    }
+
+    /**
+     * Coroutine for slowing down time for given seconds (real-time)
+     */
+    private static IEnumerator SlowDownTimeCoroutine(int seconds)
+    {
+        Time.timeScale = .3f;
+        yield return new WaitForSecondsRealtime(seconds);
+        Time.timeScale = 1f;
     }
 }
