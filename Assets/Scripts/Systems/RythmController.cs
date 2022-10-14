@@ -17,7 +17,6 @@ public class RythmController : MonoBehaviour
     private float dsptimesong;
     [SerializeField] private bool isPlaying;
     private float pauseStartDsptime = 0;
-    [SerializeField] private AudioSource _bgmSource, _tickSource;
 
     [Header("Rhythm related")]
     [SerializeField] private float _greatTimeframeRatio = 0.2f;
@@ -30,22 +29,23 @@ public class RythmController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //AudioSource[] audioSources = GetComponents<AudioSource>();
+        AudioSource[] audioSources = GetComponents<AudioSource>();
 
         // bgm related
-        bgm = _bgmSource;
+        bgm = audioSources[0];
         secPerBeat = 60f / bgmData.Bpm;
         dsptimesong = (float) AudioSettings.dspTime;
         bgm.clip = bgmData.BGM;
         bgm.PlayOneShot(bgmData.BGM);
 
         // beat marker related
-        tick = _tickSource;
+        tick = audioSources[1];
         tick.clip = tickClip;
         QueueNextTick();
 
         // volume change
         AudioManager.Instance.OnEffectsVolumeChange += OnEffectsVolumeChange;
+        AudioManager.Instance.OnMusicVolumeChange += OnMusicVolumeChange;
     }
 
     // Update is called once per frame
@@ -54,7 +54,7 @@ public class RythmController : MonoBehaviour
         if(!isPlaying) return;
 
         if(!bgm.isPlaying){
-            //TODO: tell EventsManager.Instance.EventTimeout()
+            EventsManager.Instance.EventTimeout();
         }
 
         //calculate the position in seconds
@@ -146,10 +146,12 @@ public class RythmController : MonoBehaviour
     }
 
     #region EVENT_ACTIONS
-    private void OnEffectsVolumeChange(float value)
-    {
-        bgm.volume = value;
+    private void OnEffectsVolumeChange(float value){
         tick.volume = value;
+    }
+
+    private void OnMusicVolumeChange(float value){
+        bgm.volume = value;
     }
 
     #endregion
