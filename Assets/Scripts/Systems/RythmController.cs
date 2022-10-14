@@ -11,17 +11,19 @@ public class RythmController : MonoBehaviour
 
     [Header("Audio related")]
     [SerializeField] private BgmData bgmData;
+    private AudioSource bgm;
     private float songPosition = 0;
     private float songPosInBeats = 0;
     private float secPerBeat;
     private float dsptimesong;
-    private int completedLoops;
-    private float loopPositionInBeats;
+    private float isPlaying;
+    private float pauseStartDsptime = 0f;
 
     [Header("Rhythm related")]
-    [SerializeField] private float _greatTimeframe = 3.0F / 60;
-    [SerializeField] private float _goodTimeframe = 9.0F / 60;
-    [SerializeField] private AudioSource tick;
+    [SerializeField] private float _greatTimeframeRatio = 0.2f;
+    [SerializeField] private float _goodTimeframeRatio = 0.5f;
+    [SerializeField] private AudioClip tickClip;
+    private AudioSource tick;
     private boolean onBeat = false;
 
     #endregion
@@ -29,13 +31,16 @@ public class RythmController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+
         // bgm related
+        bgm = audioSources[0];
         secPerBeat = 60f / bgmData.Bpm;
         dsptimesong = (float) AudioSettings.dspTime;
         bgmData.Bgm.Play();
 
         // beat marker related
-        tick = GetComponent<AudioSource>();
+        tick = audioSources[1];
         QueueNextTick();
 
         // volume change
@@ -45,8 +50,10 @@ public class RythmController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!isPlaying) return;
+
         //calculate the position in seconds
-        songPosition = (float) (AudioSettings.dspTime - dsptimesong - bgmData.FirstBeatOffset);
+        songPosition = (float) (AudioSettings.dspTime - dsptimesong);
 
         //calculate the position in beats & check if changed
         if ((int) songPosInBeats < (int)(songPosition / secPerBeat)) {
@@ -54,11 +61,6 @@ public class RythmController : MonoBehaviour
             QueueNextTick();
         }
         songPosInBeats = songPosition / secPerBeat;
-        
-        //calculate the loop position
-        if (songPositionInBeats >= (completedLoops + 1) * beatsPerLoop)
-            completedLoops++;
-        loopPositionInBeats = songPositionInBeats - completedLoops * beatsPerLoop;
     }
     
     void Awake() {
@@ -68,6 +70,27 @@ public class RythmController : MonoBehaviour
         }else{
             Destroy(gameObject);
         }
+    }
+
+    void Play()
+    {
+        if(isPlaying) return;
+        
+        isPlaying = true;
+        dsptimesong += (AudioSettings.dspTime - pauseStartDsptime);
+        pauseStartDsptime = 0f;
+        bgm.Play();
+
+        QueueNextTick();
+    }
+
+    void Pause()
+    {
+        if(!isPlaying) return;
+
+        isPlaying = false;
+        pauseStartDsptime = AudioSettings.dspTime;
+        bgm.Pause();
     }
 
     float GetPrevBeatPosition()
@@ -87,30 +110,22 @@ public class RythmController : MonoBehaviour
         tick.PlayScheduled(nextTickTime);
     }
 
-    RythmObject getBeat(int lastBeat)
+    RythmState getBeat()
     {
         // works with data updated from update
-        RythmObject rythmObject = new RythmObject();
-        rythmObject.currentBeat = songPosInBeats;
 
         float timeToPrev = GetPrevBeatPosition() - songPosition;
         float timeToNext = GetNextBeatPosition() - songPosition;
 
         // always work with next if lastBeat is prev
-        float closestTime;
-        if (lastBeat == songPosInBeats) {
-            closestTime = timeToNext;
-        } else {
-            closestTime = (timeToNext + timeToPrev > 0)? timeToPrev : timeToNext;
-        }
-        rythmObject.closestBeatTime = closestTime;
+        float closestTime = (timeToNext + timeToPrev > 0)? timeToPrev : timeToNext;
 
         RythmState rythmState;
-        if(closestTime < _greatTimeframe/2)
+        if(closestTime < _greatTimeframeRatio * secPerBeat)
         {
             rythmState = RythmState.Great;
         }
-        else if (closestTime < _goodTimeframe/2)
+        else if (closestTime < _goodTimeframeRatio * secPerBeat)
         {
             rythmState = RythmState.Good;
         }
@@ -118,32 +133,24 @@ public class RythmController : MonoBehaviour
         {
             rythmState = RythmState.Bad;
         }
-        rythmObject.rythmState = rythmState;
 
-        return rythmObject;
+        return rythmState;
     }
 
     #region EVENT_ACTIONS
     private void OnEffectsVolumeChange(float value)
     {
-        bgmData.volume = value;
+        bgm.volume = value;
         tick.volume = value;
     }
 
     #endregion
-    
-    // helpers
-    struct RythmObject
-    {
-        public RythmState rythmState;
-        public int currentBeat;
-        public float closestBeatTime;
-    }
 
-    enum RythmState: string
+    // helpers
+    enum RythmState
     {
-        Great = "GREAT",
-        Good = "GOOD",
-        Bad = "BAD"
+        Great,
+        Good,
+        Bad
     };
 }

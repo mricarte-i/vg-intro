@@ -4,8 +4,7 @@
 public class BgmData : ScriptableObject
 {
     public string Name;
-    public AudioSource Bgm;
+    public AudioClip Bgm;
     public int Bpm;
     public float FirstBeatOffset;
-    public float BeatsPerLoop;
 }
