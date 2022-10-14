@@ -10,6 +10,7 @@ public class RythmController : MonoBehaviour
 
     [Header("Audio related")]
     [SerializeField] private BgmData bgmData;
+    private bool isInitialized = false;
     private AudioSource bgm;
     private float songPosition = 0f;
     private float songPosInBeats = 0f;
@@ -29,20 +30,6 @@ public class RythmController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioSource[] audioSources = GetComponents<AudioSource>();
-
-        // bgm related
-        bgm = audioSources[0];
-        secPerBeat = 60f / bgmData.Bpm;
-        dsptimesong = (float) AudioSettings.dspTime;
-        bgm.clip = bgmData.BGM;
-        bgm.PlayOneShot(bgmData.BGM);
-
-        // beat marker related
-        tick = audioSources[1];
-        tick.clip = tickClip;
-        QueueNextTick();
-
         // volume change
         AudioManager.Instance.OnEffectsVolumeChange += OnEffectsVolumeChange;
         AudioManager.Instance.OnMusicVolumeChange += OnMusicVolumeChange;
@@ -51,7 +38,7 @@ public class RythmController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isPlaying) return;
+        if(!isInitialized || !isPlaying) return;
 
         if(!bgm.isPlaying){
             EventsManager.Instance.EventTimeout();
@@ -75,7 +62,7 @@ public class RythmController : MonoBehaviour
     }
 
     public event Action<bool> OnPause;
-    void Play()
+    public void Play()
     {
         if(isPlaying) return;
 
@@ -89,7 +76,7 @@ public class RythmController : MonoBehaviour
         QueueNextTick();
     }
 
-    void Pause()
+    public void Pause()
     {
         if(!isPlaying) return;
 
@@ -101,24 +88,56 @@ public class RythmController : MonoBehaviour
 
     }
 
-    float GetPrevBeatPosition()
+    public void setData(BgmData data)
+    {
+        if(isInitialized) throw new InvalidOperationException("Already initialized. Can setData only if not initialized");
+        bgmData = data;
+    }
+    
+    private void init()
+    {
+        if(isInitialized) throw new InvalidOperationException("Already initialized");
+
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+
+        // bgm related
+        bgm = audioSources[0];
+        secPerBeat = 60f / bgmData.Bpm;
+        dsptimesong = (float) AudioSettings.dspTime;
+        bgm.clip = bgmData.BGM;
+        bgm.PlayOneShot(bgmData.BGM);
+        if(!isPlaying) bgm.Pause();
+
+        // beat marker related
+        tick = audioSources[1];
+        tick.clip = tickClip;
+        if(isPlaying) QueueNextTick();
+
+        isInitialized = true;
+    }
+
+    public float getBeatProgress() {
+        return songPosInBeats%1;
+    }
+
+    private float GetPrevBeatPosition()
     {
         return dsptimesong + ((int) songPosInBeats) * secPerBeat;
     }
 
-    float GetNextBeatPosition()
+    private float GetNextBeatPosition()
     {
         return dsptimesong + ((int) songPosInBeats + 1) * secPerBeat;
     }
 
-    void QueueNextTick()
+    private void QueueNextTick()
     {
         // dsptime to queue next tick
         float nextTickTime = GetNextBeatPosition();
         tick.PlayScheduled(nextTickTime);
     }
 
-    RythmState getBeat()
+    RythmState GetBeat()
     {
         // works with data updated from update
 
