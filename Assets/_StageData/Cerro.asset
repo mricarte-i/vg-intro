@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: El Cerro
   SceneName: SceneStageCerro
-  Preview: {fileID: 21300000, guid: 72e1f7a2f08e5fb4fbc6f885a088900c, type: 3}
+  Preview: {fileID: 21300000, guid: fac7758972035b8408a83b5ec7b47d84, type: 3}
+  Zoom: 1.6

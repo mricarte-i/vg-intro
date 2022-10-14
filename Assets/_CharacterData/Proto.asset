@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: Proto
   Speed: 0
   Model: {fileID: 919132149155446097, guid: 74008ba72b8b5ee419d680e76f16a53b, type: 3}
-  Collider: {fileID: 0}
+  Collider: {fileID: 5081583450308868924, guid: 68abda53800499843a21fddc37f95cd7, type: 3}
   Portrait: {fileID: 21300000, guid: 72e1f7a2f08e5fb4fbc6f885a088900c, type: 3}

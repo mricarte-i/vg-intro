@@ -13,9 +13,18 @@ public class StageBox : MonoBehaviour
     }
 
     public void SetData(StageData data){
-        _preview.sprite = data.Preview;
-        _name.text = data.Name;
+        if(data == _stage){
+            return;
+        }
         _stage = data;
+        _name.text = data.Name;
+        _preview.sprite = data.Preview;
+        Vector2 pixelSize = new Vector2(_preview.sprite.texture.width, _preview.sprite.texture.height);
+        Vector2 pixelPivot = _preview.sprite.pivot;
+        Vector2 uiPivot = new Vector2(pixelPivot.x / pixelSize.x, pixelPivot.y / pixelSize.y);
+
+        _preview.GetComponent<RectTransform>().pivot = uiPivot;
+        _preview.GetComponent<RectTransform>().sizeDelta *= data.Zoom;
     }
 
     // Start is called before the first frame update
