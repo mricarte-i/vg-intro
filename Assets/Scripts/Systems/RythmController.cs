@@ -24,7 +24,6 @@ public class RythmController : MonoBehaviour
     [SerializeField] private float _goodTimeframeRatio = 0.5f;
     [SerializeField] private AudioClip tickClip;
     private AudioSource tick;
-    private boolean onBeat = false;
 
     #endregion
     
@@ -56,10 +55,7 @@ public class RythmController : MonoBehaviour
         songPosition = (float) (AudioSettings.dspTime - dsptimesong);
 
         //calculate the position in beats & check if changed
-        if ((int) songPosInBeats < (int)(songPosition / secPerBeat)) {
-            onBeat = true;
-            QueueNextTick();
-        }
+        if ((int) songPosInBeats < (int)(songPosition / secPerBeat)) QueueNextTick();
         songPosInBeats = songPosition / secPerBeat;
     }
     
