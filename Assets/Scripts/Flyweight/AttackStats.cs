@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Flyweight
 {
-    [CreateAssetMenu(fileName = "AttackStats", menuName = "Stats/Attacks", order = 0)]
+    [CreateAssetMenu(fileName = "AttackStats", menuName = "Attack Stats", order = 0)]
     public class AttackStats : ScriptableObject
     {
         [SerializeField] private AttackStatValues _attackStatValues;

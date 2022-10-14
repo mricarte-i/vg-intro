@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackStatValues:
     Damage: 10
+    Duration: 0.5

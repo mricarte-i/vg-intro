@@ -12,39 +12,41 @@ namespace Attacks
 {
     public class Attack : MonoBehaviour, IAttack
     {
-        [SerializeField] private AttackStats _attackStats;
+        [SerializeField] protected AttackStats _attackStats;
 
-        [SerializeField] private List<GameObject> _hitboxes = new List<GameObject>();
+        [SerializeField] protected List<Hitbox> _hitboxes = new List<Hitbox>();
 
         #region Hitter HurtBox
 
-        private LifeController _hurtbox;
+        protected LifeController _hurtbox;
         public void SetHurtBox(LifeController h) => _hurtbox = h;
 
         #endregion
 
-        public List<GameObject> Hitboxes => _hitboxes;
+        public List<Hitbox> Hitboxes => _hitboxes;
         public int Damage => _attackStats.Damage;
         public bool IsAttacking => _isAttacking;
 
-        private bool _isAttacking = false;
+        protected bool _isAttacking = false;
         
         public float Duration => _attackStats.Duration;
 
         private event Action BeforeAttackingEvents;
         private event Action AfterAttackingEvents;
 
+        protected void InvokeBeforeAttackingEvents() => BeforeAttackingEvents?.Invoke();
+        protected void InvokeAfterAttackingEvents() => AfterAttackingEvents?.Invoke();
+        
         public void AddBeforeAttackingEvent(Action beforeAttackingAction) =>
             BeforeAttackingEvents += beforeAttackingAction;
         
         public void AddAfterAttackingEvent(Action afterAttackingAction) =>
             AfterAttackingEvents += afterAttackingAction;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            foreach (var hitboxGo in _hitboxes)
+            foreach (var hitbox in _hitboxes)
             {
-                var hitbox = hitboxGo.GetComponent<Hitbox>();
                 hitbox.AddActionOnHit(MakeDamage);
             }
         }
@@ -54,13 +56,13 @@ namespace Attacks
             if(lifeController != _hurtbox) lifeController.GetHit(Damage);
         }
 
-        public void Execute()
+        public virtual void Execute()
         {
             _isAttacking = true;
-            BeforeAttackingEvents?.Invoke();
+            InvokeBeforeAttackingEvents();
             foreach (var hitbox in _hitboxes)
             {
-                hitbox.SetActive(true);
+                hitbox.gameObject.SetActive(true);
             }
 
             StartCoroutine(Wait(Duration));
@@ -71,11 +73,11 @@ namespace Attacks
             yield return new WaitForSecondsRealtime(duration);
             foreach (var hitbox in _hitboxes)
             {
-                hitbox.SetActive(false);
+                hitbox.gameObject.SetActive(false);
             }
 
             _isAttacking = false;
-            AfterAttackingEvents?.Invoke();
+            InvokeAfterAttackingEvents();
         }
     }
 }
