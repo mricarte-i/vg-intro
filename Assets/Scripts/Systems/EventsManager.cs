@@ -11,7 +11,7 @@ public class EventsManager : MonoBehaviour
     public static EventsManager Instance;
 
     [SerializeField] private int _stocksWinCondition = 2;
-    [SerializeField] private float _awaitInCaseOfDraw = 3f;
+    [SerializeField] private float _awaitInCaseOfDraw = 0.3f;
     [Space]
     [SerializeField] private bool _player1Dead, _player2Dead, _draw;
     [SerializeField] private int _player1Stocks, _player2Stocks;
@@ -19,6 +19,7 @@ public class EventsManager : MonoBehaviour
     [Space]
     [SerializeField] private int _rounds = 0;
     [SerializeField] private int _maxRounds = 3;
+    public void SetMaxRounds(int newMax) => _maxRounds = newMax;
 
     public bool IsDraw => _draw;
 
@@ -38,10 +39,12 @@ public class EventsManager : MonoBehaviour
     public void EventPlayerDeath(PlayerId id){
         switch(id){
             case PlayerId.P1:
+                if(_player1Dead == true) return;
                 if(OnPlayer1Death != null) OnPlayer1Death(true);
                 _player1Dead = true;
                 break;
             case PlayerId.P2:
+                if(_player2Dead == true) return;
                 if(OnPlayer2Death != null) OnPlayer2Death(true);
                 _player2Dead = true;
                 break;
@@ -78,18 +81,24 @@ public class EventsManager : MonoBehaviour
     public event Action<bool> OnGameOver;
 
     public void NextRound(){
+        _player1Dead = false;
+        _player2Dead = false;
+        _draw = false;
+        _rounds++;
+
         if(OnGameOver != null){
             if(_player1Stocks == _stocksWinCondition || _player1Stocks == _stocksWinCondition || _rounds == _maxRounds){
+
+                _player1Stocks = 0;
+                _player2Stocks = 0;
+                _rounds = 0;
+
                 AppManager.Instance.SetAppState(AppState.VICTORY);
                 OnGameOver(true);
                 return;
             }
         }
 
-        _player1Dead = false;
-        _player2Dead = false;
-        _draw = false;
-        _rounds++;
 
         if(OnPlayer1Death != null) OnPlayer1Death(false);
         if(OnPlayer2Death != null) OnPlayer2Death(false);

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NeutralAttack
   m_EditorClassIdentifier: 
   _attackStatValues:
-    Damage: 10
+    Damage: 8
     Duration: 0.5

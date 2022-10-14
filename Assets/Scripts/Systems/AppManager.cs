@@ -28,6 +28,10 @@ public class AppManager : MonoBehaviour
     [SerializeField] private AppState _appState = AppState.START;
     [SerializeField] private GameMode _selectedGameMode = GameMode.NORMAL;
     [SerializeField] private string _selectedStage = "SceneStageCerro";
+    [SerializeField] private BgmData _selectedBGMData;
+
+    public BgmData GetBGMData() => _selectedBGMData;
+    public void SetBGMData(BgmData bgmData) => _selectedBGMData = bgmData;
 
     public string GetStageName(){
         return _selectedStage;
@@ -59,12 +63,14 @@ public class AppManager : MonoBehaviour
 
     }
 
+    public event Action<bool> OnPause;
     public void TogglePause(){
         _paused = !_paused;
         Debug.Log("TOGGLE PAUSE CALLED " + _paused + " " + Time.timeScale);
 
         if(_paused){
             Time.timeScale = 0;
+            if(OnPause != null) OnPause(true);
             _settingsMenu.SetActive(true);
 
             //don't active more than one EventSystem at once!
@@ -73,6 +79,7 @@ public class AppManager : MonoBehaviour
             }
         }else{
             Time.timeScale = 1f;
+            if(OnPause != null) OnPause(false);
             _settingsMenu.SetActive(false);
             _eventsSystem.SetActive(false);
         }

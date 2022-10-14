@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -9,7 +8,7 @@ public class TimeCountdown : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _text;
     [SerializeField] private int _durationInSeconds = 90;
-    private int _remainingDuration;
+    private float _remainingDuration;
 
     public void Reset(){
         _paused = false;
@@ -24,20 +23,6 @@ public class TimeCountdown : MonoBehaviour
 
     private void Begin(int duration){
         _remainingDuration = duration;
-        base.StartCoroutine(UpdateTimer());
-    }
-
-    private IEnumerator UpdateTimer(){
-        while(_remainingDuration >= 0){
-            if(!_paused){
-                _text.text = $"{_remainingDuration}";
-                _remainingDuration--;
-                yield return new WaitForSecondsRealtime(1f);
-            }else{
-                yield return null;
-            }
-        }
-        OnEndTimer();
     }
 
     private void OnEndTimer(){
@@ -47,6 +32,15 @@ public class TimeCountdown : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(_paused) return;
+
+        _remainingDuration -= Time.deltaTime;
+        _text.text = $"{(int) Mathf.Max(_remainingDuration, 0)}";
+
+        if(_remainingDuration <= 0){
+            Pause();
+            OnEndTimer();
+        }
 
     }
 }

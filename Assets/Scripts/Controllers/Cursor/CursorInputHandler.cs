@@ -41,7 +41,7 @@ public class CursorInputHandler : MonoBehaviour
     void Update()
     {
         if(_user == null){
-            Debug.Log("oh no");
+            //Debug.Log("oh no");
             return;
         }
 
@@ -115,6 +115,11 @@ public class CursorInputHandler : MonoBehaviour
             var stage = other.gameObject.GetComponent<StageBox>().GetStageData();
             if(IsConfirmPressed){
                 AppManager.Instance.SetStage(stage);
+            }
+        }else if(other.gameObject.GetComponent<BgmBox>()){
+            var bgm = other.gameObject.GetComponent<BgmBox>().GetBGMData();
+            if(IsConfirmPressed){
+                AppManager.Instance.SetBGMData(bgm);
             }
         }else if(other.gameObject.GetComponent<ButtonBox>()){
             var data = other.gameObject.GetComponent<ButtonBox>().GetData();

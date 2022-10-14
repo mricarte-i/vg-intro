@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c763e696b78440c9893ba0bc8354b247, type: 3}
-  m_Name: UpperAttack
+  m_Script: {fileID: 11500000, guid: 804a6cfefa5330e4c8474409192b4431, type: 3}
+  m_Name: RhythmPenalties
   m_EditorClassIdentifier: 
-  _attackStatValues:
-    Damage: 15
-    Duration: 0.5
+  Name: easy
+  GreatHpModifier: 5
+  GoodHpModifier: 2
+  BadHpModifier: -5

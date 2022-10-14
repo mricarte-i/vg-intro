@@ -7,4 +7,6 @@ public class BgmData : ScriptableObject
     public AudioClip BGM;
     public int Bpm;
     public float FirstBeatOffset;
+    public Sprite Preview;
+    public float Zoom = 1;
 }

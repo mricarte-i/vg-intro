@@ -1,7 +1,7 @@
-using Controllers;
 using UnityEngine;
+using Controllers;
 
-public class NormalFightSetup : MonoBehaviour
+public class RhythmFightSetup : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _p1StartPos, _p2StartPos;
@@ -13,10 +13,12 @@ public class NormalFightSetup : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
     [Space]
     [SerializeField] private GameObject _fightUIPrefab;
+    [SerializeField] private GameObject _rhythmControllerPrefab;
 
-    private GameObject _p1, _p2, _fightUI;
+    private GameObject _p1, _p2, _fightUI, _rhythmController;
 
-    void Awake() {
+    void Awake()
+    {
         Instantiate(_stagePrefab, _stagePos);
 
         _p1 = InitializePlayer(AppManager.Instance.GetInputUser(0));
@@ -39,12 +41,16 @@ public class NormalFightSetup : MonoBehaviour
         _p1.GetComponentInChildren<LifeController>().SetHPBar(hbP1);
         _p2.GetComponentInChildren<LifeController>().SetHPBar(hbP2);
 
-        EventsManager.Instance.SetMaxRounds(3);
-        AudioManager.Instance.PlayMusic(AppManager.Instance.GetBGMData().BGM);
-        Debug.Log("NormalFightSetup");
+        _rhythmController = Instantiate(_rhythmControllerPrefab);
+        _rhythmController.GetComponent<RhythmController>().Init(AppManager.Instance.GetBGMData());
+
+        EventsManager.Instance.SetMaxRounds(0);
+        Debug.Log("RhythmFightSetup");
     }
 
     public void ResetFight(){
+        Debug.Log("DON'T");
+
         _p1.transform.position = _p1StartPos.position;
         _p2.transform.position = _p2StartPos.position;
 
