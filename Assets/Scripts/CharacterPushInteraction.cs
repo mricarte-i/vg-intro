@@ -7,7 +7,6 @@ public class CharacterPushInteraction : MonoBehaviour
     public void OnTriggerStay(Collider col){
         var ctrl = col.gameObject.GetComponent<CharacterController>();
         if(ctrl && this.GetComponentInParent<CharacterController>() != ctrl){
-            Debug.Log("Trigger Stay!");
             ctrl.SimpleMove(_speed);
         }
     }

@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private string _endFightSceneName = "EndFightScene";
     private string _currentScene;
     private NormalFightSetup _normalFight;
-    //private RhythmFightSetup _rhythmFight;
+    private RhythmFightSetup _rhythmFight;
 
 
     void Awake() {
@@ -47,52 +47,22 @@ public class LevelManager : MonoBehaviour
         }
         //we could get the current scene by asking for the sceneName used and set that as the active scene...
         switch(AppManager.Instance.GetGameMode()){
-            default:
+            case GameMode.NORMAL:
                 var go = Instantiate(_normalSetup);
                 _normalFight = go.GetComponent<NormalFightSetup>();
                 break;
-                //TODO: Rhythm mode...
-                /*
             case GameMode.RHYTHM:
-                //TODO: Rhythm mode...
-                Instantiate(_normalSetup);
-                //Instantiate(_rhythmSetup);
+                var go1 = Instantiate(_rhythmSetup);
+                _rhythmFight = go1.GetComponent<RhythmFightSetup>();
                 break;
             default:
                 Debug.Log("what");
                 break;
-                */
         }
     }
 
     public void LoadScene(string sceneName) {
         base.StartCoroutine(LoadAsync(sceneName));
-        /*
-        _target = 0f;
-        _progressBar.rectTransform.localScale.Set(0, 1, 1);
-
-        var scene = SceneManager.LoadSceneAsync(sceneName);
-        scene.allowSceneActivation = false;
-
-        scene.completed += AddSetup;
-
-        _loadingScreen.SetActive(true);
-
-        do{
-            //TODO: remove this...
-            await Task.Delay(100);
-            if(_target != scene.progress){
-                Debug.Log(scene.progress);
-            }
-            _target = scene.progress;
-        }while(scene.progress < 0.9f);
-
-        _currentScene = sceneName;
-
-        scene.allowSceneActivation = true;
-
-        _loadingScreen.SetActive(false);
-        */
     }
 
     private IEnumerator LoadAsync(string sceneName){
@@ -130,8 +100,11 @@ public class LevelManager : MonoBehaviour
                 case GameMode.NORMAL:
                     _normalFight.ResetFight();
                     break;
+                case GameMode.RHYTHM:
+                    LoadEndgameScene();
+                    break;
                 default:
-                    _normalFight.ResetFight();
+                    Debug.Log("bruh");
                     break;
             }
         }

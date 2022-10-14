@@ -13,7 +13,6 @@ public class NormalFightSetup : MonoBehaviour
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
     [Space]
     [SerializeField] private GameObject _fightUIPrefab;
-    [SerializeField] private GameObject _damageSystem;
 
     private GameObject _p1, _p2, _fightUI;
 
@@ -40,6 +39,9 @@ public class NormalFightSetup : MonoBehaviour
         _p1.GetComponentInChildren<LifeController>().SetHPBar(hbP1);
         _p2.GetComponentInChildren<LifeController>().SetHPBar(hbP2);
 
+        EventsManager.Instance.SetMaxRounds(3);
+        AudioManager.Instance.PlayMusic(AppManager.Instance.GetBGMData().BGM);
+        Debug.Log("NormalFightSetup");
     }
 
     public void ResetFight(){
@@ -65,7 +67,7 @@ public class NormalFightSetup : MonoBehaviour
 
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         //do the same when we eventually add the collider thingy!
-        var damageSystem = Instantiate(_damageSystem, go.transform);
+        var damageSystem = Instantiate(player.characterData.DamageSystem, go.transform);
         var damageSystemHandler = damageSystem.GetComponent<DamageSystemHandler>();
         damageSystemHandler.AddBeforeAttackingEvent(pc.DisablePlayerActions);
         damageSystemHandler.AddAfterAttackingEvent(pc.EnablePlayerActions);

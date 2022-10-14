@@ -9,6 +9,7 @@ public class FightUI : MonoBehaviour
     [SerializeField] private GameObject _roundEndText;
     [SerializeField] private float _holdResultsTime = 3f;
     [SerializeField] private TimeCountdown _timer;
+    [SerializeField] private GameObject _time, _beat;
 
     public HealthBar GetPlayer1HPBar() => _HPBarP1;
     public HealthBar GetPlayer2HPBar() => _HPBarP2;
@@ -21,6 +22,10 @@ public class FightUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var isNormal = AppManager.Instance.GetGameMode() == GameMode.NORMAL;
+        _time.SetActive(isNormal);
+        _beat.SetActive(!isNormal);
+
         _roundEndText.SetActive(false);
         EventsManager.Instance.OnShowRoundResult += ShowRoundResults;
     }

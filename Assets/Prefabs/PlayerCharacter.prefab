@@ -77,13 +77,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerControls: {fileID: -944628639613478452, guid: 8a51e88e1bb097749a95eaefe46a7b82, type: 3}
+  _rhythmValues: {fileID: 11400000, guid: 5159b1961b888ec4eb0c95c7d7893b5e, type: 2}
   movementSpeed: 4
   _gravity: -9.8
   _groundedGravity: -0.5
   _maxJumpHeight: 0.75
   _maxJumpTime: 0.75
   _isDummy: 0
-  _playerId: 0
   _inverted: 1
-  _inputKeyboard: 0
-  _controllerId: 0

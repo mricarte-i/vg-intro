@@ -21,6 +21,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     #region Properties and Fields
 
+    [SerializeField] private RhythmHpModifierData _rhythmValues;
+
     [Header("Movement variables")]
     //Movement stuff...
     [SerializeField] private float movementSpeed = 10f;
@@ -52,6 +54,11 @@ public class PlayerInputHandler : MonoBehaviour
 
     private DamageSystemHandler _damageSystemHandler;
     public void SetDamageSystemHandler(DamageSystemHandler dsh) => _damageSystemHandler = dsh;
+
+    [Header("Rhythm Exclusive variables")]
+
+    [SerializeField] private float _rythmCooldown = 0.3f;
+    private float _currentRythmCooldown = 0f;
 
     #endregion
 
@@ -92,7 +99,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         downAttack.started += OnDownAttackPerformed;
         downAttack.canceled += OnDownAttackPerformed;
-        
+
         upperAttack.started += OnUpperAttackPerformed;
         upperAttack.canceled += OnUpperAttackPerformed;
 
@@ -127,13 +134,13 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnJumpingPerformed(InputAction.CallbackContext context) {
         IsJumpPressed = context.ReadValueAsButton();
         if(IsJumpPressed){
-            Debug.Log("hear me!");
+            //Debug.Log("hear me!");
         }
     }
     private void OnMenuPerformed(InputAction.CallbackContext context) {
         if(_isDummy) return;
         context.ReadValueAsButton();
-        Debug.Log("calling a manager...");
+        //Debug.Log("calling a manager...");
         AppManager.Instance.TogglePause();
     }
 
@@ -160,7 +167,7 @@ public class PlayerInputHandler : MonoBehaviour
         downAttack.Disable();
         upperAttack.Disable();
     }
-    
+
     public void EnablePlayerActions()
     {
         walking.Enable();
@@ -199,7 +206,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void handleJump(){
         if(!IsJumping && _characterController.isGrounded && IsJumpPressed){
-            Debug.Log("Jump!");
+            //Debug.Log("Jump!");
             IsJumping = true;
             Depth = _initialJumpVelocity;
         }else if(!IsJumpPressed && IsJumping && _characterController.isGrounded){
@@ -217,6 +224,30 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void handleAttack()
     {
+        // lowering cooldown
+        if(_currentRythmCooldown > 0) _currentRythmCooldown -= Time.deltaTime;
+
+        var isAttackPressed = IsNeutralAttackPressed || IsDownAttackPressed || IsUpperAttackPressed;
+        if(!isAttackPressed) return;
+
+        if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM && _currentRythmCooldown <= 0) {
+            _currentRythmCooldown = _rythmCooldown;
+            var result = RhythmController.Instance.GetBeat();
+            switch(result){
+                case RhythmState.Bad:
+                    _damageSystemHandler.GetHurtbox.GetHit(-_rhythmValues.BadHpModifier);
+                    return;
+                case RhythmState.Good:
+                    _damageSystemHandler.GetHurtbox.GetHit(-_rhythmValues.GoodHpModifier);
+                    break;
+                case RhythmState.Great:
+                    _damageSystemHandler.GetHurtbox.GetHit(-_rhythmValues.GreatHpModifier);
+                    break;
+                default:
+                    //Debug.Log("unexpected state");
+                    break;
+            }
+        }
         if (IsNeutralAttackPressed)
         {
             _damageSystemHandler.DoNeutralAttack();
