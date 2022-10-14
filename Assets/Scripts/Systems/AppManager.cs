@@ -18,9 +18,12 @@ public enum AppState {
 public class AppManager : MonoBehaviour
 {
     public static AppManager Instance;
+
     [SerializeField] private GameObject _settingsMenu;
     [SerializeField] private GameObject _eventsSystem;
+    [Space]
     [SerializeField] private PlayableCharacter _player1Device = null, _player2Device = null;
+    [Space]
     [SerializeField] private bool _paused = false;
     [SerializeField] private AppState _appState = AppState.START;
     [SerializeField] private GameMode _selectedGameMode = GameMode.NORMAL;

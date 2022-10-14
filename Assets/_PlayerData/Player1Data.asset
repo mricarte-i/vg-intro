@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Player1Data
   m_EditorClassIdentifier: 
   characterData: {fileID: 0}
-  playerId: 1
+  playerId: 0

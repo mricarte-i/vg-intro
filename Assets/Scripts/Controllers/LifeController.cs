@@ -12,15 +12,23 @@ namespace Controllers
 
         [SerializeField] private HealthBar _healthBar;
 
+        [SerializeField] private PlayerId _playerId;
+        public void SetPlayerId(PlayerId id) => _playerId = id;
+
         public void SetHPBar(HealthBar healthBar){
             _healthBar = healthBar;
             _healthBar.UpdateMaxHealth(MaxLife);
+            _healthBar.UpdateCurrentHealth(_currentLife);
+        }
+
+        public void Reset(){
+            Start();
         }
 
         private void Start()
         {
             _currentLife = MaxLife;
-            _healthBar.UpdateMaxHealth(MaxLife);
+            if(_healthBar != null) SetHPBar(_healthBar);
             //Update Life Event
         }
 
@@ -34,7 +42,7 @@ namespace Controllers
 
         public void Lose()
         {
-            throw new System.NotImplementedException();
+            EventsManager.Instance.EventPlayerDeath(_playerId);
         }
     }
 }

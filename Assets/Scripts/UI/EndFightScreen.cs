@@ -25,6 +25,8 @@ public class EndFightScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _fightResult = EventsManager.Instance.GetFightResult();
+
         switch(_fightResult){
             case FightResult.DRAW:
                 ShowDRAWScreen();

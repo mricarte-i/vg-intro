@@ -9,5 +9,5 @@ public class PlayableCharacter : ScriptableObject
     public void SetInputUser(InputUser iu) => inputUser = iu;
     public GeneratedPlayerControls controls = null;
     public void SetControls(GeneratedPlayerControls c) => controls = c;
-    public int playerId = 0;
+    public PlayerId playerId = PlayerId.P1;
 }
