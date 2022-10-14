@@ -1,23 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [RequireComponent(typeof(AudioSource))]
 public class RythmController : MonoBehaviour
 {
     public static RythmController Instance;
-    
+
     #region Properties and Fields
 
     [Header("Audio related")]
     [SerializeField] private BgmData bgmData;
     private AudioSource bgm;
-    private float songPosition = 0;
-    private float songPosInBeats = 0;
+    private float songPosition = 0f;
+    private float songPosInBeats = 0f;
     private float secPerBeat;
     private float dsptimesong;
-    private float isPlaying;
-    private float pauseStartDsptime = 0f;
+    [SerializeField] private bool isPlaying;
+    private float pauseStartDsptime = 0;
+    [SerializeField] private AudioSource _bgmSource, _tickSource;
 
     [Header("Rhythm related")]
     [SerializeField] private float _greatTimeframeRatio = 0.2f;
@@ -26,20 +26,22 @@ public class RythmController : MonoBehaviour
     private AudioSource tick;
 
     #endregion
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        AudioSource[] audioSources = GetComponents<AudioSource>();
+        //AudioSource[] audioSources = GetComponents<AudioSource>();
 
         // bgm related
-        bgm = audioSources[0];
+        bgm = _bgmSource;
         secPerBeat = 60f / bgmData.Bpm;
         dsptimesong = (float) AudioSettings.dspTime;
-        bgmData.Bgm.Play();
+        bgm.clip = bgmData.BGM;
+        bgm.PlayOneShot(bgmData.BGM);
 
         // beat marker related
-        tick = audioSources[1];
+        tick = _tickSource;
+        tick.clip = tickClip;
         QueueNextTick();
 
         // volume change
@@ -51,6 +53,10 @@ public class RythmController : MonoBehaviour
     {
         if(!isPlaying) return;
 
+        if(!bgm.isPlaying){
+            //TODO: tell EventsManager.Instance.EventTimeout()
+        }
+
         //calculate the position in seconds
         songPosition = (float) (AudioSettings.dspTime - dsptimesong);
 
@@ -58,7 +64,7 @@ public class RythmController : MonoBehaviour
         if ((int) songPosInBeats < (int)(songPosition / secPerBeat)) QueueNextTick();
         songPosInBeats = songPosition / secPerBeat;
     }
-    
+
     void Awake() {
         if(Instance == null){
             Instance = this;
@@ -68,14 +74,17 @@ public class RythmController : MonoBehaviour
         }
     }
 
+    public event Action<bool> OnPause;
     void Play()
     {
         if(isPlaying) return;
-        
+
         isPlaying = true;
-        dsptimesong += (AudioSettings.dspTime - pauseStartDsptime);
+        dsptimesong += ((float) AudioSettings.dspTime - pauseStartDsptime);
         pauseStartDsptime = 0f;
-        bgm.Play();
+        bgm.UnPause();
+
+        if(OnPause != null) OnPause(false);
 
         QueueNextTick();
     }
@@ -85,15 +94,18 @@ public class RythmController : MonoBehaviour
         if(!isPlaying) return;
 
         isPlaying = false;
-        pauseStartDsptime = AudioSettings.dspTime;
+        pauseStartDsptime = (float) AudioSettings.dspTime;
         bgm.Pause();
+
+        if(OnPause != null) OnPause(true);
+
     }
 
     float GetPrevBeatPosition()
     {
         return dsptimesong + ((int) songPosInBeats) * secPerBeat;
     }
-    
+
     float GetNextBeatPosition()
     {
         return dsptimesong + ((int) songPosInBeats + 1) * secPerBeat;
@@ -143,7 +155,7 @@ public class RythmController : MonoBehaviour
     #endregion
 
     // helpers
-    enum RythmState
+    public enum RythmState
     {
         Great,
         Good,
