@@ -55,6 +55,11 @@ public class PlayerInputHandler : MonoBehaviour
     private DamageSystemHandler _damageSystemHandler;
     public void SetDamageSystemHandler(DamageSystemHandler dsh) => _damageSystemHandler = dsh;
 
+    [Header("Rhythm Exclusive variables")]
+
+    [SerializeField] private float _rythmCooldown = 0.3f;
+    private float _currentRythmCooldown = 0f;
+
     #endregion
 
     void Awake()
@@ -219,10 +224,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void handleAttack()
     {
+        // lowering cooldown
+        if(_currentRythmCooldown > 0) _currentRythmCooldown -= Time.deltaTime;
 
         var isAttackPressed = IsNeutralAttackPressed || IsDownAttackPressed || IsUpperAttackPressed;
+        if(!isAttackPressed) return;
 
-        if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM && isAttackPressed){
+        if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM && _currentRythmCooldown <= 0) {
+            _currentRythmCooldown = _rythmCooldown;
             var result = RhythmController.Instance.GetBeat();
             switch(result){
                 case RhythmState.Bad:
