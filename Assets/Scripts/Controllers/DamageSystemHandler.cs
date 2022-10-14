@@ -39,6 +39,7 @@ namespace Controllers
         {
             if (!_isCurrentlyAttacking)
             {
+
                 attack.Execute();
             }
         }

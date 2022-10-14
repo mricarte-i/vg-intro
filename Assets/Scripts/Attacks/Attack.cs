@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using Controllers;
 using Entities;
 using Flyweight;
-using JetBrains.Annotations;
 using Strategy;
 using UnityEngine;
 
 namespace Attacks
 {
-    public class Attack : MonoBehaviour, IAttack
+  public class Attack : MonoBehaviour, IAttack
     {
         [SerializeField] protected AttackStats _attackStats;
 
         [SerializeField] protected List<Hitbox> _hitboxes = new List<Hitbox>();
+
+        [SerializeField] private GameObject _sfxPrefab;
 
         #region Hitter HurtBox
 
@@ -28,7 +29,7 @@ namespace Attacks
         public bool IsAttacking => _isAttacking;
 
         protected bool _isAttacking = false;
-        
+
         public float Duration => _attackStats.Duration;
 
         private event Action BeforeAttackingEvents;
@@ -36,10 +37,10 @@ namespace Attacks
 
         protected void InvokeBeforeAttackingEvents() => BeforeAttackingEvents?.Invoke();
         protected void InvokeAfterAttackingEvents() => AfterAttackingEvents?.Invoke();
-        
+
         public void AddBeforeAttackingEvent(Action beforeAttackingAction) =>
             BeforeAttackingEvents += beforeAttackingAction;
-        
+
         public void AddAfterAttackingEvent(Action afterAttackingAction) =>
             AfterAttackingEvents += afterAttackingAction;
 
@@ -53,7 +54,11 @@ namespace Attacks
 
         private void MakeDamage(LifeController lifeController)
         {
-            if(lifeController != _hurtbox) lifeController.GetHit(Damage);
+            if(lifeController != _hurtbox){
+                lifeController.GetHit(Damage);
+                var sfxgo = Instantiate(_sfxPrefab);
+                sfxgo.GetComponent<SoundEffectController>().Play(_attackStats.SFXCONTACT);
+            }
         }
 
         public virtual void Execute()
@@ -63,6 +68,8 @@ namespace Attacks
             foreach (var hitbox in _hitboxes)
             {
                 hitbox.gameObject.SetActive(true);
+                var sfxgo = Instantiate(_sfxPrefab);
+                sfxgo.GetComponent<SoundEffectController>().Play(_attackStats.SFXTHROW);
             }
 
             StartCoroutine(Wait(Duration));
