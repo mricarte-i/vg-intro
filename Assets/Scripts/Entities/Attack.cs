@@ -29,6 +29,9 @@ namespace Attacks
 
         private bool _isAttacking = false;
 
+        [SerializeField] private float _duration;
+        public float Duration => _duration;
+
         private void Awake()
         {
             foreach (var hitboxGo in _hitboxes)
@@ -51,7 +54,7 @@ namespace Attacks
                 hitbox.SetActive(true);
             }
 
-            StartCoroutine(Wait(3));
+            StartCoroutine(Wait(_duration));
         }
 
         private IEnumerator Wait(float duration)
