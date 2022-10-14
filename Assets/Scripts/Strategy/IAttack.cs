@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Entities;
 
 namespace Strategy
 {
     public interface IAttack : Command
     {
-        List<GameObject> Hitboxes { get; }
+        List<Hitbox> Hitboxes { get; }
         
         int Damage { get; }
         
