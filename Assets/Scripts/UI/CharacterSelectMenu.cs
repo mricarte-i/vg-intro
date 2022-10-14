@@ -11,6 +11,8 @@ public class CharacterSelectMenu : MonoBehaviour
     [SerializeField] private GameObject _playerTokenPrefab;
     [SerializeField] private GameObject _canvas;
 
+
+
     // Start is called before the first frame update
     void Start()
     {

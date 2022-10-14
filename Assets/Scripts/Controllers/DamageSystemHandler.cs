@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Attacks;
 using Strategy;
 using UnityEngine;

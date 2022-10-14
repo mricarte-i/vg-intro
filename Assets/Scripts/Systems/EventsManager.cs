@@ -57,7 +57,7 @@ public class EventsManager : MonoBehaviour
 
     private IEnumerator HoldInCaseOfDraw(){
         yield return new WaitForSecondsRealtime(_awaitInCaseOfDraw);
-        if(_player1Dead && _player2Dead){
+        if((_player1Dead && _player2Dead) ||(!_player1Dead && !_player2Dead)){
             if(OnFightDraw != null) OnFightDraw(true);
             _draw = true;
         }
@@ -104,6 +104,16 @@ public class EventsManager : MonoBehaviour
             return FightResult.PLAYER1WINS;
         }else{
             return FightResult.PLAYER2WINS;
+        }
+    }
+
+    public PlayableCharacter GetWinner(){
+        if(_player1Dead && _player2Dead){
+            return null;
+        }else if(_player2Dead){
+            return AppManager.Instance.GetInputUser(0);
+        }else{
+            return AppManager.Instance.GetInputUser(1);
         }
     }
 

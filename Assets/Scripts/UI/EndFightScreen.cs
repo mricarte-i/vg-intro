@@ -26,6 +26,7 @@ public class EndFightScreen : MonoBehaviour
     void Start()
     {
         _fightResult = EventsManager.Instance.GetFightResult();
+        _winner = EventsManager.Instance.GetWinner();
 
         switch(_fightResult){
             case FightResult.DRAW:

@@ -12,6 +12,7 @@ public class TimeCountdown : MonoBehaviour
     private int _remainingDuration;
 
     public void Reset(){
+        _paused = false;
         Begin(_durationInSeconds);
     }
 

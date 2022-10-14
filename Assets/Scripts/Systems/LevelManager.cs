@@ -47,10 +47,12 @@ public class LevelManager : MonoBehaviour
         }
         //we could get the current scene by asking for the sceneName used and set that as the active scene...
         switch(AppManager.Instance.GetGameMode()){
-            case GameMode.NORMAL:
+            default:
                 var go = Instantiate(_normalSetup);
                 _normalFight = go.GetComponent<NormalFightSetup>();
                 break;
+                //TODO: Rhythm mode...
+                /*
             case GameMode.RHYTHM:
                 //TODO: Rhythm mode...
                 Instantiate(_normalSetup);
@@ -59,6 +61,7 @@ public class LevelManager : MonoBehaviour
             default:
                 Debug.Log("what");
                 break;
+                */
         }
     }
 
@@ -108,9 +111,12 @@ public class LevelManager : MonoBehaviour
             yield return null;
         }
 
-        var scene = SceneManager.GetSceneByName(sceneName);
-        if(!scene.IsValid()) yield break;
-        SceneManager.SetActiveScene(scene);
+        var oldScene = SceneManager.GetActiveScene();
+
+        var newScene = SceneManager.GetSceneByName(sceneName);
+        if(!newScene.IsValid()) yield break;
+        SceneManager.SetActiveScene(newScene);
+        SceneManager.UnloadSceneAsync(oldScene);
     }
 
     void Update(){
