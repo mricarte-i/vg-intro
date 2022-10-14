@@ -15,13 +15,30 @@ namespace Attacks
         [SerializeField] private AttackStats _attackStats;
 
         [SerializeField] private List<GameObject> _hitboxes = new List<GameObject>();
+
+        #region Hitter HurtBox
+
         private LifeController _hurtbox;
         public void SetHurtBox(LifeController h) => _hurtbox = h;
+
+        #endregion
+
         public List<GameObject> Hitboxes => _hitboxes;
         public int Damage => _attackStats.Damage;
         public bool IsAttacking => _isAttacking;
 
         private bool _isAttacking = false;
+        
+        public float Duration => _attackStats.Duration;
+
+        private event Action BeforeAttackingEvents;
+        private event Action AfterAttackingEvents;
+
+        public void AddBeforeAttackingEvent(Action beforeAttackingAction) =>
+            BeforeAttackingEvents += beforeAttackingAction;
+        
+        public void AddAfterAttackingEvent(Action afterAttackingAction) =>
+            AfterAttackingEvents += afterAttackingAction;
 
         private void Awake()
         {
@@ -40,12 +57,13 @@ namespace Attacks
         public void Execute()
         {
             _isAttacking = true;
+            BeforeAttackingEvents?.Invoke();
             foreach (var hitbox in _hitboxes)
             {
                 hitbox.SetActive(true);
             }
 
-            StartCoroutine(Wait(3));
+            StartCoroutine(Wait(Duration));
         }
 
         private IEnumerator Wait(float duration)
@@ -57,6 +75,7 @@ namespace Attacks
             }
 
             _isAttacking = false;
+            AfterAttackingEvents?.Invoke();
         }
     }
 }

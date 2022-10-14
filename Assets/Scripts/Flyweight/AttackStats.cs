@@ -8,12 +8,14 @@ namespace Flyweight
     {
         [SerializeField] private AttackStatValues _attackStatValues;
         public int Damage => _attackStatValues.Damage;
+        public float Duration => _attackStatValues.Duration;
     }
     
     [System.Serializable]
     public struct AttackStatValues
     {
         public int Damage;
+        public float Duration;
     }
 
 }

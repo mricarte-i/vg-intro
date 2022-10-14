@@ -446,9 +446,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Strong",
+                    "name": "Down",
                     "type": "Button",
                     "id": "6030ba32-11fa-4c8d-ad53-f8fbe3811080",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Upper",
+                    "type": "Button",
+                    "id": "9d82428b-0422-4966-a207-64bd328ef44f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -485,7 +494,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Strong",
+                    "action": "Down",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -496,7 +505,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Strong",
+                    "action": "Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c55f6759-6446-487d-8233-7f55d303c82d",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Upper",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a4a709b-c1c6-4cde-aea4-d96aeb110198",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Upper",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

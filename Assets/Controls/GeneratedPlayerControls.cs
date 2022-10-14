@@ -468,9 +468,18 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Strong"",
+                    ""name"": ""Down"",
                     ""type"": ""Button"",
                     ""id"": ""6030ba32-11fa-4c8d-ad53-f8fbe3811080"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Upper"",
+                    ""type"": ""Button"",
+                    ""id"": ""9d82428b-0422-4966-a207-64bd328ef44f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -507,7 +516,7 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""Strong"",
+                    ""action"": ""Down"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -518,7 +527,29 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Strong"",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c55f6759-6446-487d-8233-7f55d303c82d"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Joystick"",
+                    ""action"": ""Upper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1a4a709b-c1c6-4cde-aea4-d96aeb110198"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Upper"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -564,7 +595,8 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
         // Attacks
         m_Attacks = asset.FindActionMap("Attacks", throwIfNotFound: true);
         m_Attacks_Neutral = m_Attacks.FindAction("Neutral", throwIfNotFound: true);
-        m_Attacks_Strong = m_Attacks.FindAction("Strong", throwIfNotFound: true);
+        m_Attacks_Down = m_Attacks.FindAction("Down", throwIfNotFound: true);
+        m_Attacks_Upper = m_Attacks.FindAction("Upper", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -731,13 +763,15 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
     private readonly InputActionMap m_Attacks;
     private IAttacksActions m_AttacksActionsCallbackInterface;
     private readonly InputAction m_Attacks_Neutral;
-    private readonly InputAction m_Attacks_Strong;
+    private readonly InputAction m_Attacks_Down;
+    private readonly InputAction m_Attacks_Upper;
     public struct AttacksActions
     {
         private @GeneratedPlayerControls m_Wrapper;
         public AttacksActions(@GeneratedPlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Neutral => m_Wrapper.m_Attacks_Neutral;
-        public InputAction @Strong => m_Wrapper.m_Attacks_Strong;
+        public InputAction @Down => m_Wrapper.m_Attacks_Down;
+        public InputAction @Upper => m_Wrapper.m_Attacks_Upper;
         public InputActionMap Get() { return m_Wrapper.m_Attacks; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -750,9 +784,12 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
                 @Neutral.started -= m_Wrapper.m_AttacksActionsCallbackInterface.OnNeutral;
                 @Neutral.performed -= m_Wrapper.m_AttacksActionsCallbackInterface.OnNeutral;
                 @Neutral.canceled -= m_Wrapper.m_AttacksActionsCallbackInterface.OnNeutral;
-                @Strong.started -= m_Wrapper.m_AttacksActionsCallbackInterface.OnStrong;
-                @Strong.performed -= m_Wrapper.m_AttacksActionsCallbackInterface.OnStrong;
-                @Strong.canceled -= m_Wrapper.m_AttacksActionsCallbackInterface.OnStrong;
+                @Down.started -= m_Wrapper.m_AttacksActionsCallbackInterface.OnDown;
+                @Down.performed -= m_Wrapper.m_AttacksActionsCallbackInterface.OnDown;
+                @Down.canceled -= m_Wrapper.m_AttacksActionsCallbackInterface.OnDown;
+                @Upper.started -= m_Wrapper.m_AttacksActionsCallbackInterface.OnUpper;
+                @Upper.performed -= m_Wrapper.m_AttacksActionsCallbackInterface.OnUpper;
+                @Upper.canceled -= m_Wrapper.m_AttacksActionsCallbackInterface.OnUpper;
             }
             m_Wrapper.m_AttacksActionsCallbackInterface = instance;
             if (instance != null)
@@ -760,9 +797,12 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
                 @Neutral.started += instance.OnNeutral;
                 @Neutral.performed += instance.OnNeutral;
                 @Neutral.canceled += instance.OnNeutral;
-                @Strong.started += instance.OnStrong;
-                @Strong.performed += instance.OnStrong;
-                @Strong.canceled += instance.OnStrong;
+                @Down.started += instance.OnDown;
+                @Down.performed += instance.OnDown;
+                @Down.canceled += instance.OnDown;
+                @Upper.started += instance.OnUpper;
+                @Upper.performed += instance.OnUpper;
+                @Upper.canceled += instance.OnUpper;
             }
         }
     }
@@ -801,6 +841,7 @@ public partial class @GeneratedPlayerControls : IInputActionCollection2, IDispos
     public interface IAttacksActions
     {
         void OnNeutral(InputAction.CallbackContext context);
-        void OnStrong(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnUpper(InputAction.CallbackContext context);
     }
 }
