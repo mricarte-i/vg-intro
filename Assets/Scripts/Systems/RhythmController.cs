@@ -2,9 +2,9 @@ using UnityEngine;
 using System;
 
 [RequireComponent(typeof(AudioSource))]
-public class RythmController : MonoBehaviour
+public class RhythmController : MonoBehaviour
 {
-    public static RythmController Instance;
+    public static RhythmController Instance;
 
     #region Properties and Fields
 
@@ -137,7 +137,7 @@ public class RythmController : MonoBehaviour
         tick.PlayScheduled(nextTickTime);
     }
 
-    RythmState GetBeat()
+    RhythmState GetBeat()
     {
         // works with data updated from update
 
@@ -147,21 +147,21 @@ public class RythmController : MonoBehaviour
         // always work with next if lastBeat is prev
         float closestTime = (timeToNext + timeToPrev > 0)? timeToPrev : timeToNext;
 
-        RythmState rythmState;
+        RhythmState rhythmState;
         if(closestTime < _greatTimeframeRatio * secPerBeat)
         {
-            rythmState = RythmState.Great;
+            rhythmState = RhythmState.Great;
         }
         else if (closestTime < _goodTimeframeRatio * secPerBeat)
         {
-            rythmState = RythmState.Good;
+            rhythmState = RhythmState.Good;
         }
         else
         {
-            rythmState = RythmState.Bad;
+            rhythmState = RhythmState.Bad;
         }
 
-        return rythmState;
+        return rhythmState;
     }
 
     #region EVENT_ACTIONS
@@ -174,12 +174,4 @@ public class RythmController : MonoBehaviour
     }
 
     #endregion
-
-    // helpers
-    public enum RythmState
-    {
-        Great,
-        Good,
-        Bad
-    };
 }
