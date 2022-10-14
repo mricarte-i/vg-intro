@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DownAttack
   m_EditorClassIdentifier: 
   _attackStatValues:
-    Damage: 15
+    Damage: 10
     Duration: 0.5

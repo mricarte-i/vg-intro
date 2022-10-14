@@ -16,7 +16,7 @@ public class RhythmController : MonoBehaviour
     private float songPosInBeats = 0f;
     private float secPerBeat;
     private float dsptimesong;
-    [SerializeField] private bool isPlaying;
+    [SerializeField] private bool isPlaying = true;
     private float pauseStartDsptime = 0;
 
     [Header("Rhythm related")]
@@ -30,6 +30,7 @@ public class RhythmController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AppManager.Instance.OnPause += OnAppPause;
         // volume change
         AudioManager.Instance.OnEffectsVolumeChange += OnEffectsVolumeChange;
         AudioManager.Instance.OnMusicVolumeChange += OnMusicVolumeChange;
@@ -42,6 +43,7 @@ public class RhythmController : MonoBehaviour
 
         if(!bgm.isPlaying){
             EventsManager.Instance.EventTimeout();
+            Destroy(this); //end this man
         }
 
         //calculate the position in seconds
@@ -88,15 +90,19 @@ public class RhythmController : MonoBehaviour
 
     }
 
-    public void setData(BgmData data)
-    {
-        if(isInitialized) throw new InvalidOperationException("Already initialized. Can setData only if not initialized");
-        bgmData = data;
+    private void OnAppPause(bool isPaused){
+        if(isPaused){
+            Pause();
+        }else{
+            Play();
+        }
     }
-    
-    private void init()
+
+    public void Init(BgmData data)
     {
-        if(isInitialized) throw new InvalidOperationException("Already initialized");
+        if(isInitialized) throw new InvalidOperationException("Already initialized.");
+
+        bgmData = data;
 
         AudioSource[] audioSources = GetComponents<AudioSource>();
 
@@ -137,7 +143,7 @@ public class RhythmController : MonoBehaviour
         tick.PlayScheduled(nextTickTime);
     }
 
-    RhythmState GetBeat()
+    public RhythmState GetBeat()
     {
         // works with data updated from update
 

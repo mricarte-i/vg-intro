@@ -1,5 +1,7 @@
-[CreateAssetMenu(fileName ="New RythmHpModifierData", menuName = "Rhythm Hp modifier")]
-public class RythmHpModifierData : ScriptableObject
+using UnityEngine;
+
+[CreateAssetMenu(fileName ="New RhythmHpModifierData", menuName = "Rhythm Hp modifier")]
+public class RhythmHpModifierData : ScriptableObject
 {
     public string Name;
     public float GreatHpModifier;
