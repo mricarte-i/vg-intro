@@ -50,6 +50,9 @@ public class PlayerInputHandler : MonoBehaviour
     //private BoxCollider _boxTrigger; //do we really need to keep this variable?
     private CharacterPushInteraction _pushInteract;
 
+    private PlayerId _playerId;
+    public void SetPlayerId(PlayerId id) => _playerId = id;
+
     //private int currentCmdNum = 0; memento lmao
 
     private DamageSystemHandler _damageSystemHandler;
@@ -232,8 +235,22 @@ public class PlayerInputHandler : MonoBehaviour
 
         if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM && _currentRythmCooldown <= 0) {
             _currentRythmCooldown = _rythmCooldown;
-            var result = RhythmController.Instance.GetBeat();
-            switch(result){
+            var result = RhythmController.Instance.HitStrum(_playerId);
+
+            var hitState =
+                result.Position >= 0 ?
+                    result.Position < RhythmController.Instance.LatencyThreshold ?
+                        result.Position == 0 ? RhythmState.Great : RhythmState.Good
+                        : result.Position > -RhythmController.Instance.LatencyThreshold ?
+                            RhythmState.Good
+                            : RhythmState.Bad
+                    : RhythmState.Bad;
+
+            if(result.BeatNumber == -1){
+                hitState = RhythmState.Bad;
+            }
+
+            switch(hitState){
                 case RhythmState.Bad:
                     _damageSystemHandler.GetHurtbox.GetHit(-_rhythmValues.BadHpModifier);
                     return;

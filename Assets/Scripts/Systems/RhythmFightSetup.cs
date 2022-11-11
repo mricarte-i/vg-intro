@@ -27,6 +27,9 @@ public class RhythmFightSetup : MonoBehaviour
         _p1.transform.position = _p1StartPos.position;
         _p2.transform.position = _p2StartPos.position;
 
+        _p1.GetComponent<PlayerInputHandler>().SetPlayerId(PlayerId.P1);
+        _p2.GetComponent<PlayerInputHandler>().SetPlayerId(PlayerId.P2);
+
         _playerGuider.SetPlayers(_p1.GetComponent<PlayerInputHandler>(), _p2.GetComponent<PlayerInputHandler>());
 
         _targetGroup.AddMember(_p1.transform, 0.4f, 1.7f);

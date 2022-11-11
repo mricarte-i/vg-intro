@@ -203,11 +203,12 @@ public class RhythmController : MonoBehaviour
     private BeatInfo GetPossibleBeat(LinkedList<BeatInfo> possibleBeats){
         BeatInfo ret = new BeatInfo(-1, -1f);
 
-        var peekBeat = possibleBeats.Last;
+        var peekBeat = possibleBeats.First;
         if(peekBeat != null && Mathf.Abs(peekBeat.Value.Position) < _latencySafeZone) {
             ret = peekBeat.Value.Clone();
             possibleBeats.Remove(peekBeat);
         }
+        Debug.Log("beat given " + ret.BeatNumber + ret.Position);
 
         return ret;
     }
