@@ -1,3 +1,4 @@
+using Animations;
 using Controllers;
 using UnityEngine;
 
@@ -66,6 +67,9 @@ public class NormalFightSetup : MonoBehaviour
         pc.BindControls(player.controls);
 
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
+        var animationController = model.GetComponent<CharacterAnimatorController>();
+        pc.SetAnimatorController(animationController);
+        
         //do the same when we eventually add the collider thingy!
         var damageSystem = Instantiate(player.characterData.DamageSystem, go.transform);
         var damageSystemHandler = damageSystem.GetComponent<DamageSystemHandler>();
@@ -73,6 +77,7 @@ public class NormalFightSetup : MonoBehaviour
         damageSystemHandler.AddAfterAttackingEvent(pc.EnablePlayerActions);
         damageSystemHandler.GetHurtbox.SetPlayerId(player.playerId);
         pc.SetDamageSystemHandler(damageSystemHandler);
+        
 
         return go;
     }
