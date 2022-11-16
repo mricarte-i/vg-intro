@@ -16,9 +16,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4633515072506228267}
     - target: {fileID: 3269071485765991107, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: _sfxPrefab
+      value: 
+      objectReference: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
+    - target: {fileID: 3269071485765991107, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: _hitboxes.Array.data[0]
       value: 
       objectReference: {fileID: 6887072567094558772}
+    - target: {fileID: 5871032034648663116, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: _sfxPrefab
+      value: 
+      objectReference: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
     - target: {fileID: 5871032034648663116, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: _hitboxes.Array.data[0]
       value: 
@@ -123,4 +131,5 @@ MonoBehaviour:
   _attackStats: {fileID: 11400000, guid: 5c5cafdd2e21c434d8474574ba1ee671, type: 2}
   _hitboxes:
   - {fileID: 3913460097695973590}
+  _sfxPrefab: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
   _rollingSpeed: 8

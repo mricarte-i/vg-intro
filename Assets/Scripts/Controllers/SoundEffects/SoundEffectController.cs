@@ -3,8 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundEffectController : MonoBehaviour, IListenable
 {
+    private bool isDone = false;
+    private bool isPlaying = false;
     public AudioSource AudioSource => _audioSource;
-    private AudioSource _audioSource;
+    [SerializeField] private AudioSource _audioSource;
 
     public AudioClip AudioClip => _audioClip;
     private AudioClip _audioClip;
@@ -20,13 +22,22 @@ public class SoundEffectController : MonoBehaviour, IListenable
     }
 
     public void Play(AudioClip clip) {
+        isPlaying = true;
         AudioSource.PlayOneShot(clip);
     }
 
-    public void Play() => AudioSource.PlayOneShot(AudioClip);
+    public void Play(){
+        isPlaying = true;
+        AudioSource.PlayOneShot(AudioClip);
+    }
 
     public void Stop() => AudioSource.Stop();
 
+    void Update(){
+        if(isPlaying && !AudioSource.isPlaying){
+            Destroy(this);
+        }
+    }
 
     void Start()
     {

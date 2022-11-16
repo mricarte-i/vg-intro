@@ -11,6 +11,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicDamageSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 3269071485765991107, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: _sfxPrefab
+      value: 
+      objectReference: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
+    - target: {fileID: 4657812353699554484, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: _sfxPrefab
+      value: 
+      objectReference: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
+    - target: {fileID: 5871032034648663116, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: _sfxPrefab
+      value: 
+      objectReference: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
     - target: {fileID: 5871032034648663116, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: _hitboxes.Array.data[0]
       value: 
