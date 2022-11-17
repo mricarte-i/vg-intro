@@ -2,6 +2,8 @@
 {
     public interface ICharaterAnimatorController
     {
+        #region Movement
+
         bool IsIdle();
         void TriggerIdle();
 
@@ -14,6 +16,21 @@
         bool IsJumping();
         void TriggerJump();
 
+        #endregion
+        
+        
+
+        #region Take Damage
+
+        bool IsTakeDamage();
+        void TriggerTakeDamage();
+
+        #endregion
+
+
+
+        #region Attacks
+
         bool IsUpperAttack();
         void TriggerUpperAttack();
 
@@ -22,5 +39,7 @@
 
         bool IsDownAttack();
         void TriggerDownAttack();
+
+        #endregion
     }
 }

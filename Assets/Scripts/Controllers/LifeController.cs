@@ -1,4 +1,5 @@
-﻿using Strategy;
+﻿using System;
+using Strategy;
 using UnityEngine;
 
 namespace Controllers
@@ -14,6 +15,9 @@ namespace Controllers
 
         [SerializeField] private PlayerId _playerId;
         public void SetPlayerId(PlayerId id) => _playerId = id;
+
+        private event Action _onHitEvents;
+        public void AddOnHitEvents(Action onHitAction) => _onHitEvents += onHitAction;
 
         public void SetHPBar(HealthBar healthBar){
             _healthBar = healthBar;
@@ -36,6 +40,7 @@ namespace Controllers
         {
             _currentLife -= damage;
             _healthBar.UpdateCurrentHealth(_currentLife);
+            _onHitEvents?.Invoke();
             //Update Life Event
             if (_currentLife <= 0) Lose();
         }

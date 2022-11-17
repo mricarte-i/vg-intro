@@ -18,6 +18,8 @@ namespace Animations
             WalkingBackwards,
             Jump,
             
+            TakeDamage,
+            
             UpperAttack,
             NeutralAttack,
             DownAttack
@@ -33,6 +35,8 @@ namespace Animations
         private static readonly string TRIGGER_WALKING_FORWARDS = "TriggerWalkingForwards";
         private static readonly string TRIGGER_WALKING_BACKWARDS = "TriggerWalkingBackwards";
         private static readonly string TRIGGER_JUMP = "TriggerJump";
+
+        private static readonly string TRIGGER_TAKE_DAMAGE = "TriggerTakeDamage";
         
         private static readonly string TRIGGER_UPPER_ATTACK = "TriggerUpperAttack";
         private static readonly string TRIGGER_NEUTRAL_ATTACK = "TriggerNeutralAttack";
@@ -44,6 +48,8 @@ namespace Animations
             { AnimationType.WalkingForwards, TRIGGER_WALKING_FORWARDS },
             { AnimationType.WalkingBackwards, TRIGGER_WALKING_BACKWARDS },
             { AnimationType.Jump, TRIGGER_JUMP },
+
+            { AnimationType.TakeDamage, TRIGGER_TAKE_DAMAGE },
 
             { AnimationType.UpperAttack, TRIGGER_UPPER_ATTACK },
             { AnimationType.NeutralAttack, TRIGGER_NEUTRAL_ATTACK },
@@ -115,6 +121,22 @@ namespace Animations
             if (IsJumping()) return;
             _currentAnimation = AnimationType.Jump;
             SetAnimationParameters(AnimationType.Jump);
+        }
+
+        #endregion
+
+        #region Take Damage
+
+        public bool IsTakeDamage()
+        {
+            return _currentAnimation == AnimationType.TakeDamage;
+        }
+
+        public void TriggerTakeDamage()
+        {
+            if (IsTakeDamage()) return;
+            _currentAnimation = AnimationType.TakeDamage;
+            SetAnimationParameters(AnimationType.TakeDamage);
         }
 
         #endregion

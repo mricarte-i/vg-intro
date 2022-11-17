@@ -84,7 +84,7 @@ public class PlayerInputHandler : MonoBehaviour
         _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerUpperAttack, DamageSystemHandler.AttackType.Upper);
         _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerDownAttack, DamageSystemHandler.AttackType.Down);
         
-        //_damageSystemHandler.AddAfterAttackingEvent(_animatorController.TriggerIdle);
+        _damageSystemHandler.GetHurtbox.AddOnHitEvents(_animatorController.TriggerTakeDamage);
     }
 
     public void BindControls(GeneratedPlayerControls controls){
