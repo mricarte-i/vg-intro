@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 72149221371612378, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b65c40b32ef05c549836d6986f28c96b, type: 2}
+    - target: {fileID: 546862453456887870, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1013275942826599576, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: m_Name
       value: BlenderDamageSystem
@@ -15,6 +23,26 @@ PrefabInstance:
       propertyPath: _downAttack
       value: 
       objectReference: {fileID: 4633515072506228267}
+    - target: {fileID: 2823594118074814279, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823594118074814279, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823594118074814279, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823594118074814279, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2823594118074814279, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3269071485765991107, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: _sfxPrefab
       value: 
@@ -23,6 +51,30 @@ PrefabInstance:
       propertyPath: _hitboxes.Array.data[0]
       value: 
       objectReference: {fileID: 6887072567094558772}
+    - target: {fileID: 4458122742800544077, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9848078
+      objectReference: {fileID: 0}
+    - target: {fileID: 4458122742800544077, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.17364825
+      objectReference: {fileID: 0}
+    - target: {fileID: 4458122742800544077, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4458122742800544077, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4458122742800544077, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5729742531282292950, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5871032034648663116, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: _sfxPrefab
       value: 
