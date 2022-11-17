@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Animations;
 using Controllers;
@@ -75,6 +76,15 @@ public class PlayerInputHandler : MonoBehaviour
         _moveCommandReceiver = new MoveCommandReceiver();
 
         setUpJumpVariables();
+    }
+
+    private void Start()
+    {
+        _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerNeutralAttack, DamageSystemHandler.AttackType.Neutral);
+        _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerUpperAttack, DamageSystemHandler.AttackType.Upper);
+        _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerDownAttack, DamageSystemHandler.AttackType.Down);
+        
+        //_damageSystemHandler.AddAfterAttackingEvent(_animatorController.TriggerIdle);
     }
 
     public void BindControls(GeneratedPlayerControls controls){
@@ -201,7 +211,6 @@ public class PlayerInputHandler : MonoBehaviour
         if(_isDummy) return;
         _pushInteract.Speed(PushForce);
         
-        IsAttacking = false;
         StartJump = false;
         
         Move(_currentSpeed);
@@ -213,7 +222,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private void handleAnimations()
     {
-        if (IsAttacking)
+        if (_damageSystemHandler.IsCurrentlyAttacking)
         {
             return;
         }
@@ -268,7 +277,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         var isAttackPressed = IsNeutralAttackPressed || IsDownAttackPressed || IsUpperAttackPressed;
         if(!isAttackPressed) return;
-        IsAttacking = isAttackPressed;
+        
         if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM && _currentRythmCooldown <= 0) {
             _currentRythmCooldown = _rythmCooldown;
             var result = RhythmController.Instance.GetBeat();
@@ -360,7 +369,6 @@ public class PlayerInputHandler : MonoBehaviour
 
     #region Attacks
 
-    private bool IsAttacking { get; set; }
     private bool IsNeutralAttackPressed { get; set; }
     private bool IsDownAttackPressed { get; set; }
     private bool IsUpperAttackPressed { get; set; }

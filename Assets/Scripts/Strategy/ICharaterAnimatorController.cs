@@ -13,5 +13,14 @@
 
         bool IsJumping();
         void TriggerJump();
+
+        bool IsUpperAttack();
+        void TriggerUpperAttack();
+
+        bool IsNeutralAttack();
+        void TriggerNeutralAttack();
+
+        bool IsDownAttack();
+        void TriggerDownAttack();
     }
 }
