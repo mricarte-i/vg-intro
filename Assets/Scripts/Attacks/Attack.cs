@@ -15,7 +15,7 @@ namespace Attacks
 
         [SerializeField] protected List<Hitbox> _hitboxes = new List<Hitbox>();
 
-        [SerializeField] private GameObject _sfxPrefab;
+        [SerializeField] protected GameObject _sfxPrefab;
 
         #region Hitter HurtBox
 
@@ -52,7 +52,7 @@ namespace Attacks
             }
         }
 
-        private void MakeDamage(LifeController lifeController)
+        protected void MakeDamage(LifeController lifeController)
         {
             if(lifeController != _hurtbox){
                 lifeController.GetHit(Damage);

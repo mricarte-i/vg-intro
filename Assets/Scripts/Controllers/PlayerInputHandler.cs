@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Animations;
 using Controllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -55,6 +57,9 @@ public class PlayerInputHandler : MonoBehaviour
     private DamageSystemHandler _damageSystemHandler;
     public void SetDamageSystemHandler(DamageSystemHandler dsh) => _damageSystemHandler = dsh;
 
+    private CharacterAnimatorController _animatorController;
+    public void SetAnimatorController(CharacterAnimatorController cac) => _animatorController = cac;
+
     [Header("Rhythm Exclusive variables")]
 
     [SerializeField] private float _rythmCooldown = 0.3f;
@@ -71,6 +76,17 @@ public class PlayerInputHandler : MonoBehaviour
         _moveCommandReceiver = new MoveCommandReceiver();
 
         setUpJumpVariables();
+    }
+
+    private void Start()
+    {
+        _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerNeutralAttack, DamageSystemHandler.AttackType.Neutral);
+        _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerUpperAttack, DamageSystemHandler.AttackType.Upper);
+        _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerDownAttack, DamageSystemHandler.AttackType.Down);
+        
+        _damageSystemHandler.GetHurtbox.AddOnHitEvents(_animatorController.TriggerTakeDamage);
+        _damageSystemHandler.GetHurtbox.AddOnLoseEvents(_animatorController.TriggerDying);
+        _damageSystemHandler.GetHurtbox.AddOnLoseEvents(DisablePlayerActions);
     }
 
     public void BindControls(GeneratedPlayerControls controls){
@@ -186,22 +202,62 @@ public class PlayerInputHandler : MonoBehaviour
         upperAttack.Disable();
     }
 
+    public void ResetPlayerActions()
+    {
+        EnablePlayerActions();
+        Debug.Log($"Reseteando before: animacion Idle:{_animatorController.IsIdle()}");
+        _animatorController.TriggerReset();
+        Debug.Log($"Reseteando after: animacion Idle:{_animatorController.IsIdle()}");
+    }
+
     #endregion
 
     // Update is called once per frame
     void Update()
     {
         //player might not be giving inputs but could be falling, still have speed, etc.
-        _currentSpeed = Direction * movementSpeed * Time.deltaTime;
+        _currentSpeed = Direction * (movementSpeed * Time.deltaTime);
 
         if(_isDummy) return;
         _pushInteract.Speed(PushForce);
-
-
+        
+        StartJump = false;
+        
         Move(_currentSpeed);
         handleGravity();
         handleJump();
         handleAttack();
+        handleAnimations();
+    }
+
+    private void handleAnimations()
+    {
+        if (_damageSystemHandler.IsCurrentlyAttacking)
+        {
+            return;
+        }
+        
+        if (StartJump)
+        {
+            _animatorController.TriggerJump();
+            StartJump = false;
+            return;
+        }
+        
+        if (IsJumping && !_characterController.isGrounded) return;
+
+        var movingOrientation = GetMovingOrientation();
+        switch (movingOrientation)
+        {
+            case MovingOrientation.Forwards:
+                _animatorController.TriggerWalkingForwards();
+                return;
+            case MovingOrientation.Backwards:
+                _animatorController.TriggerWalkingBackwards();
+                return;
+        }
+        
+        _animatorController.TriggerIdle();
     }
 
     private void handleJump(){
@@ -209,8 +265,10 @@ public class PlayerInputHandler : MonoBehaviour
             //Debug.Log("Jump!");
             IsJumping = true;
             Depth = _initialJumpVelocity;
-        }else if(!IsJumpPressed && IsJumping && _characterController.isGrounded){
-            IsJumping = false;
+            StartJump = true;
+        }
+        else if(IsJumping && _characterController.isGrounded){
+            IsJumping = IsJumpPressed;
         }
     }
 
@@ -229,7 +287,7 @@ public class PlayerInputHandler : MonoBehaviour
 
         var isAttackPressed = IsNeutralAttackPressed || IsDownAttackPressed || IsUpperAttackPressed;
         if(!isAttackPressed) return;
-
+        
         if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM && _currentRythmCooldown <= 0) {
             _currentRythmCooldown = _rythmCooldown;
             var result = RhythmController.Instance.GetBeat();
@@ -278,6 +336,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     private bool IsJumpPressed { get; set; }
     private bool IsJumping { get; set; }
+    private bool StartJump { get; set; }
 
     //names based on typical controller naming...
     private float Vertical { get; set; }
@@ -288,14 +347,30 @@ public class PlayerInputHandler : MonoBehaviour
     private Vector3 Direction {
         get {
             var dir =
-                (transform.forward * Horizontal * (_inverted ? -1 : 1)) +
+                (transform.forward * (Horizontal * (_inverted ? -1 : 1))) +
                 (transform.up * Depth) +
-                (transform.right * 0.5f * Vertical * (_inverted ? 1 : -1)); //half rotation speed ?
+                (transform.right * (0.5f * Vertical * (_inverted ? 1 : -1))); //half rotation speed ?
             return dir;
         }
     }
 
-    private bool IsMoving => Direction != Vector3.zero;
+    private bool IsMoving => Mathf.Abs(_characterController.velocity.x) > 0.1;
+    
+    private enum MovingOrientation
+    {
+        Idle,
+        Forwards,
+        Backwards
+    }
+    
+    private MovingOrientation GetMovingOrientation()
+    {
+        if (!IsMoving) return MovingOrientation.Idle;
+        var dotProduct = Vector3.Dot(transform.forward, _characterController.velocity);
+        if (dotProduct < 0) return MovingOrientation.Backwards;
+        return MovingOrientation.Forwards;
+    }
+    
     private Vector3 PushForce => _characterController.velocity.Equals(Vector3.zero) ?
         _currentSpeed :
         _characterController.velocity;
