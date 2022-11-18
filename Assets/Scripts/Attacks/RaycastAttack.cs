@@ -26,7 +26,13 @@ namespace Attacks
             if(_isAttacking && !_endingAttack) {
                 RaycastHit hit;
                 if(Physics.Raycast(transform.position, transform.forward, out hit, _range)){
-                    var lifeControllerHit = hit.transform.gameObject.GetComponent<LifeController>();
+
+                    Debug.Log(hit.transform.name);
+
+                    var lifeControllerHit = hit.transform.GetComponentInChildren<LifeController>();
+
+                    Debug.Log(lifeControllerHit != null);
+                    Debug.Log(lifeControllerHit != _hurtbox);
 
                     if(lifeControllerHit != null && lifeControllerHit != _hurtbox){
                         base.MakeDamage(lifeControllerHit);
