@@ -14,6 +14,8 @@ public class SoundEffectController : MonoBehaviour, IListenable
     public AudioType AudioType => _audioType;
     [SerializeField] private AudioType _audioType = AudioType.EFFECTS;
 
+    private float clipDuration;
+
 
     public void InitAudioSource()
     {
@@ -22,11 +24,13 @@ public class SoundEffectController : MonoBehaviour, IListenable
     }
 
     public void Play(AudioClip clip) {
+        clipDuration = clip.length;
         isPlaying = true;
         AudioSource.PlayOneShot(clip);
     }
 
     public void Play(){
+        clipDuration = AudioClip.length;
         isPlaying = true;
         AudioSource.PlayOneShot(AudioClip);
     }
@@ -34,7 +38,7 @@ public class SoundEffectController : MonoBehaviour, IListenable
     public void Stop() => AudioSource.Stop();
 
     void Update(){
-        if(isPlaying && !AudioSource.isPlaying){
+        if(isPlaying && AudioSource.time >= clipDuration){
             Destroy(this);
         }
     }

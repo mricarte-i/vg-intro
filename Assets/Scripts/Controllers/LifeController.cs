@@ -1,4 +1,5 @@
-﻿using Strategy;
+﻿using System;
+using Strategy;
 using UnityEngine;
 
 namespace Controllers
@@ -15,6 +16,12 @@ namespace Controllers
         [SerializeField] private PlayerId _playerId;
         public void SetPlayerId(PlayerId id) => _playerId = id;
 
+        private event Action _onHitEvents;
+        public void AddOnHitEvents(Action onHitAction) => _onHitEvents += onHitAction;
+
+        private event Action _onLoseEvents;
+        public void AddOnLoseEvents(Action onLoseEvents) => _onLoseEvents += onLoseEvents;
+
         public void SetHPBar(HealthBar healthBar){
             _healthBar = healthBar;
             _healthBar.UpdateMaxHealth(MaxLife);
@@ -29,6 +36,8 @@ namespace Controllers
         {
             _currentLife = MaxLife;
             if(_healthBar != null) SetHPBar(_healthBar);
+            var colliderComponent = gameObject.GetComponent<Collider>();
+            colliderComponent.enabled = true;
             //Update Life Event
         }
 
@@ -36,12 +45,16 @@ namespace Controllers
         {
             _currentLife -= damage;
             _healthBar.UpdateCurrentHealth(_currentLife);
+            _onHitEvents?.Invoke();
             //Update Life Event
             if (_currentLife <= 0) Lose();
         }
 
         public void Lose()
         {
+            var colliderComponent = gameObject.GetComponent<Collider>();
+            colliderComponent.enabled = false;
+            _onLoseEvents?.Invoke();
             EventsManager.Instance.EventPlayerDeath(_playerId);
         }
     }

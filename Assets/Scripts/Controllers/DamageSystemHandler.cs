@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Attacks;
 using Strategy;
 using UnityEngine;
@@ -12,12 +13,31 @@ namespace Controllers
         [SerializeField] private Attack _upperAttack;
         [SerializeField] private LifeController _hurtbox;
         public LifeController GetHurtbox => _hurtbox;
+        
+        public enum AttackType
+        {
+            Upper,
+            Neutral,
+            Down
+        }
+
+        private Dictionary<AttackType, Attack> _attacks;
 
         public bool IsCurrentlyAttacking => _isCurrentlyAttacking;
         private bool _isCurrentlyAttacking = false;
 
         private void SetAsNotAttacking() => _isCurrentlyAttacking = false;
         private void SetAsAttacking() => _isCurrentlyAttacking = true;
+
+        private void Awake()
+        {
+            _attacks = new Dictionary<AttackType, Attack>
+            {
+                { AttackType.Upper, _upperAttack },
+                { AttackType.Neutral, _neutralAttack},
+                { AttackType.Down, _downAttack }
+            };
+        }
 
         private void Start()
         {
@@ -61,12 +81,22 @@ namespace Controllers
             _downAttack.AddBeforeAttackingEvent(beforeAttackingAction);
             _upperAttack.AddBeforeAttackingEvent(beforeAttackingAction);
         }
+        
+        public void AddBeforeAttackingEvent(Action beforeAttackingAction, AttackType attackType)
+        {
+            _attacks[attackType].AddBeforeAttackingEvent(beforeAttackingAction);
+        }
 
         public void AddAfterAttackingEvent(Action afterAttackingAction)
         {
             _neutralAttack.AddAfterAttackingEvent(afterAttackingAction);
             _downAttack.AddAfterAttackingEvent(afterAttackingAction);
             _upperAttack.AddAfterAttackingEvent(afterAttackingAction);
+        }
+        
+        public void AddAfterAttackingEvent(Action afterAttackingAction, AttackType attackType)
+        {
+            _attacks[attackType].AddAfterAttackingEvent(afterAttackingAction);
         }
 
         #endregion

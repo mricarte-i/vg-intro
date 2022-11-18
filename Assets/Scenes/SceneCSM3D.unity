@@ -1564,7 +1564,7 @@ MonoBehaviour:
   _characters:
   - {fileID: 11400000, guid: dea9b0e553ce1c94da322a8480786b43, type: 2}
   - {fileID: 11400000, guid: 0e00372772f119949aa060a12b2880f1, type: 2}
-  - {fileID: 11400000, guid: 0e00372772f119949aa060a12b2880f1, type: 2}
+  - {fileID: 11400000, guid: 40eb0de644edc6742ac52bfe42a2dfb2, type: 2}
   - {fileID: 11400000, guid: dea9b0e553ce1c94da322a8480786b43, type: 2}
   _playerFloors:
   - {fileID: 1146087106}
@@ -1694,7 +1694,7 @@ MonoBehaviour:
   - {fileID: 1844330681}
   _stages:
   - {fileID: 11400000, guid: 0373ca7cfa5a1a14195a849580c6c59c, type: 2}
-  - {fileID: 11400000, guid: 0373ca7cfa5a1a14195a849580c6c59c, type: 2}
+  - {fileID: 11400000, guid: f9dec95ddff96c64db3fa68783f40055, type: 2}
   - {fileID: 11400000, guid: 0373ca7cfa5a1a14195a849580c6c59c, type: 2}
   - {fileID: 11400000, guid: 0373ca7cfa5a1a14195a849580c6c59c, type: 2}
   _menu: {fileID: 584935559}

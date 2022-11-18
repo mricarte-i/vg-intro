@@ -816,15 +816,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1121877114932695817}
-  m_LocalRotation: {x: 0.7071068, y: 1.5524824e-10, z: -1.3466878e-10, w: 0.7071067}
-  m_LocalPosition: {x: -0.000021654767, y: 0.00007614125, z: 0.011011783}
-  m_LocalScale: {x: 1, y: 0.9999998, z: 1}
+  m_LocalRotation: {x: -0, y: 1.4551867e-11, z: -2.0500229e-10, w: 1}
+  m_LocalPosition: {x: -0.0021654768, y: 1.1011782, z: -0.007614255}
+  m_LocalScale: {x: 100, y: 99.99997, z: 99.999985}
   m_Children:
   - {fileID: 8454598983709002376}
   - {fileID: 8543358817854470732}
   - {fileID: 4572036455737247039}
-  m_Father: {fileID: 5467134794772148396}
-  m_RootOrder: 9
+  m_Father: {fileID: 1233776579486769822}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1185515966361637076
 GameObject:
@@ -1921,6 +1921,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1233776579486769822}
+  - component: {fileID: 1611574834502222629}
+  - component: {fileID: 8685070867554503925}
   m_Layer: 0
   m_Name: FullBlenderHead
   m_TagString: Untagged
@@ -1946,9 +1948,41 @@ Transform:
   - {fileID: 4691624917071138524}
   - {fileID: 1491169719367449658}
   - {fileID: 5467134794772148396}
+  - {fileID: 326686052038186927}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1611574834502222629
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897301801836820516}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 74008ba72b8b5ee419d680e76f16a53b, type: 3}
+  m_Controller: {fileID: 9100000, guid: 51fcf3095a69d2e46ba195dbda6799cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8685070867554503925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1897301801836820516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b88666eb9ae4eeb98c0dfc545fb4388, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2052217685592876491
 GameObject:
   m_ObjectHideFlags: 0
@@ -5193,7 +5227,6 @@ Transform:
   - {fileID: 3490720548149160146}
   - {fileID: 4526193260281538493}
   - {fileID: 9202781885693218363}
-  - {fileID: 326686052038186927}
   m_Father: {fileID: 1233776579486769822}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
