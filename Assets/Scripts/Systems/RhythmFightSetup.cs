@@ -1,5 +1,6 @@
 using UnityEngine;
 using Controllers;
+using Animations;
 
 public class RhythmFightSetup : MonoBehaviour
 {
@@ -58,6 +59,9 @@ public class RhythmFightSetup : MonoBehaviour
         _p2.GetComponentInChildren<LifeController>().Reset();
 
         _fightUI.GetComponent<FightUI>().Reset();
+
+        _p1.GetComponent<PlayerInputHandler>().ResetPlayerActions();
+        _p2.GetComponent<PlayerInputHandler>().ResetPlayerActions();
     }
 
     private GameObject InitializePlayer(PlayableCharacter player){
@@ -72,6 +76,9 @@ public class RhythmFightSetup : MonoBehaviour
         pc.BindControls(player.controls);
 
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
+        var animationController = model.GetComponent<CharacterAnimatorController>();
+        pc.SetAnimatorController(animationController);
+
         //do the same when we eventually add the collider thingy!
         var damageSystem = Instantiate(player.characterData.DamageSystem, go.transform);
         var damageSystemHandler = damageSystem.GetComponent<DamageSystemHandler>();

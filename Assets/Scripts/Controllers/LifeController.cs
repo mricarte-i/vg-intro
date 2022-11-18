@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Strategy;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ namespace Controllers
         [SerializeField] private float _currentLife;
 
         [SerializeField] private HealthBar _healthBar;
+
+        [SerializeField] private GameObject _hurtLight;
 
         [SerializeField] private PlayerId _playerId;
         public void SetPlayerId(PlayerId id) => _playerId = id;
@@ -34,6 +37,7 @@ namespace Controllers
 
         private void Start()
         {
+            if(_hurtLight != null) _hurtLight.SetActive(false);
             _currentLife = MaxLife;
             if(_healthBar != null) SetHPBar(_healthBar);
             var colliderComponent = gameObject.GetComponent<Collider>();
@@ -46,8 +50,19 @@ namespace Controllers
             _currentLife -= damage;
             _healthBar.UpdateCurrentHealth(_currentLife);
             _onHitEvents?.Invoke();
+
+            if(_hurtLight != null) _hurtLight.SetActive(true);
+            if(damage > 0) TimeManager.Instance.HitStop(1f/5f);
+            StartCoroutine(Wait(1f/4f));
+
             //Update Life Event
             if (_currentLife <= 0) Lose();
+        }
+
+        private IEnumerator Wait(float duration)
+        {
+            yield return new WaitForSecondsRealtime(duration);
+            if(_hurtLight != null) _hurtLight.SetActive(false);
         }
 
         public void Lose()
@@ -55,6 +70,7 @@ namespace Controllers
             var colliderComponent = gameObject.GetComponent<Collider>();
             colliderComponent.enabled = false;
             _onLoseEvents?.Invoke();
+            TimeManager.Instance.SlowDown(4f);
             EventsManager.Instance.EventPlayerDeath(_playerId);
         }
     }
