@@ -15,11 +15,17 @@ namespace Attacks
         public override void Execute(){
             _isAttacking = true;
             InvokeBeforeAttackingEvents();
+            StartCoroutine(WaitStart(Duration/3));
+
+            StartCoroutine(WaitEnd(Duration));
+        }
+
+        private IEnumerator WaitStart(float duration)
+        {
+            yield return new WaitForSecondsRealtime(duration);
             _spawnedBeam = Instantiate(_beamPrefab, transform);
             var sfxgo = Instantiate(_sfxPrefab);
             sfxgo.GetComponent<SoundEffectController>().Play(_attackStats.SFXTHROW);
-
-            StartCoroutine(Wait(Duration));
         }
 
         private void Update(){
@@ -31,17 +37,26 @@ namespace Attacks
 
                     var lifeControllerHit = hit.transform.GetComponentInChildren<LifeController>();
 
-                    Debug.Log(lifeControllerHit != null);
-                    Debug.Log(lifeControllerHit != _hurtbox);
+                    //Debug.Log(lifeControllerHit != null);
+                    //Debug.Log(lifeControllerHit != _hurtbox);
 
                     if(lifeControllerHit != null && lifeControllerHit != _hurtbox){
-                        base.MakeDamage(lifeControllerHit);
+                        MakeRayDamage(lifeControllerHit);
                     }
                 }
             }
         }
 
-        private IEnumerator Wait(float duration)
+        protected void MakeRayDamage(LifeController lifeController)
+        {
+            if(lifeController != _hurtbox){
+                lifeController.GetHit(Damage*Time.deltaTime);
+                var sfxgo = Instantiate(_sfxPrefab);
+                sfxgo.GetComponent<SoundEffectController>().Play(_attackStats.SFXCONTACT);
+            }
+        }
+
+        private IEnumerator WaitEnd(float duration)
         {
             yield return new WaitForSecondsRealtime(duration);
             _endingAttack = true;
