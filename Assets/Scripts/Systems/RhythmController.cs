@@ -5,26 +5,27 @@ using System.Collections.Generic;
 public class BeatInfo {
     public int BeatNumber;
     public float Position;
-    private float _initialPosition;
+    public float _initialPosition;
     private float _secPerBeat;
 
-    public BeatInfo(int bn, float pos, float secPerBeat) {
+    public BeatInfo(int bn, float pos) {
         BeatNumber = bn;
         Position = pos;
-        _secPerBeat = secPerBeat;
         _initialPosition = pos;
     }
 
+    private BeatInfo(int bn, float pos, float _initialPosition) {
+        BeatNumber = bn;
+        Position = pos;
+        _initialPosition = _initialPosition;
+    }
+
     public BeatInfo Clone() {
-        return new BeatInfo(BeatNumber, Position, _secPerBeat);
+        return new BeatInfo(BeatNumber, Position, _initialPosition);
     }
 
     public float Progress() {
-        return (Position - _initialPosition) / (BeatNumber * _secPerBeat - _initialPosition);
-    }
-
-    public float distanceToBeat() {
-        return Position - BeatNumber * _secPerBeat;
+        return (_initialPosition-Position) / _initialPosition;
     }
 }
 
@@ -48,6 +49,7 @@ public class RhythmController : MonoBehaviour
     private float pauseStartDsptime = 0;
 
     [Header("Rhythm related")]
+    [SerializeField] private float _beatFutureFrameWindow = 2f;
     [SerializeField] private float _greatTimeframeRatio = 0.12f;
     [SerializeField] private float _goodTimeframeRatio = 0.36f;
     [SerializeField] private AudioClip tickClip;
@@ -172,7 +174,7 @@ public class RhythmController : MonoBehaviour
 
             foreach(BeatInfo beatInfo in possibleBeats){
                 beatInfo.Position = (beatInfo.BeatNumber * secPerBeat) - songPosition;
-                if(beatInfo.distanceToBeat() > _latencySafeZone){
+                if(beatInfo.Position < -_latencySafeZone) {
                     //gone over the forgivable latency threshold
                     beatsToRemove.Add(beatInfo);
                 }
@@ -186,13 +188,13 @@ public class RhythmController : MonoBehaviour
         if(possibleBeats.Last != null) youngestBeat = possibleBeats.Last.Value;
         if(youngestBeat == null || youngestBeat.BeatNumber < _maxSongBeats){
             //add all possible next beats (within the allowed time frame)
-            var time = Math.Min(1f, bgmData.BGM.length - songPosition);
-            var numberOfNewBeats =  time / (bgmData.Bpm / 60);
+            var time = Math.Min(_beatFutureFrameWindow, bgmData.BGM.length - songPosition);
+            var numberOfNewBeats =  time * secPerBeat;
             var newestBeat = Mathf.FloorToInt(songPosInBeats + numberOfNewBeats);
 
             for(int beat = Mathf.FloorToInt(songPosInBeats); beat <= newestBeat; beat++){
                 if(youngestBeat == null || beat > youngestBeat.BeatNumber){
-                    possibleBeats.AddLast(new BeatInfo(beat, (beat * songPosInBeats) - songPosition, secPerBeat));
+                    possibleBeats.AddLast(new BeatInfo(beat, (beat * secPerBeat) - songPosition));
                 }
             }
         }
@@ -214,7 +216,7 @@ public class RhythmController : MonoBehaviour
     }
 
     private BeatInfo GetPossibleBeat(LinkedList<BeatInfo> possibleBeats){
-        BeatInfo ret = new BeatInfo(-1, -1f, secPerBeat);
+        BeatInfo ret = new BeatInfo(-1, -1f);
 
         var peekBeat = possibleBeats.First;
         if(peekBeat != null && Mathf.Abs(peekBeat.Value.Position) < _latencySafeZone) {

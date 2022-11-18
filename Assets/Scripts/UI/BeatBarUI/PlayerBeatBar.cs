@@ -60,7 +60,6 @@ public class PlayerBeatBar : MonoBehaviour
     void Update()
     {
         var possibleBeats = RhythmController.Instance.GetPossibleBeats(_playerId);
-        Debug.Log($"there are {possibleBeats.Count} possible beats");
 
         //check renderedBeats against possibleBeats, remove those that are no longer in possibleBeats (checking BeatNumber)
         List<int> toRemoveBeats = new List<int>(_renderedBeats.Keys);
@@ -75,8 +74,7 @@ public class PlayerBeatBar : MonoBehaviour
                     _startMarker.transform.rotation
                 );
                 newBeat.transform.SetParent(this.transform);
-                newBeat.name = $"Beat-{beatInfo.BeatNumber}-{_playerId}";
-                Debug.Log($"Beat{beatInfo.BeatNumber} at {newBeat.transform.position}");
+                newBeat.name = $"Beat-{_playerId}-{beatInfo.BeatNumber}";
 
                 _renderedBeats.Add(beatInfo.BeatNumber, newBeat);
             }
