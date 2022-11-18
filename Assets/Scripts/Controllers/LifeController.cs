@@ -52,8 +52,8 @@ namespace Controllers
             _onHitEvents?.Invoke();
 
             if(_hurtLight != null) _hurtLight.SetActive(true);
-            if(damage > 0) TimeManager.Instance.HitStop(1f/5f);
-            StartCoroutine(Wait(1f/4f));
+            //if(damage > 0) TimeManager.Instance.HitStop(1f/15f);
+            StartCoroutine(Wait(1f/10f));
 
             //Update Life Event
             if (_currentLife <= 0) Lose();
@@ -70,7 +70,7 @@ namespace Controllers
             var colliderComponent = gameObject.GetComponent<Collider>();
             colliderComponent.enabled = false;
             _onLoseEvents?.Invoke();
-            TimeManager.Instance.SlowDown(4f);
+            //TimeManager.Instance.SlowDown(4f);
             EventsManager.Instance.EventPlayerDeath(_playerId);
         }
     }

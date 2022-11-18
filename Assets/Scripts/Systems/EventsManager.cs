@@ -23,6 +23,8 @@ public class EventsManager : MonoBehaviour
 
     public bool IsDraw => _draw;
 
+    private FightResult _winner = FightResult.DRAW;
+
     void Awake() {
         if(Instance == null){
             Instance = this;
@@ -89,6 +91,9 @@ public class EventsManager : MonoBehaviour
         if(OnGameOver != null){
             if(_player1Stocks == _stocksWinCondition || _player1Stocks == _stocksWinCondition || _rounds == _maxRounds){
 
+                if(_player1Stocks == _stocksWinCondition) _winner = FightResult.PLAYER1WINS;
+                if(_player2Stocks == _stocksWinCondition) _winner = FightResult.PLAYER2WINS;
+
                 _player1Stocks = 0;
                 _player2Stocks = 0;
                 _rounds = 0;
@@ -117,9 +122,9 @@ public class EventsManager : MonoBehaviour
     }
 
     public PlayableCharacter GetWinner(){
-        if(_player1Dead && _player2Dead){
+        if(_winner == FightResult.DRAW){
             return null;
-        }else if(_player2Dead){
+        }else if(_winner == FightResult.PLAYER1WINS){
             return AppManager.Instance.GetInputUser(0);
         }else{
             return AppManager.Instance.GetInputUser(1);
