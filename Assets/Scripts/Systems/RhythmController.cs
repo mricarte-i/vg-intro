@@ -239,11 +239,11 @@ public class RhythmController : MonoBehaviour
     {
         // works with data updated from update
 
-        float timeToPrev = GetPrevBeatPosition() - songPosition;
-        float timeToNext = GetNextBeatPosition() - songPosition;
+        float timeToPrev = songPosInBeats - (GetPrevBeatPosition() - dsptimesong);
+        float timeToNext = (GetNextBeatPosition() - dsptimesong) - songPosition;
 
         // always work with next if lastBeat is prev
-        float closestTime = (timeToNext + timeToPrev > 0)? timeToPrev : timeToNext;
+        float closestTime = (timeToPrev < timeToNext) ? timeToPrev : timeToNext;
 
         RhythmState rhythmState;
         if(closestTime < _greatTimeframeRatio * secPerBeat)
