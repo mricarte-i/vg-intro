@@ -20,10 +20,16 @@
         
         
 
-        #region Take Damage
+        #region Damage
+
+        bool IsDying();
+        void TriggerDying();
 
         bool IsTakeDamage();
         void TriggerTakeDamage();
+
+        bool IsReseting();
+        void TriggerReset();
 
         #endregion
 

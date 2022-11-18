@@ -53,6 +53,9 @@ public class NormalFightSetup : MonoBehaviour
         _p2.GetComponentInChildren<LifeController>().Reset();
 
         _fightUI.GetComponent<FightUI>().Reset();
+        
+        _p1.GetComponent<PlayerInputHandler>().ResetPlayerActions();
+        _p2.GetComponent<PlayerInputHandler>().ResetPlayerActions();
     }
 
     private GameObject InitializePlayer(PlayableCharacter player){

@@ -85,6 +85,8 @@ public class PlayerInputHandler : MonoBehaviour
         _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerDownAttack, DamageSystemHandler.AttackType.Down);
         
         _damageSystemHandler.GetHurtbox.AddOnHitEvents(_animatorController.TriggerTakeDamage);
+        _damageSystemHandler.GetHurtbox.AddOnLoseEvents(_animatorController.TriggerDying);
+        _damageSystemHandler.GetHurtbox.AddOnLoseEvents(DisablePlayerActions);
     }
 
     public void BindControls(GeneratedPlayerControls controls){
@@ -198,6 +200,14 @@ public class PlayerInputHandler : MonoBehaviour
         neutralAttack.Disable();
         downAttack.Disable();
         upperAttack.Disable();
+    }
+
+    public void ResetPlayerActions()
+    {
+        EnablePlayerActions();
+        Debug.Log($"Reseteando before: animacion Idle:{_animatorController.IsIdle()}");
+        _animatorController.TriggerReset();
+        Debug.Log($"Reseteando after: animacion Idle:{_animatorController.IsIdle()}");
     }
 
     #endregion

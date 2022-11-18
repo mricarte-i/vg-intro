@@ -19,16 +19,22 @@ namespace Animations
             Jump,
             
             TakeDamage,
+            Dying,
+            Reset,
             
             UpperAttack,
             NeutralAttack,
             DownAttack
         }
 
+        private void Awake()
+        {
+            _currentAnimation = AnimationType.Idle;
+        }
+
         private void Start()
         {
             _animator = GetComponent<Animator>();
-            _currentAnimation = AnimationType.Idle;
         }
 
         private static readonly string TRIGGER_IDLE = "TriggerIdle";
@@ -37,6 +43,8 @@ namespace Animations
         private static readonly string TRIGGER_JUMP = "TriggerJump";
 
         private static readonly string TRIGGER_TAKE_DAMAGE = "TriggerTakeDamage";
+        private static readonly string TRIGGER_DYING = "TriggerDying";
+        private static readonly string TRIGGER_RESET = "TriggerReset";
         
         private static readonly string TRIGGER_UPPER_ATTACK = "TriggerUpperAttack";
         private static readonly string TRIGGER_NEUTRAL_ATTACK = "TriggerNeutralAttack";
@@ -50,6 +58,8 @@ namespace Animations
             { AnimationType.Jump, TRIGGER_JUMP },
 
             { AnimationType.TakeDamage, TRIGGER_TAKE_DAMAGE },
+            { AnimationType.Dying, TRIGGER_DYING },
+            { AnimationType.Reset, TRIGGER_RESET},
 
             { AnimationType.UpperAttack, TRIGGER_UPPER_ATTACK },
             { AnimationType.NeutralAttack, TRIGGER_NEUTRAL_ATTACK },
@@ -125,7 +135,7 @@ namespace Animations
 
         #endregion
 
-        #region Take Damage
+        #region Damage
 
         public bool IsTakeDamage()
         {
@@ -137,6 +147,30 @@ namespace Animations
             if (IsTakeDamage()) return;
             _currentAnimation = AnimationType.TakeDamage;
             SetAnimationParameters(AnimationType.TakeDamage);
+        }
+        
+        public bool IsDying()
+        {
+            return _currentAnimation == AnimationType.Dying;
+        }
+
+        public void TriggerDying()
+        {
+            if (IsDying()) return;
+            _currentAnimation = AnimationType.Dying;
+            SetAnimationParameters(AnimationType.Dying);
+        }
+        
+        public bool IsReseting()
+        {
+            return _currentAnimation == AnimationType.Reset;
+        }
+
+        public void TriggerReset()
+        {
+            if (IsDying()) return;
+            _currentAnimation = AnimationType.Idle;
+            SetAnimationParameters(AnimationType.Reset);
         }
 
         #endregion
