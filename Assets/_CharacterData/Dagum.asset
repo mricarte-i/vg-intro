@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Dagum
   Speed: 0
-  Model: {fileID: 6055603496129866238, guid: b72c3c1210e1c874ead37dde1da8ac07, type: 3}
+  Model: {fileID: 6988147614777298810, guid: 5f2c79858aa4bf94783dc7b40e26e096, type: 3}
   DamageSystem: {fileID: 4999671443319437764, guid: c27d1a7babb117f49bfd1c9e8ed21c20, type: 3}
   Portrait: {fileID: 21300000, guid: 6b78c06982bb20a45a17b1bfd3f48894, type: 3}
   Zoom: 1.71

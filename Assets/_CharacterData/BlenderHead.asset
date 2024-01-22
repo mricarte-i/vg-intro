@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: BlenderHead
   Speed: 0
-  Model: {fileID: 1897301801836820516, guid: 315a4ede47b335f428370bf1eea38930, type: 3}
+  Model: {fileID: 6409344208016198724, guid: 2acf119d53f5e67478b00d8ee32aa50e, type: 3}
   DamageSystem: {fileID: 3572812209691721856, guid: cac8367d8047bd7408d6eff7ca8308d1, type: 3}
   Portrait: {fileID: 21300000, guid: 9deb67d87473ad04f9ff00a048db7cf4, type: 3}
   Zoom: 1.71
