@@ -45,8 +45,11 @@ namespace Controllers
             //Update Life Event
         }
 
+        private int _hits = 0;
+
         public void GetHit(float damage)
         {
+            _hits += 1;
             _currentLife -= damage;
             _healthBar.UpdateCurrentHealth(_currentLife);
             _onHitEvents?.Invoke();
@@ -62,7 +65,8 @@ namespace Controllers
         private IEnumerator Wait(float duration)
         {
             yield return new WaitForSecondsRealtime(duration);
-            if(_hurtLight != null) _hurtLight.SetActive(false);
+            _hits -= 1;
+            if(_hits == 0 && _hurtLight != null) _hurtLight.SetActive(false);
         }
 
         public void Lose()
