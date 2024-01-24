@@ -15,6 +15,6 @@ MonoBehaviour:
   Name: Zoner
   Speed: 0
   Model: {fileID: 8012146267494118678, guid: ef87aa80eeeb4aea5876f7ce230b8685, type: 3}
-  DamageSystem: {fileID: 4999671443319437764, guid: 712b797255af2e243a59cf19bf176d17, type: 3}
+  DamageSystem: {fileID: 4999671443319437764, guid: 4e23707f74fb3cf1d93b810c411428ad, type: 3}
   Portrait: {fileID: 21300000, guid: 6cd56a0ba1bf03b85a478dcffccf5ed6, type: 3}
   Zoom: 1.4
