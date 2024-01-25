@@ -84,7 +84,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: DemolitionDamageSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 1494742485738641034, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: _neutralAttack
+      value: 
+      objectReference: {fileID: 1176983640653485043}
     - target: {fileID: 1588373383701426450, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2758929218259841196, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -164,8 +172,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5871032034648663116, guid: 144be088b73431c429df31c93089971f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 144be088b73431c429df31c93089971f, type: 3}
+--- !u!1 &6557950079416210863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1184169022854383859, guid: 144be088b73431c429df31c93089971f, type: 3}
+  m_PrefabInstance: {fileID: 5435149488498466140}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7162794129484556544 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2885361392829264988, guid: 144be088b73431c429df31c93089971f, type: 3}
@@ -182,3 +196,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5689102788922740645, guid: 144be088b73431c429df31c93089971f, type: 3}
   m_PrefabInstance: {fileID: 5435149488498466140}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1176983640653485043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6557950079416210863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a01e11c852c34f698a80767f7d37dbcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackStats: {fileID: 11400000, guid: f5fabd4d643b5084ba4e823658bfa633, type: 2}
+  _hitboxes:
+  - {fileID: 7162794129484556544}
+  _sfxPrefab: {fileID: 6707769767286018005, guid: a524fa103aeb7454abe1783b3a794622, type: 3}
+  _explosionPrefab: {fileID: 2164667135363800489, guid: 7a9f67c97b50db9269be07d985f7bda4, type: 3}
+  _deltaPositionForward: 0.75
+  _deltaPositionY: 1.55
+  _explosionDelay: 0.5
