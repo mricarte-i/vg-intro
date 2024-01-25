@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackStatValues:
     Damage: 10
-    Duration: 3
+    Duration: 2.45
     SFXTHROW: {fileID: 8300000, guid: 35cb4d9e47a4de94ebbda66dda8c9c18, type: 3}
     SFXCONTACT: {fileID: 8300000, guid: abbed8d4fec925f45b3b3c8d833c5b53, type: 3}

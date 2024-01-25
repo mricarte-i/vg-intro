@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: _downAttack
       value: 
       objectReference: {fileID: 4633515072506228267}
+    - target: {fileID: 1588373383701426450, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2823594118074814279, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -83,6 +87,10 @@ PrefabInstance:
       propertyPath: _hitboxes.Array.data[0]
       value: 
       objectReference: {fileID: 1697874900213862468}
+    - target: {fileID: 7947291738414784732, guid: 144be088b73431c429df31c93089971f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8771035557322043698, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: m_RootOrder
       value: 0
