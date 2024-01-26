@@ -18,16 +18,14 @@ namespace Entities
         public void Update()
         {
             _timeElapsed += Time.deltaTime;
-            if (_timeElapsed > 1)
+            if (_timeElapsed < 1) return;
+            _currentLife -= _timeElapsed;
+            if (_currentLife <= 0)
             {
-                _currentLife -= 1f;
-                if (_currentLife <= 0)
-                {
-                    Destroy(gameObject);
-                }
-
-                _timeElapsed = 0;
+                Destroy(gameObject);
             }
+
+            _timeElapsed = 0;
         }
     }
 }

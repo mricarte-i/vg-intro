@@ -11,18 +11,17 @@ namespace Attacks
         public float DeltaPositionY=> _deltaPositionY;
         public float ExplosionDelay => _explosionDelay;
         
-        [SerializeField] private GameObject _explosionPrefab;
-        [SerializeField] private float _deltaPositionForward;
-        [SerializeField] private float _deltaPositionY;
-        [SerializeField] private float _explosionDelay;
+        [SerializeField] protected GameObject _explosionPrefab;
+        [SerializeField] protected float _deltaPositionForward;
+        [SerializeField] protected float _deltaPositionY;
+        [SerializeField] protected float _explosionDelay;
 
         public override void Execute()
         {
             base.Execute();
-            StartCoroutine(Wait(_explosionDelay));
         }
         
-        private IEnumerator Wait(float duration)
+        private IEnumerator ExplosionWait(float duration)
         {
             yield return new WaitForSecondsRealtime(duration);
             Instantiate(_explosionPrefab, transform.position + transform.forward * _deltaPositionForward + Vector3.up * _deltaPositionY, transform.rotation);

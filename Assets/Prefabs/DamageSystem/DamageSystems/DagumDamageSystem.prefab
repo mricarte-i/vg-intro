@@ -69,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 8421119410631656248}
     - target: {fileID: 2758929218259841196, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3269071485765991107, guid: 144be088b73431c429df31c93089971f, type: 3}
       propertyPath: _sfxPrefab
