@@ -12,15 +12,26 @@ public class BeatHeart : MonoBehaviour
     private const int HEART_GOOD_ID = 1;
     private const int HEART_GREAT_ID = 2;
 
+    [SerializeField] private bool _enabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        _heart.sprite = _heartSprites[HEART_BAD_ID];
+        if(AppManager.Instance.GetGameMode() == GameMode.RHYTHM) {
+            _enabled = true;
+            _heart.sprite = _heartSprites[HEART_BAD_ID];
+        } else {
+            _heart.enabled = false;
+        }
     }
-    
+
     // Update is called once per frame
     void Update()
     {
+        if(!_enabled){
+            return;
+        }
+
         switch(RhythmController.Instance.GetBeat())
         {
             case RhythmState.Bad:

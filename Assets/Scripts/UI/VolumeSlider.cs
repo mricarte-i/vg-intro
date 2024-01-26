@@ -15,6 +15,7 @@ public class VolumeSlider : MonoBehaviour
     void Start()
     {
         _slider.onValueChanged.AddListener(val => {
+            Debug.Log(_audioType + " " + val);
             switch(_audioType){
                 case AudioType.MASTER:
                     AudioManager.Instance.ChangeMasterVolume(val);
