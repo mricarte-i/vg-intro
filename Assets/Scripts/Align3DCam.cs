@@ -1,3 +1,4 @@
+using Controllers;
 using UnityEngine;
 
 /**
@@ -8,8 +9,8 @@ public class Align3DCam : MonoBehaviour
 {
 
     [Tooltip("The transforms the camera aligns to.")]
-    [SerializeField] private PlayerInputHandler _t1, _t2;
-    public void SetPlayers(PlayerInputHandler p1, PlayerInputHandler p2){
+    [SerializeField] private InputHandler _t1, _t2;
+    public void SetPlayers(InputHandler p1, InputHandler p2){
         _t1 = p1;
         _t2 = p2;
     }

@@ -8,6 +8,14 @@ public class PlayerFloor : MonoBehaviour
     [SerializeField] private GameObject _characterShow;
     [SerializeField] private Image _charaPortrait;
     [SerializeField] private TextMeshProUGUI _charaName;
+    [SerializeField] private GameObject _playerTag;
+
+
+    public void AITag()
+    {
+        _playerTag.SetActive(false);
+    }
+    
     private CharacterData _chara;
     // Start is called before the first frame update
     void Start()

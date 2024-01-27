@@ -26,13 +26,13 @@ public class NormalFightSetup : MonoBehaviour
         _p1.transform.position = _p1StartPos.position;
         _p2.transform.position = _p2StartPos.position;
 
-        _playerGuider.SetPlayers(_p1.GetComponent<PlayerInputHandler>(), _p2.GetComponent<PlayerInputHandler>());
+        _playerGuider.SetPlayers(_p1.GetComponent<InputHandler>(), _p2.GetComponent<InputHandler>());
 
         _targetGroup.AddMember(_p1.transform, 0.4f, 1.7f);
         _targetGroup.AddMember(_p2.transform, 0.5f, 1.7f);
 
         var alignScript = _targetGroup.GetComponent<Align3DCam>();
-        alignScript.SetPlayers(_p1.GetComponent<PlayerInputHandler>(), _p2.GetComponent<PlayerInputHandler>());
+        alignScript.SetPlayers(_p1.GetComponent<InputHandler>(), _p2.GetComponent<InputHandler>());
 
         _fightUI = Instantiate(_fightUIPrefab);
         HealthBar hbP1 = _fightUI.GetComponent<FightUI>().GetPlayer1HPBar();
@@ -54,8 +54,8 @@ public class NormalFightSetup : MonoBehaviour
 
         _fightUI.GetComponent<FightUI>().Reset();
         
-        _p1.GetComponent<PlayerInputHandler>().ResetPlayerActions();
-        _p2.GetComponent<PlayerInputHandler>().ResetPlayerActions();
+        _p1.GetComponent<InputHandler>().ResetPlayerActions();
+        _p2.GetComponent<InputHandler>().ResetPlayerActions();
     }
 
     private GameObject InitializePlayer(PlayableCharacter player){
@@ -65,21 +65,29 @@ public class NormalFightSetup : MonoBehaviour
 
         GameObject go = Instantiate(_playerPrefab);
 
-        PlayerInputHandler pc = go.GetComponent<PlayerInputHandler>();
-        pc.SetInputUser(player.inputUser);
-        pc.BindControls(player.controls);
+        InputHandler handler = go.GetComponent<InputHandler>();
+        switch (handler)
+        {
+            case PlayerInputHandler pc:
+                pc.SetInputUser(player.inputUser);
+                pc.BindControls(player.controls);
+                break;
+            case AIInputHandler ai:
+                ai.BindControls();
+                break;
+        }
 
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         var animationController = model.GetComponent<CharacterAnimatorController>();
-        pc.SetAnimatorController(animationController);
+        handler.SetAnimatorController(animationController);
         
         //do the same when we eventually add the collider thingy!
         var damageSystem = Instantiate(player.characterData.DamageSystem, go.transform);
         var damageSystemHandler = damageSystem.GetComponent<DamageSystemHandler>();
-        damageSystemHandler.AddBeforeAttackingEvent(pc.DisablePlayerActions);
-        damageSystemHandler.AddAfterAttackingEvent(pc.EnablePlayerActions);
+        damageSystemHandler.AddBeforeAttackingEvent(handler.DisablePlayerActions);
+        damageSystemHandler.AddAfterAttackingEvent(handler.EnablePlayerActions);
         damageSystemHandler.GetHurtbox.SetPlayerId(player.playerId);
-        pc.SetDamageSystemHandler(damageSystemHandler);
+        handler.SetDamageSystemHandler(damageSystemHandler);
         
 
         return go;

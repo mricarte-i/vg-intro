@@ -72,7 +72,11 @@ public class SelectMenuConductor : MonoBehaviour
         }
     }
 
-    public void CalledReady(int playerId){
+    private bool _aiInit = false;
+
+    public void CalledReady(int playerId)
+    {
+       
         if(playerId > 1){
             throw new Exception("CalledReady received a weird playerId");
         }
@@ -82,6 +86,16 @@ public class SelectMenuConductor : MonoBehaviour
             NextMenuState();
             _playersReady[0] = false;
             _playersReady[1] = false;
+            if (AppManager.Instance.IsAIControlled())
+            {
+                AppManager.Instance.ReturnControl();
+                _playersReady[1] = true;
+            }
+        } else if (!_aiInit && _playersReady[0] && AppManager.Instance.IsNotPlayerControlled(1))
+        {
+            _aiInit = true;
+            AppManager.Instance.SetAIPlayerControl();
+            AppManager.Instance._wsCharacterSelectMenu.InitializePlayerCursor(1);
         }
     }
 

@@ -30,6 +30,14 @@ public class AppManager : MonoBehaviour
     [SerializeField] private string _selectedStage = "SceneStageCerro";
     [SerializeField] private BgmData _selectedBGMData;
 
+    public bool IsAIControlled() => _aiControlled;
+    
+    private bool _aiControlled = false;
+
+    public WSCharacterSelectMenu _wsCharacterSelectMenu { get; set; }
+
+    public void SetWSCharacterSelectMenu(WSCharacterSelectMenu ws) => _wsCharacterSelectMenu = ws;
+
     public BgmData GetBGMData() => _selectedBGMData;
     public void SetBGMData(BgmData bgmData) => _selectedBGMData = bgmData;
 
@@ -117,6 +125,19 @@ public class AppManager : MonoBehaviour
         }else{
             throw new Exception("AppManager's SetPlayerControl being mishandled!");
         }
+    }
+    
+    public void SetAIPlayerControl(){
+        _player2Device.SetInputUser(_player1Device.inputUser);
+        _player2Device.SetControls(_player1Device.controls);
+        _player1Device._cursor.SetActive(false);
+        _aiControlled = true;
+    }
+
+    public void ReturnControl()
+    {
+        _player1Device._cursor.SetActive(true);
+        _player2Device._cursor.SetActive(false);
     }
 
     public void SetPlayerCharacter(int playerId, CharacterData character){

@@ -23,6 +23,7 @@ public class WSCharacterSelectMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AppManager.Instance.SetWSCharacterSelectMenu(this);
         //if players come back from a fight, they are already paired!
         if(!AppManager.Instance.IsNotPlayerControlled(0)){
             InitializePlayerCursor(0);
@@ -86,7 +87,7 @@ public class WSCharacterSelectMenu : MonoBehaviour
         }
     }
 
-    private void InitializePlayerCursor(int playerId){
+    public void InitializePlayerCursor(int playerId){
         var player = AppManager.Instance.GetInputUser(playerId);
         if(player == null){
             throw new System.Exception("how dare you");
@@ -101,6 +102,8 @@ public class WSCharacterSelectMenu : MonoBehaviour
         cih.SetPlayerId(playerId);
         cih.SetInputUser(player.inputUser);
         cih.BindControls(player.controls);
+        player._cursor = cih.gameObject;
+        
         CursorMaterialHandler cmh = go.GetComponent<CursorMaterialHandler>();
         if(cmh == null){
             Debug.Log("cursor gameobject material not gottem");
@@ -127,6 +130,10 @@ public class WSCharacterSelectMenu : MonoBehaviour
                 cmh.SetOutlineBlack();
                 Debug.Log("monkey business?");
                 break;
+        }
+        if (AppManager.Instance.IsAIControlled())
+        {
+            cih.GetPlayerFloor().AITag();
         }
         //Set the token's player id, give its reference to the pointer!
     }

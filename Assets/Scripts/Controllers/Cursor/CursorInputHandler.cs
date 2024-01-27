@@ -25,7 +25,10 @@ public class CursorInputHandler : MonoBehaviour
     private Rigidbody _rb;
     [SerializeField] private bool _mode = false;
 
-
+    public PlayerFloor GetPlayerFloor()
+    {
+        return _playerFloor;
+    }
 
     // Start is called before the first frame update
     void Start()

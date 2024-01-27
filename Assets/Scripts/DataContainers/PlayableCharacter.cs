@@ -10,4 +10,5 @@ public class PlayableCharacter : ScriptableObject
     public GeneratedPlayerControls controls = null;
     public void SetControls(GeneratedPlayerControls c) => controls = c;
     public PlayerId playerId = PlayerId.P1;
+    public GameObject _cursor { get; set; }
 }

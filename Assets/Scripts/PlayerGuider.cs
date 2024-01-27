@@ -1,13 +1,14 @@
+using Controllers;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class PlayerGuider : MonoBehaviour
 {
-    [SerializeField] private PlayerInputHandler _p1, _p2;
+    [SerializeField] private InputHandler _p1, _p2;
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
     [SerializeField] private float _height = 1.25f;
 
-    public void SetPlayers(PlayerInputHandler p1, PlayerInputHandler p2){
+    public void SetPlayers(InputHandler p1, InputHandler p2){
         _p1 = p1;
         _p2 = p2;
     }
