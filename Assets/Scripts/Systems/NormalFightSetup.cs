@@ -5,6 +5,7 @@ using UnityEngine;
 public class NormalFightSetup : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private GameObject _aiPrefab;
     [SerializeField] private Transform _p1StartPos, _p2StartPos;
     [Space]
     [SerializeField] private GameObject _stagePrefab; //get these from app manager or level manager!
@@ -63,7 +64,15 @@ public class NormalFightSetup : MonoBehaviour
             throw new System.Exception("how dare you");
         }
 
-        GameObject go = Instantiate(_playerPrefab);
+        GameObject go;
+        if (!player.aiControlled)
+        {
+            go = Instantiate(_playerPrefab);
+        }
+        else
+        {
+            go = Instantiate(_aiPrefab);
+        }
 
         InputHandler handler = go.GetComponent<InputHandler>();
         switch (handler)

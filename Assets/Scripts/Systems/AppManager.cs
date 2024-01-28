@@ -130,6 +130,7 @@ public class AppManager : MonoBehaviour
     public void SetAIPlayerControl(){
         _player2Device.SetInputUser(_player1Device.inputUser);
         _player2Device.SetControls(_player1Device.controls);
+        _player2Device.aiControlled = true;
         _player1Device._cursor.SetActive(false);
         _aiControlled = true;
     }
