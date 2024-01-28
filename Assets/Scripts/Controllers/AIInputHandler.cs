@@ -38,11 +38,6 @@ namespace Controllers
         private MarkovChain _markovChain = new MarkovChain();
 
         public new void BindControls(){
-            //walking = movementActionMap.Walking;
-            //jumping = movementActionMap.Jumping;
-            //neutralAttack = attackActionMap.Neutral;
-            //downAttack = attackActionMap.Down;
-            //upperAttack = attackActionMap.Upper;
             _markovChain.AddState("idle", StopAction);
             
             _markovChain.AddState("walkingForward", StopAction);
@@ -97,44 +92,6 @@ namespace Controllers
             _markovChain.AddTransition("upperAttack", "downAttack", 0.1d);
             
             _markovChain.SetState("walkingForward");
-            /*
-        var movementActionMap = controls.Movement;
-        var menuActionMap = controls.Menu;
-        var attackActionMap = controls.Attacks;
-
-        walking = movementActionMap.Walking;
-        jumping = movementActionMap.Jumping;
-        menu = menuActionMap.Pause;
-        neutralAttack = attackActionMap.Neutral;
-        downAttack = attackActionMap.Down;
-        upperAttack = attackActionMap.Upper;
-
-        walking.started += OnWalkingPerformed;
-        walking.performed += OnWalkingPerformed;
-        walking.canceled += OnWalkingPerformed;
-
-        jumping.started += OnJumpingPerformed;
-        jumping.canceled += OnJumpingPerformed;
-
-        menu.started += OnMenuPerformed;
-
-        neutralAttack.started += OnNeutralAttackPerformed;
-        neutralAttack.canceled += OnNeutralAttackPerformed;
-
-        downAttack.started += OnDownAttackPerformed;
-        downAttack.canceled += OnDownAttackPerformed;
-
-        upperAttack.started += OnUpperAttackPerformed;
-        upperAttack.canceled += OnUpperAttackPerformed;
-
-        //should be called OnEnable...
-        walking.Enable();
-        jumping.Enable();
-        menu.Enable();
-        neutralAttack.Enable();
-        downAttack.Enable();
-        upperAttack.Enable();
-        */
         }
 
         private void OnDestroy() {
