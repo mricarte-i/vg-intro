@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 290923094}
   - component: {fileID: 290923093}
   m_Layer: 0
-  m_Name: Keyboard
+  m_Name: Keyboard Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,15 +208,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 290923094}
-        m_TargetAssemblyTypeName: ChangeSceneButton, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_TargetAssemblyTypeName: ButtonLayout, Assembly-CSharp
+        m_MethodName: changeLayout
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: MainScene
+          m_StringArgument: keyboard
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &290923094
@@ -228,9 +228,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 290923091}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4fde7bd0db048d41b343ef9ae9ed508, type: 3}
+  m_Script: {fileID: 11500000, guid: 25495910a711c454baf8516f09273ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textField: {fileID: 1738284289}
 --- !u!114 &290923095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +284,7 @@ GameObject:
   - component: {fileID: 436902545}
   - component: {fileID: 436902544}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: Controller Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,15 +355,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 436902545}
-        m_TargetAssemblyTypeName: ChangeSceneButton, Assembly-CSharp
-        m_MethodName: ChangeScene
+        m_TargetAssemblyTypeName: ButtonLayout, Assembly-CSharp
+        m_MethodName: changeLayout
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: MainScene
+          m_StringArgument: controller
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &436902545
@@ -374,9 +375,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 436902542}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4fde7bd0db048d41b343ef9ae9ed508, type: 3}
+  m_Script: {fileID: 11500000, guid: 25495910a711c454baf8516f09273ccc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _textField: {fileID: 1738284289}
 --- !u!114 &436902546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1527,7 +1529,7 @@ GameObject:
   - component: {fileID: 1738284290}
   - component: {fileID: 1738284289}
   m_Layer: 0
-  m_Name: Controls
+  m_Name: ButtonLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1549,8 +1551,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -110}
-  m_SizeDelta: {x: 306.62, y: 50}
+  m_AnchoredPosition: {x: 0, y: -140}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1738284289
 MonoBehaviour:
@@ -1572,25 +1574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1
-
-    2
-
-    3
-
-    4
-
-    5
-
-    6
-
-    7
-
-    8
-
-    9
-
-    10'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
