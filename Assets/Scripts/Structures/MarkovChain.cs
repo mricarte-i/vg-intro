@@ -69,6 +69,11 @@ public class MarkovChain
 
     }
 
+    public string GetCurrentState()
+    {
+        return _currentState;
+    }
+
     private Dictionary<string, MarkovChainEntry> _chain = new Dictionary<string, MarkovChainEntry>();
     private string _currentState = null;
     private Random _random = new Random();

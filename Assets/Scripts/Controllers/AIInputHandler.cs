@@ -38,57 +38,60 @@ namespace Controllers
         private MarkovChain _markovChain = new MarkovChain();
 
         public new void BindControls(){
-            //walking = movementActionMap.Walking;
-            //jumping = movementActionMap.Jumping;
-            //neutralAttack = attackActionMap.Neutral;
-            //downAttack = attackActionMap.Down;
-            //upperAttack = attackActionMap.Upper;
+            _markovChain.AddState("idle", StopAction);
+            
+            _markovChain.AddState("walkingForward", StopAction);
             _markovChain.AddState("walkingForward", OnWalkingForwardPerformed);
+            
+            _markovChain.AddState("jumping", StopAction);
             _markovChain.AddState("jumping", OnJumpingPerformed);
+            
+            _markovChain.AddState("neutralAttack", StopAction);
             _markovChain.AddState("neutralAttack", OnNeutralAttackPerformed);
+            
+            _markovChain.AddState("downAttack", StopAction);
             _markovChain.AddState("downAttack", OnDownAttackPerformed);
+            
+            _markovChain.AddState("upperAttack", StopAction);
             _markovChain.AddState("upperAttack", OnUpperAttackPerformed);
-            _markovChain.AddTransition("walkingForward", "jumping", 0.15d);
-            _markovChain.AddTransition("jumping", "walkingForward", 0.99d);
+            
+            _markovChain.AddTransition("walkingForward", "idle", 0.3d);
+            _markovChain.AddTransition("walkingForward", "jumping", 0.1d);
+            _markovChain.AddTransition("walkingForward", "neutralAttack", 0.1d);
+            _markovChain.AddTransition("walkingForward", "downAttack", 0.1d);
+            _markovChain.AddTransition("walkingForward", "upperAttack", 0.1d);
+            
+            _markovChain.AddTransition("jumping", "idle", 0.3d);
+            _markovChain.AddTransition("jumping", "walkingForward", 0.3d);
+            _markovChain.AddTransition("jumping", "neutralAttack", 0.1d);
+            _markovChain.AddTransition("jumping", "downAttack", 0.1d);
+            _markovChain.AddTransition("jumping", "upperAttack", 0.1d);
+            
+            _markovChain.AddTransition("idle", "walkingForward", 0.3d);
+            _markovChain.AddTransition("idle", "jumping", 0.1d);
+            _markovChain.AddTransition("idle", "neutralAttack", 0.1d);
+            _markovChain.AddTransition("idle", "downAttack", 0.1d);
+            _markovChain.AddTransition("idle", "upperAttack", 0.1d);
+            
+            _markovChain.AddTransition("neutralAttack", "idle", 0.3d);
+            _markovChain.AddTransition("neutralAttack", "walkingForward", 0.3d);
+            _markovChain.AddTransition("neutralAttack", "jumping", 0.1d);
+            _markovChain.AddTransition("neutralAttack", "downAttack", 0.1d);
+            _markovChain.AddTransition("neutralAttack", "upperAttack", 0.1d);
+            
+            _markovChain.AddTransition("downAttack", "idle", 0.3d);
+            _markovChain.AddTransition("downAttack", "walkingForward", 0.3d);
+            _markovChain.AddTransition("downAttack", "jumping", 0.1d);
+            _markovChain.AddTransition("downAttack", "neutralAttack", 0.1d);
+            _markovChain.AddTransition("downAttack", "upperAttack", 0.1d);
+            
+            _markovChain.AddTransition("upperAttack", "idle", 0.3d);
+            _markovChain.AddTransition("upperAttack", "walkingForward", 0.3d);
+            _markovChain.AddTransition("upperAttack", "jumping", 0.1d);
+            _markovChain.AddTransition("upperAttack", "neutralAttack", 0.1d);
+            _markovChain.AddTransition("upperAttack", "downAttack", 0.1d);
+            
             _markovChain.SetState("walkingForward");
-            /*
-        var movementActionMap = controls.Movement;
-        var menuActionMap = controls.Menu;
-        var attackActionMap = controls.Attacks;
-
-        walking = movementActionMap.Walking;
-        jumping = movementActionMap.Jumping;
-        menu = menuActionMap.Pause;
-        neutralAttack = attackActionMap.Neutral;
-        downAttack = attackActionMap.Down;
-        upperAttack = attackActionMap.Upper;
-
-        walking.started += OnWalkingPerformed;
-        walking.performed += OnWalkingPerformed;
-        walking.canceled += OnWalkingPerformed;
-
-        jumping.started += OnJumpingPerformed;
-        jumping.canceled += OnJumpingPerformed;
-
-        menu.started += OnMenuPerformed;
-
-        neutralAttack.started += OnNeutralAttackPerformed;
-        neutralAttack.canceled += OnNeutralAttackPerformed;
-
-        downAttack.started += OnDownAttackPerformed;
-        downAttack.canceled += OnDownAttackPerformed;
-
-        upperAttack.started += OnUpperAttackPerformed;
-        upperAttack.canceled += OnUpperAttackPerformed;
-
-        //should be called OnEnable...
-        walking.Enable();
-        jumping.Enable();
-        menu.Enable();
-        neutralAttack.Enable();
-        downAttack.Enable();
-        upperAttack.Enable();
-        */
         }
 
         private void OnDestroy() {
@@ -97,16 +100,36 @@ namespace Controllers
 
         #region Movement Boilerplate
 
+        private void StopAction()
+        {
+            StopJumping();
+            StopWalking();
+            StopNeutralAttack();
+            StopDownAttack();
+            StopUpperAttack();
+        }
+
         private void OnWalkingForwardPerformed() {
             var direction = transform.forward;
 
             Horizontal = direction.x;
             Vertical = direction.z;
-
         }
+
+        private void StopWalking()
+        {
+            Horizontal = 0;
+            Vertical = 0;
+        }
+        
         private void OnJumpingPerformed()
         {
             IsJumpPressed = true;
+        }
+
+        private void StopJumping()
+        {
+            IsJumpPressed = false;
         }
 
         private void OnNeutralAttackPerformed()
@@ -114,14 +137,29 @@ namespace Controllers
             IsNeutralAttackPressed = true;
         }
 
+        private void StopNeutralAttack()
+        {
+            IsNeutralAttackPressed = false;
+        }
+
         private void OnDownAttackPerformed()
         {
             IsDownAttackPressed = true;
         }
 
+        private void StopDownAttack()
+        {
+            IsDownAttackPressed = false;
+        }
+
         private void OnUpperAttackPerformed()
         {
             IsUpperAttackPressed = true;
+        }
+
+        private void StopUpperAttack()
+        {
+            IsUpperAttackPressed = false;
         }
 
         private bool _isEnabled = true;
@@ -152,8 +190,11 @@ namespace Controllers
             if (_timeElapsed > 1)
             {
                 _markovChain.NextStep();
+                _markovChain.RunActions();
+                _timeElapsed = 0;
+                Debug.Log(_markovChain.GetCurrentState());
             }
-            _markovChain.RunActions();
+            
             //player might not be giving inputs but could be falling, still have speed, etc.
             _currentSpeed = Direction * (movementSpeed * Time.deltaTime);
 

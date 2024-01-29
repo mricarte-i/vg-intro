@@ -6,9 +6,9 @@ public class RhythmFightSetup : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private Transform _p1StartPos, _p2StartPos;
-    [Space]
-    [SerializeField] private GameObject _stagePrefab; //get these from app manager or level manager!
-    [SerializeField] private Transform _stagePos;
+    //[Space]
+    //[SerializeField] private GameObject _stagePrefab; //get these from app manager or level manager!
+    //[SerializeField] private Transform _stagePos;
     [Space]
     [SerializeField] private PlayerGuider _playerGuider;
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
@@ -20,7 +20,7 @@ public class RhythmFightSetup : MonoBehaviour
 
     void Awake()
     {
-        Instantiate(_stagePrefab, _stagePos);
+        //Instantiate(_stagePrefab, _stagePos);
 
         _p1 = InitializePlayer(AppManager.Instance.GetInputUser(0));
         _p2 = InitializePlayer(AppManager.Instance.GetInputUser(1));

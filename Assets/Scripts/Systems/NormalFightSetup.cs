@@ -5,10 +5,11 @@ using UnityEngine;
 public class NormalFightSetup : MonoBehaviour
 {
     [SerializeField] private GameObject _playerPrefab;
+    [SerializeField] private GameObject _aiPrefab;
     [SerializeField] private Transform _p1StartPos, _p2StartPos;
-    [Space]
-    [SerializeField] private GameObject _stagePrefab; //get these from app manager or level manager!
-    [SerializeField] private Transform _stagePos;
+    //[Space]
+    //[SerializeField] private GameObject _stagePrefab; //get these from app manager or level manager!
+    //[SerializeField] private Transform _stagePos;
     [Space]
     [SerializeField] private PlayerGuider _playerGuider;
     [SerializeField] private Cinemachine.CinemachineTargetGroup _targetGroup;
@@ -18,7 +19,7 @@ public class NormalFightSetup : MonoBehaviour
     private GameObject _p1, _p2, _fightUI;
 
     void Awake() {
-        Instantiate(_stagePrefab, _stagePos);
+        //Instantiate(_stagePrefab, _stagePos);
 
         _p1 = InitializePlayer(AppManager.Instance.GetInputUser(0));
         _p2 = InitializePlayer(AppManager.Instance.GetInputUser(1));
@@ -53,7 +54,7 @@ public class NormalFightSetup : MonoBehaviour
         _p2.GetComponentInChildren<LifeController>().Reset();
 
         _fightUI.GetComponent<FightUI>().Reset();
-        
+
         _p1.GetComponent<InputHandler>().ResetPlayerActions();
         _p2.GetComponent<InputHandler>().ResetPlayerActions();
     }
@@ -63,7 +64,15 @@ public class NormalFightSetup : MonoBehaviour
             throw new System.Exception("how dare you");
         }
 
-        GameObject go = Instantiate(_playerPrefab);
+        GameObject go;
+        if (!player.aiControlled)
+        {
+            go = Instantiate(_playerPrefab);
+        }
+        else
+        {
+            go = Instantiate(_aiPrefab);
+        }
 
         InputHandler handler = go.GetComponent<InputHandler>();
         switch (handler)
@@ -80,7 +89,7 @@ public class NormalFightSetup : MonoBehaviour
         var model = Instantiate(player.characterData.Model, go.transform); //instance model with player gameObject as parent!
         var animationController = model.GetComponent<CharacterAnimatorController>();
         handler.SetAnimatorController(animationController);
-        
+
         //do the same when we eventually add the collider thingy!
         var damageSystem = Instantiate(player.characterData.DamageSystem, go.transform);
         var damageSystemHandler = damageSystem.GetComponent<DamageSystemHandler>();
@@ -88,7 +97,7 @@ public class NormalFightSetup : MonoBehaviour
         damageSystemHandler.AddAfterAttackingEvent(handler.EnablePlayerActions);
         damageSystemHandler.GetHurtbox.SetPlayerId(player.playerId);
         handler.SetDamageSystemHandler(damageSystemHandler);
-        
+
 
         return go;
     }
