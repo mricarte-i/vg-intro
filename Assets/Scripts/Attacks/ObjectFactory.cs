@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Instanciator : MonoBehaviour
+public class ObjectFactory : MonoBehaviour
 {
     [SerializeField] private GameObject _prefab;
     

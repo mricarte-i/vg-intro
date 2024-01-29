@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstanciatorTrigger : MonoBehaviour
+public class ObjectFactoryTrigger : MonoBehaviour
 {
-    [SerializeField] private List<Instanciator> _instanciators;
+    [SerializeField] private List<ObjectFactory> _instanciators;
 
     public void CreateInstances()
     {
