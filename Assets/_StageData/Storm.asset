@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6aa7fcf18caee5a448820e774c3f17df, type: 3}
-  m_Name: Twister
+  m_Name: Storm
   m_EditorClassIdentifier: 
-  Name: Twister
-  SceneName: SceneStageTwister
-  Preview: {fileID: 21300000, guid: 65f0e363b74cf5845ab8c3fbc14f39ac, type: 3}
-  Zoom: 1
+  Name: Storm
+  SceneName: SceneStageStorm
+  Preview: {fileID: 21300000, guid: fac7758972035b8408a83b5ec7b47d84, type: 3}
+  Zoom: 1.6

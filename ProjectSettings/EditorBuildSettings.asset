@@ -27,9 +27,9 @@ EditorBuildSettings:
     path: Assets/Scenes/SceneStageSpace.unity
     guid: 8e29997251bdd9442b8f2534d8d3a862
   - enabled: 1
-    path: Assets/Scenes/SceneStageTwister.unity
-    guid: f7cb72441db5a574a9ad59fa65bf7d23
-  - enabled: 1
     path: Assets/Scenes/HowToPlayScene.unity
     guid: 144fbc7673c98134eaf0312184696ff8
+  - enabled: 1
+    path: Assets/Scenes/SceneStageStorm.unity
+    guid: 6468d3a001ab34446bb4c0abba421a74
   m_configObjects: {}
