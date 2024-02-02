@@ -169,14 +169,21 @@ namespace Controllers
             _isEnabled = false;
         }
 
-        public new void EnablePlayerActions()
+        public override void EnablePlayerActions()
         {
             _isEnabled = true;
         }
 
-        public new void DisablePlayerActions()
+        public override void DisablePlayerActions()
         {
-            _isEnabled = true;
+            _isEnabled = false;
+            StopAction();
+        }
+
+        public override void ResetPlayerActions()
+        {
+            _animatorController.TriggerReset();
+            EnablePlayerActions();
         }
 
         #endregion
@@ -186,11 +193,18 @@ namespace Controllers
         // Update is called once per frame
         private void Update()
         {
+            if (_animatorController.IsDying())
+            {
+                DisablePlayerActions();
+            }
             _timeElapsed += Time.deltaTime;
             if (_timeElapsed > 1)
             {
-                _markovChain.NextStep();
-                _markovChain.RunActions();
+                if (_isEnabled)
+                {
+                    _markovChain.NextStep();
+                    _markovChain.RunActions();
+                }
                 _timeElapsed = 0;
                 Debug.Log(_markovChain.GetCurrentState());
             }

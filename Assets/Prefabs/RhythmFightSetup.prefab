@@ -357,10 +357,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 1866589900787907693, guid: 6f25bac5aad67c045b49e159e6be904f, type: 3}
+  _aiPrefab: {fileID: 1866589900787907693, guid: 1f850bd796111e397a75ba0412b5cff2, type: 3}
   _p1StartPos: {fileID: 4080898575312182572}
   _p2StartPos: {fileID: 1705191311496647256}
-  _stagePrefab: {fileID: 7580965295903469985, guid: c1b90a61b4097b1408b5e28540cd91bd, type: 3}
-  _stagePos: {fileID: 6145673464979748765}
   _playerGuider: {fileID: 6399707343915074143}
   _targetGroup: {fileID: 4972461544321053374}
   _fightUIPrefab: {fileID: 6664150510100555545, guid: ad7327d0309bd7644877c0aa9987aa3b, type: 3}
