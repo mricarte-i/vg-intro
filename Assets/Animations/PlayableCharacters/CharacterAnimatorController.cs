@@ -183,7 +183,7 @@ namespace Animations
         public void TriggerDying()
         {
             _deathBed = true;
-            if (IsDying()) return;
+            //if (IsDying()) return;
             _currentAnimation = AnimationType.Dying;
             SetAnimationParameters(AnimationType.Dying);
         }
@@ -196,7 +196,7 @@ namespace Animations
         public void TriggerReset()
         {
             _deathBed = false;
-            if (IsDying()) return;
+            //if (IsDying()) return;
             _currentAnimation = AnimationType.Idle;
             SetAnimationParameters(AnimationType.Reset);
         }
@@ -262,7 +262,7 @@ namespace Animations
         {
             if (!_deathBed) return;
             if (_currentAnimation == AnimationType.Reset) return;
-            if (IsDying()) return;
+            //if (IsDying()) return;
             TriggerDying();
         }
     }

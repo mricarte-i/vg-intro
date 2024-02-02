@@ -271,10 +271,10 @@ namespace Controllers
 
         public virtual void ResetPlayerActions()
         {
-            EnablePlayerActions();
             Debug.Log($"Reseteando before: animacion Idle:{_animatorController.IsIdle()}");
             _animatorController.TriggerReset();
             Debug.Log($"Reseteando after: animacion Idle:{_animatorController.IsIdle()}");
+            EnablePlayerActions();
         }
     }
 }

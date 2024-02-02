@@ -182,8 +182,8 @@ namespace Controllers
 
         public override void ResetPlayerActions()
         {
-            EnablePlayerActions();
             _animatorController.TriggerReset();
+            EnablePlayerActions();
         }
 
         #endregion
@@ -193,6 +193,10 @@ namespace Controllers
         // Update is called once per frame
         private void Update()
         {
+            if (_animatorController.IsDying())
+            {
+                DisablePlayerActions();
+            }
             _timeElapsed += Time.deltaTime;
             if (_timeElapsed > 1)
             {
