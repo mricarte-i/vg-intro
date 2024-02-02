@@ -132,7 +132,7 @@ namespace Controllers
             upperAttack.Disable();
         }
 
-        public void EnablePlayerActions()
+        public override void EnablePlayerActions()
         {
             walking.Enable();
             jumping.Enable();
@@ -141,7 +141,7 @@ namespace Controllers
             upperAttack.Enable();
         }
 
-        public void DisablePlayerActions()
+        public override void DisablePlayerActions()
         {
             walking.Disable();
             jumping.Disable();
@@ -150,9 +150,12 @@ namespace Controllers
             upperAttack.Disable();
         }
 
-        public void ResetPlayerActions()
+        public override void ResetPlayerActions()
         {
-            base.ResetPlayerActions();
+            Debug.Log($"Reseteando before: animacion Idle:{_animatorController.IsIdle()}");
+            _animatorController.TriggerReset();
+            Debug.Log($"Reseteando after: animacion Idle:{_animatorController.IsIdle()}");
+            EnablePlayerActions();
         }
 
         #endregion
@@ -160,6 +163,10 @@ namespace Controllers
         // Update is called once per frame
         void Update()
         {
+            if (_animatorController.IsDying())
+            {
+                DisablePlayerActions();
+            }
             //player might not be giving inputs but could be falling, still have speed, etc.
             _currentSpeed = Direction * (movementSpeed * Time.deltaTime);
 

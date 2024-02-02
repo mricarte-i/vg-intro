@@ -21,9 +21,6 @@ EditorBuildSettings:
     path: Assets/Scenes/NormalFightScene.unity
     guid: 70dd27495044d874d9cbd437afe56334
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 1
     path: Assets/Scenes/SceneStage2.unity
     guid: 62bcd3efcd9cab34a888860bde47fa1f
   - enabled: 1
@@ -32,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SceneStageTwister.unity
     guid: f7cb72441db5a574a9ad59fa65bf7d23
+  - enabled: 1
+    path: Assets/Scenes/HowToPlayScene.unity
+    guid: 144fbc7673c98134eaf0312184696ff8
   m_configObjects: {}

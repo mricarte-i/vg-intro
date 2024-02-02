@@ -10,6 +10,7 @@ namespace Animations
     {
         private Animator _animator;
         private AnimationType _currentAnimation;
+        private bool _deathBed = false;
 
         private enum AnimationType
         {
@@ -80,6 +81,11 @@ namespace Animations
 
         public void TriggerIdle()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsIdle()) return;
             _currentAnimation = AnimationType.Idle;
             SetAnimationParameters(AnimationType.Idle);
@@ -96,6 +102,11 @@ namespace Animations
 
         public void TriggerWalkingForwards()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsWalkingForwards()) return;
             _currentAnimation = AnimationType.WalkingForwards;
             SetAnimationParameters(AnimationType.WalkingForwards);
@@ -112,6 +123,11 @@ namespace Animations
 
         public void TriggerWalkingBackwards()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsWalkingBackwards()) return;
             _currentAnimation = AnimationType.WalkingBackwards;
             SetAnimationParameters(AnimationType.WalkingBackwards);
@@ -128,6 +144,11 @@ namespace Animations
 
         public void TriggerJump()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsJumping()) return;
             _currentAnimation = AnimationType.Jump;
             SetAnimationParameters(AnimationType.Jump);
@@ -144,6 +165,11 @@ namespace Animations
 
         public void TriggerTakeDamage()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsTakeDamage()) return;
             _currentAnimation = AnimationType.TakeDamage;
             SetAnimationParameters(AnimationType.TakeDamage);
@@ -156,7 +182,8 @@ namespace Animations
 
         public void TriggerDying()
         {
-            if (IsDying()) return;
+            _deathBed = true;
+            //if (IsDying()) return;
             _currentAnimation = AnimationType.Dying;
             SetAnimationParameters(AnimationType.Dying);
         }
@@ -168,7 +195,8 @@ namespace Animations
 
         public void TriggerReset()
         {
-            if (IsDying()) return;
+            _deathBed = false;
+            //if (IsDying()) return;
             _currentAnimation = AnimationType.Idle;
             SetAnimationParameters(AnimationType.Reset);
         }
@@ -184,6 +212,11 @@ namespace Animations
 
         public void TriggerUpperAttack()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsUpperAttack()) return;
             _currentAnimation = AnimationType.UpperAttack;
             SetAnimationParameters(AnimationType.UpperAttack);
@@ -196,6 +229,11 @@ namespace Animations
 
         public void TriggerNeutralAttack()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsNeutralAttack()) return;
             _currentAnimation = AnimationType.NeutralAttack;
             SetAnimationParameters(AnimationType.NeutralAttack);
@@ -208,11 +246,24 @@ namespace Animations
 
         public void TriggerDownAttack()
         {
+            if (_deathBed)
+            {
+                if (IsDying()) return;
+                TriggerDying();
+            }
             if (IsDownAttack()) return;
             _currentAnimation = AnimationType.DownAttack;
             SetAnimationParameters(AnimationType.DownAttack);
         }
 
         #endregion
+
+        private void Update()
+        {
+            if (!_deathBed) return;
+            if (_currentAnimation == AnimationType.Reset) return;
+            //if (IsDying()) return;
+            TriggerDying();
+        }
     }
 }

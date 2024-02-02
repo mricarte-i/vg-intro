@@ -21,6 +21,9 @@ namespace Controllers
 
         private event Action _onHitEvents;
         public void AddOnHitEvents(Action onHitAction) => _onHitEvents += onHitAction;
+        
+        private event Action _afterHitEvents;
+        public void AddAfterHitEvents(Action afterHitAction) => _afterHitEvents += afterHitAction;
 
         private event Action _onLoseEvents;
         public void AddOnLoseEvents(Action onLoseEvents) => _onLoseEvents += onLoseEvents;
@@ -56,21 +59,29 @@ namespace Controllers
 
             if(_hurtLight != null) _hurtLight.SetActive(true);
             //if(damage > 0) TimeManager.Instance.HitStop(1f/15f);
-            StartCoroutine(Wait(1f/10f));
 
             //Update Life Event
             if (_currentLife <= 0) Lose();
+            else StartCoroutine(Wait(1f/10f));
         }
 
         private IEnumerator Wait(float duration)
         {
             yield return new WaitForSecondsRealtime(duration);
+            
             _hits -= 1;
-            if(_hits == 0 && _hurtLight != null) _hurtLight.SetActive(false);
+            if (_hits == 0 && _hurtLight != null)
+            {
+                _hurtLight.SetActive(false);
+                if (_currentLife > 0) _afterHitEvents?.Invoke();
+            }
         }
 
         public void Lose()
         {
+            _hits -= 1;
+            if(_hits == 0 && _hurtLight != null) _hurtLight.SetActive(false);
+            
             var colliderComponent = gameObject.GetComponent<Collider>();
             colliderComponent.enabled = false;
             _onLoseEvents?.Invoke();

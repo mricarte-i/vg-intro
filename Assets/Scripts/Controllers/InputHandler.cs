@@ -63,10 +63,14 @@ namespace Controllers
             _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerNeutralAttack, DamageSystemHandler.AttackType.Neutral);
             _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerUpperAttack, DamageSystemHandler.AttackType.Upper);
             _damageSystemHandler.AddBeforeAttackingEvent(_animatorController.TriggerDownAttack, DamageSystemHandler.AttackType.Down);
-        
+            
+            _damageSystemHandler.GetHurtbox.AddOnHitEvents(DisablePlayerActions);
             _damageSystemHandler.GetHurtbox.AddOnHitEvents(_animatorController.TriggerTakeDamage);
-            _damageSystemHandler.GetHurtbox.AddOnLoseEvents(_animatorController.TriggerDying);
+            
+            _damageSystemHandler.GetHurtbox.AddAfterHitEvents(EnablePlayerActions);
+            
             _damageSystemHandler.GetHurtbox.AddOnLoseEvents(DisablePlayerActions);
+            _damageSystemHandler.GetHurtbox.AddOnLoseEvents(_animatorController.TriggerDying);
         }
 
         // Update is called once per frame
@@ -261,16 +265,16 @@ namespace Controllers
         }
 
         
-        public void EnablePlayerActions() {}
+        public virtual void EnablePlayerActions() {}
 
-        public void DisablePlayerActions() {}
+        public virtual void DisablePlayerActions() {}
 
-        public void ResetPlayerActions()
+        public virtual void ResetPlayerActions()
         {
-            EnablePlayerActions();
             Debug.Log($"Reseteando before: animacion Idle:{_animatorController.IsIdle()}");
             _animatorController.TriggerReset();
             Debug.Log($"Reseteando after: animacion Idle:{_animatorController.IsIdle()}");
+            EnablePlayerActions();
         }
     }
 }
