@@ -49,7 +49,7 @@ public class RhythmFightSetup : MonoBehaviour
         _rhythmController = Instantiate(_rhythmControllerPrefab);
         _rhythmController.GetComponent<RhythmController>().Init(AppManager.Instance.GetBGMData());
 
-        EventsManager.Instance.SetMaxRounds(0);
+        EventsManager.Instance.SetMaxRounds(1);
         Debug.Log("RhythmFightSetup");
     }
 
