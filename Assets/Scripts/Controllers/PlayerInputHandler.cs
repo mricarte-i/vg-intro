@@ -132,7 +132,7 @@ namespace Controllers
             upperAttack.Disable();
         }
 
-        public void EnablePlayerActions()
+        public override void EnablePlayerActions()
         {
             walking.Enable();
             jumping.Enable();
@@ -141,7 +141,7 @@ namespace Controllers
             upperAttack.Enable();
         }
 
-        public void DisablePlayerActions()
+        public override void DisablePlayerActions()
         {
             walking.Disable();
             jumping.Disable();
@@ -150,7 +150,7 @@ namespace Controllers
             upperAttack.Disable();
         }
 
-        public void ResetPlayerActions()
+        public override void ResetPlayerActions()
         {
             base.ResetPlayerActions();
         }

@@ -169,14 +169,21 @@ namespace Controllers
             _isEnabled = false;
         }
 
-        public new void EnablePlayerActions()
+        public override void EnablePlayerActions()
         {
             _isEnabled = true;
         }
 
-        public new void DisablePlayerActions()
+        public override void DisablePlayerActions()
         {
-            _isEnabled = true;
+            _isEnabled = false;
+            StopAction();
+        }
+
+        public override void ResetPlayerActions()
+        {
+            EnablePlayerActions();
+            _animatorController.TriggerReset();
         }
 
         #endregion
@@ -189,8 +196,11 @@ namespace Controllers
             _timeElapsed += Time.deltaTime;
             if (_timeElapsed > 1)
             {
-                _markovChain.NextStep();
-                _markovChain.RunActions();
+                if (_isEnabled)
+                {
+                    _markovChain.NextStep();
+                    _markovChain.RunActions();
+                }
                 _timeElapsed = 0;
                 Debug.Log(_markovChain.GetCurrentState());
             }
